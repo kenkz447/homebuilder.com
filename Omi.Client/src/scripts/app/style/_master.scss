@@ -1,0 +1,10 @@
+.app-master {
+    &-loading-bar {
+        position: fixed;
+        height: 3px;
+        width: 100%;
+        left: 0;
+        top: 0;
+        background: blue;
+    }
+}

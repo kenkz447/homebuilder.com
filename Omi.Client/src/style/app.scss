@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700');
+// Use bootstrap's utilities only
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities";
+// Font awesome
+@import "~font-awesome/scss/font-awesome.scss";
+// App style
+@import "app/fonts";
+@import "app/structure";
+@import "app/list";
+@import "app/link";

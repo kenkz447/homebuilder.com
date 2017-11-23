@@ -1,0 +1,30 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint-eslint-rules"
+    ],
+    "linterOptions": {
+        "typeCheck": true
+    },
+    "rules": {
+        "class-name": true,
+        "max-file-line-count": true,
+        "no-constant-condition": true,
+        "no-extra-semi": true,
+        "no-unused-variable": true,
+        "prefer-const": true,
+        "prefer-template": true,
+        "quotes": [
+            2,
+            "single"
+        ],
+        "semicolon": [
+            true,
+            "never"
+        ],
+        "strict": [
+            2,
+            "never"
+        ]
+    }
+}

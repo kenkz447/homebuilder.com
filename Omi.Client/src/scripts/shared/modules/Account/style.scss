@@ -1,0 +1,12 @@
+.account-form {
+    &-wrap {
+        max-width: 330px;
+        margin: 0 auto;
+    }
+    &-heading {
+        margin-bottom: 1rem;
+    }
+    &-forgot {
+        float: right;
+    }
+}

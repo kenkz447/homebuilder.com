@@ -1,0 +1,1 @@
+export const PAGE = "ACCOUNT@PAGE_REGISTER"

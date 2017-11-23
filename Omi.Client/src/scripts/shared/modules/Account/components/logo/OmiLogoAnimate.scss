@@ -1,0 +1,30 @@
+@keyframes omi-logo-animate-circle {
+    0% {
+        box-shadow: 0 0 0 5px #e74c3c, 0 0 0 15px #e67e22;
+    }
+    100% {
+        box-shadow: 0 0 0 10px #e74c3c, 0 0 0 10px #e67e22;
+    }
+}
+
+.omi-logo-animate {
+    margin-bottom: 2rem;
+    &-circle {
+        position: relative;
+        width: 25px;
+        height: 25px;
+        background: white;
+        margin: 0 auto;
+        border-radius: 50%;
+        box-shadow: 0 0 0 5px #e74c3c, 0 0 0 15px #e67e22;
+        animation: omi-logo-animate-circle 1.5s infinite ease-in-out alternate;
+    }
+    &-text {
+        position: relative;
+        right: -20px;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #34495e;
+        top: 0px;
+    }
+}

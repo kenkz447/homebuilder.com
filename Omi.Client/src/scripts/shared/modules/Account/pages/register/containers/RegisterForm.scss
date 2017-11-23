@@ -1,0 +1,10 @@
+@import '~bootstrap/scss/functions';
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+.register-form.account-form {
+    @include media-breakpoint-up(md) {
+        &-wrap {
+            max-width: 450px;
+        }
+    }
+}
