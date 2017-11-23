@@ -1,0 +1,15 @@
+.react-monaco-editor-container {
+    border: 1px solid #eee;
+}
+
+.language-input-list {
+    margin-bottom: 15px;
+    &-item {
+        display: inline-block;
+        margin-left: 15px;
+        font-size: 16px;
+    }
+    .active {
+        font-weight: bold;
+    }
+}

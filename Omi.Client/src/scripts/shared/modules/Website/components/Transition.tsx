@@ -1,4 +1,5 @@
 import * as React from 'react'
+
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 export const Transition = (props) => {

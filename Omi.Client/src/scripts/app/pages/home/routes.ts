@@ -1,12 +1,12 @@
-import { ViewRoute } from 'shared/core'
+import { ViewRoute } from '../../../shared/core'
 
 import IndexComponent from './Page'
 
-import { ROUTE_NAME } from './keys'
+import { indexRouteName } from './keys'
 
-export const HomeRoute: ViewRoute = {
+export const homeRoute: ViewRoute = {
     path: '/',
-    name: ROUTE_NAME,
+    name: indexRouteName,
     exact: true,
     component: IndexComponent
 }

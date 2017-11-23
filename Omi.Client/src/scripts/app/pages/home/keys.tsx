@@ -1,1 +1,1 @@
-export const ROUTE_NAME = 'PAGE_HOME@INDEX'
+export const indexRouteName = 'PAGE_HOME@INDEX'
