@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Omi.Core\Omi.Data\Omi.Data.csproj" />
+    <ProjectReference Include="..\..\Omi.Core\Omi.Extensions\Omi.Extensions.csproj" />
+    <ProjectReference Include="..\..\Omi.Core\Omi.Modular\Omi.Modular.csproj" />
+    <ProjectReference Include="..\Omi.Modules.ModuleBase\Omi.Modules.ModuleBase.csproj" />
+  </ItemGroup>
+
+</Project>

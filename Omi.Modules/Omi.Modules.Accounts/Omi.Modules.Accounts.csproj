@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Omi.Core\Omi.Base\Omi.Base.csproj" />
+    <ProjectReference Include="..\..\Omi.Core\Omi.Data\Omi.Data.csproj" />
+    <ProjectReference Include="..\..\Omi.Core\Omi.Extensions\Omi.Extensions.csproj" />
+    <ProjectReference Include="..\..\Omi.Core\Omi.Packages\Omi.Packages.csproj" />
+    <ProjectReference Include="..\..\Omi.Core\Omi.Services\Omi.Services.csproj" />
+    <ProjectReference Include="..\Omi.Modules.ModuleBase\Omi.Modules.ModuleBase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
