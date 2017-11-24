@@ -71,14 +71,14 @@ class PackageFormComponent extends React.Component<PackageFormProps> {
     }
 
     renderHidden() {
-        return [
-            this.props.form.getFieldDecorator('id', {
-                initialValue: this.props.initPackageViewModel.id
-            })(<Input type="hidden" />),
-            this.props.form.getFieldDecorator('language', {
-                initialValue: this.props.initPackageViewModel.language
-            })(<Input type="hidden" />),
-        ]
+        return (
+            <div>
+                {
+                    this.props.form.getFieldDecorator('id', {
+                        initialValue: this.props.initPackageViewModel.id
+                    })(<Input key="id" type="hidden" />)
+                }
+            </div>)
     }
 
     renderBasicInfomation() {

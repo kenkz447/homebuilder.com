@@ -27,7 +27,6 @@ function MasterWrapper(props: StateProps & DispatchProps) {
     )
 }
 
-
 const mapStateToProps = (state: WebsiteRootState): StateProps => {
     return {
         websiteSetting: state.data.getIn(['WEBSITE_SETTING', 'response', 'result'])
@@ -37,10 +36,7 @@ const mapStateToProps = (state: WebsiteRootState): StateProps => {
 const mapDispatchToProps = (dispatch): DispatchProps => {
     return {
         getWebsiteSetting: () => {
-            const action = RequestSend('WEBSITE_SETTING', {
-                url: '/setting/getAppSetting'
-            })
-            dispatch(action)
+
         }
     }
 }

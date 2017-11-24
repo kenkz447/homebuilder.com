@@ -1,6 +1,6 @@
-window.baseUrl = 'http://localhost:31414/'
+window.baseUrl = 'https://localhost:44336/'
 
-import a from 'shared/core'
+import '../style/app.scss'
 
 // Import main
 import initStartup from 'shared/startup'

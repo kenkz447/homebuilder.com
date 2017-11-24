@@ -1,6 +1,6 @@
 import { WebsiteRoutePath } from 'shared/modules/website'
 
-export const MAIN_ROUTE_PATH = `${WebsiteRoutePath}/homebuilder`
+export const MAIN_ROUTE_PATH = `${WebsiteRoutePath}/admin`
 export const MAIN_ROUTE_NAME = 'HOMEBUILDER'
 
 export const LAYOUT_PACKAGE_MASTER = 'HOMEBUILDER@LAYOUT_PACKAGE_MASTER'

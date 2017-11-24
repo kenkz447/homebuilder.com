@@ -1,0 +1,139 @@
+$brand-gutter: 30px;
+$brand-max-width: 1500px;
+.brand {
+    &-container {
+        margin: 0 auto;
+        max-width: $brand-max-width;
+    }
+    &-layout {
+        background: #fff;
+        height: 100vh;
+    }
+    &-header {
+        background: transparent;
+        padding: $brand-gutter;
+        height: auto;
+        line-height: initial;
+        line-height: auto;
+    }
+    &-footer {
+        background: $gray-light;
+        &-text {
+            font-size: 1rem;
+        }
+    }
+    &-logo {
+        height: 50px;
+        &-image {
+            max-height: 100%;
+        }
+    }
+}
+
+.header-search {
+    $header-search-height: 40px;
+    background: #e8e8e8;
+    height: $header-search-height;
+    line-height: $header-search-height;
+    padding: 0 15px;
+    font-size: 1rem;
+    color: #000;
+    margin-bottom: 30px;
+    &-textbox {
+        height: $header-search-height;
+        background: transparent;
+        border: 0;
+        outline: 0;
+    }
+    &-icon {
+        font-size: 1.4rem;
+        display: inline-block;
+        margin-left: 15px;
+    }
+}
+
+.header-menu {
+    &-item {
+        float: left;
+        &:not(:last-child) {
+            .header-menu-link {
+                border-right: 1px solid;
+                padding-right: 15px;
+            }
+        }
+    }
+    &-link {
+        font-size: 1rem;
+        padding-left: 15px;
+        padding-bottom: 4px;
+        padding-top: 4px;
+        color: #000;
+    }
+    .active {
+        font-weight: bold;
+    }
+}
+
+.brand-select {
+    background: $gray-light;
+    $height: 40px;
+    .ant-select-selection {
+        background: transparent;
+        line-height: $height;
+        height: $height;
+        border: 0;
+        border-radius: 0;
+        &__rendered {
+            height: $height;
+        }
+        &-selected-value {
+            height: $height;
+            line-height: $height;
+        }
+    }
+}
+
+.filter {
+    &-label {
+        font-weight: 300;
+        font-size: 1rem;
+    }
+}
+
+.brand-dropdown {
+    position: relative;
+    .ant-collapse {
+        &-item {
+            border: 0;
+        }
+        &-header {
+            background: $gray-light!important;
+            padding: 0 15px!important;
+            height: 40px!important;
+            line-height: 40px!important;
+            .arrow {
+                right: 10px;
+                left: unset!important;
+            }
+        }
+        &-content {
+            position: absolute;
+            width: 100%;
+            border: 1px solid $gray-light;
+            border-top: 0!important;
+            background: #fff!important;
+            z-index: 1;
+        }
+    }
+}
+
+.btn {
+    &-menu {
+        &-link {
+            border: 0;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+    }
+}

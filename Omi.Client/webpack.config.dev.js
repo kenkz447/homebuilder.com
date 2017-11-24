@@ -22,7 +22,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
         new HtmlWebpackPlugin({
-            template: 'src/templates/index.html',
+            template: 'src/templates/index.dev.html',
             inject: 'body'
         })
     ],

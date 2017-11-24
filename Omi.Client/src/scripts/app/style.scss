@@ -1,2 +1,27 @@
-@import '/style/master';
-@import '/style/views/home';
+$gray-dark: #272727;
+$gray-light: #e8e8e8;
+@import 'style/html-hint.min.css';
+@import 'style/map';
+@import 'style/brand';
+@import 'style/master';
+@import 'style/package';
+@import 'style/project';
+@import 'style/pager';
+@import 'style/carousel';
+@import 'style/slick';
+@import 'style/effect';
+@import 'style/transition';
+.logo {
+    background: #333;
+    border-radius: 6px;
+    color: #fff;
+    float: left;
+    font-size: 1rem;
+    font-weight: bold;
+    height: 31px;
+    line-height: 31px;
+    margin: 16px 28px 16px 0;
+    text-align: center;
+    text-transform: uppercase;
+    width: 120px;
+}
