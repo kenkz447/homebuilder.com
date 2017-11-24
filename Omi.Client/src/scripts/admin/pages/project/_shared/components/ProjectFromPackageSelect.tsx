@@ -39,7 +39,7 @@ const mapStateToProps = (state: ModuleRootState, ownProps: OwnProps): StateProps
         packages: state.data.getIn(['packages', 'response', 'result'])
     }
 }
-
+ 
 const mapDispatchToProps = (dispatch): DispathProps => {
     return {
         getPackages: () => {

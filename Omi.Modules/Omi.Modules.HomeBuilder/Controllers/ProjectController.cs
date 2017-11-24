@@ -84,9 +84,11 @@ namespace Omi.Modules.HomeBuilder.Controllers
         public async Task<BaseJsonResult> GetProject(long projectId)
         {
             var project = await _projectService.GetProjectById(projectId);
-            var projectViewModel = ProjectViewModelExtended.FromEntity(project, EmptyProjectViewModel);
+            var projectViewModel = ProjectViewModelExtended.FromEntity(project);
 
-            return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, projectViewModel);
+            var resultViewModel = AutoMapper.Mapper.Map(EmptyProjectViewModel, projectViewModel);
+
+            return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, resultViewModel);
         }
 
         [AllowAnonymous]
@@ -121,8 +123,8 @@ namespace Omi.Modules.HomeBuilder.Controllers
         {
             var serviceModel = ProjectFilterServiceModel.FromViewModel(viewModel);
             var entities = await _projectService.GetProjects(serviceModel);
-
-            var viewModels = new PageEntityViewModel<Project, ProjectViewModel>(entities, o => ProjectViewModelExtended.FromEntity(o, EmptyProjectViewModel));
+            
+            var viewModels = new PageEntityViewModel<Project, ProjectViewModel>(entities, entity => ProjectViewModelExtended.FromEntity(entity));
 
             return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, viewModels);
         }

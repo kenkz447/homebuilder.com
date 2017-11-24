@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Omi.Extensions;
+using Omi.Modular;
 using Omi.Modules.ModuleBase.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Omi.Modules.HomeBuilder.DbSeed
 {
-    class ProjectTypeSeed
+    public class ProjectTypeSeed : IDbSeed
     {
         public static TaxonomyType ProjectType = new TaxonomyType
         {
@@ -22,7 +23,7 @@ namespace Omi.Modules.HomeBuilder.DbSeed
             {
                 new TaxonomyDetail
                 {
-                    Label = "Căn hộ",
+                    Label = "Chung cư",
                     Language = "vi"
                 }
             }

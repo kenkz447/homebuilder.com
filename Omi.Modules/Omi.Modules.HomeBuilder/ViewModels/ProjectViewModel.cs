@@ -65,31 +65,17 @@ namespace Omi.Modules.HomeBuilder.ViewModels
 
         public IEnumerable<GeographicaLocationViewModel> AvaliableGeographicaLocations { get; set; }
 
-        public static ProjectViewModelExtended FromEntity(Project entity, ProjectViewModelExtended baseViewModel = null)
+        public static ProjectViewModelExtended FromEntity(Project entity)
         {
             var entityDetail = entity.Details.FirstOrDefault();
-            var avatarFile = entity.EnitityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.Avatar).FileEntity;
+            var resultViewModel = AutoMapper.Mapper.Map<ProjectViewModelExtended>(entityDetail);
+
             var projectType = entity.EntityTaxonomies.FirstOrDefault(o => o.Taxonomy.TaxonomyTypeId == ProjectTypeSeed.ProjectType.Id);
-            var projectStatus = entity.EntityTaxonomies.FirstOrDefault(o => o.Taxonomy.TaxonomyTypeId == ProjectStatusSeed.ProjectStatus.Id);
 
-            var resultViewModel = baseViewModel ?? new ProjectViewModelExtended();
-
-            resultViewModel.Id = entity.Id;
-            resultViewModel.Name = entity.Name;
-
-            resultViewModel.Title = entityDetail.Title;
-            resultViewModel.Area = entityDetail.Area;
-            resultViewModel.Street = entityDetail.Street;
-            resultViewModel.StartedYear = entityDetail.StartedYear;
-            resultViewModel.TotalApartment = entityDetail.TotalApartment;
-            resultViewModel.Website = entityDetail.Website;
-            resultViewModel.Invertor = entityDetail.Investor;
-            resultViewModel.MapLatitude = entityDetail.MapLatitude;
-            resultViewModel.MapLongitude = entityDetail.MapLongitude;
-
-            resultViewModel.CityId = entity.CityId;
             resultViewModel.ProjectTypeId = projectType.TaxonomyId;
             resultViewModel.ProjectType = TaxomonyViewModel.FromEntity(projectType.Taxonomy);
+
+            var projectStatus = entity.EntityTaxonomies.FirstOrDefault(o => o.Taxonomy.TaxonomyTypeId == ProjectStatusSeed.ProjectStatus.Id);
 
             if (projectStatus != null)
             {
@@ -99,6 +85,7 @@ namespace Omi.Modules.HomeBuilder.ViewModels
 
             resultViewModel.ProjectBlocks = entity.ProjectBlocks.Select(o => ProjectBlockViewModelExtension.FromEnitity(o));
 
+            var avatarFile = entity.EnitityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.Avatar).FileEntity;
             resultViewModel.Avatar = FileEntityInfo.FromEntity(avatarFile);
 
             return resultViewModel;

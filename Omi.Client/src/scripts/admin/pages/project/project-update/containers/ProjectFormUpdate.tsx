@@ -14,32 +14,32 @@ function ProjectUpdateFormHOC(props) {
   let newProps = props
 
   if (newProps.initValue.projectBlocks) {
-    const towerBlockKeys = newProps.initValue.projectBlocks.map((o) => o.id)
+    const roomTypeKeys = newProps.initValue.projectBlocks.map((o) => o.id)
 
     const processedProps = {
       initValue: {}
     }
 
-    processedProps.initValue[FormComponent.towerKeysFieldName] = towerBlockKeys
-    for (const towerBlock of newProps.initValue.projectBlocks) {
-      // Process floors
-      if (towerBlock.children) {
-        towerBlock['children-keys'] = []
-        for (const floorBlock of towerBlock.children) {
-          towerBlock['children-keys'].push(floorBlock.id)
-          towerBlock[`children-${floorBlock.id}`] = floorBlock
+    processedProps.initValue[FormComponent.roomTypeKeysFieldName] = roomTypeKeys
+    for (const roomType of newProps.initValue.projectBlocks) {
+      // Process roomLayouts
+      if (roomType.children) {
+        roomType['children-keys'] = []
+        for (const roomLayout of roomType.children) {
+          roomType['children-keys'].push(roomLayout.id)
+          roomType[`children-${roomLayout.id}`] = roomLayout
           
           // Process rooms
-          if (floorBlock.children) {
-            floorBlock['children-keys'] = []
-            for (const room of floorBlock.children) {
-              floorBlock['children-keys'].push(room.id)
-              floorBlock[`children-${room.id}`] = room 
+          if (roomLayout.children) {
+            roomLayout['children-keys'] = []
+            for (const room of roomLayout.children) {
+              roomLayout['children-keys'].push(room.id)
+              roomLayout[`children-${room.id}`] = room 
             }
           }
         }
       }
-      processedProps.initValue[`${FormComponent.towerFieldName}-${towerBlock.id}`] = towerBlock
+      processedProps.initValue[`${FormComponent.roomTypeFieldName}-${roomType.id}`] = roomType
     }
 
     newProps = extend(true, processedProps, props)

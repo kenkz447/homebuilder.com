@@ -7,7 +7,7 @@ import * as uuid from 'uuid'
 
 import { ProjectBlockViewModel, ProjectViewModel } from '../../../../Types'
 import { FormFileSelect } from 'shared/modules/FileAndMedia/index'
-import { ProjectFromRoomLayout } from './ProjectFromRoomLayout'
+import { ProjectFromRoomPerspective } from './ProjectFromRoomPerspective'
 import { ConnectedPackageSelect } from './ProjectFromPackageSelect'
 
 interface OwnProps {
@@ -17,7 +17,7 @@ interface OwnProps {
     onRemove?: () => void
 }
 
-export class ProjectFormFloorBlock extends React.Component<OwnProps> {
+export class ProjectFormRoomLayout extends React.Component<OwnProps> {
     roomKeysFieldName
     static defaultProps: OwnProps = {
         block: {}
@@ -40,15 +40,15 @@ export class ProjectFormFloorBlock extends React.Component<OwnProps> {
             const roomKeys = this.props.block.children.map((o) => o.id)
 
             this.props.form.setFieldsValue({ [this.roomKeysFieldName]: roomKeys })
-            
+
             for (const key of roomKeys) {
-                const roomFieldName = `${this.props.fieldName}.${ProjectFormFloorBlock.roomFieldName}-${key}`
+                const roomFieldName = `${this.props.fieldName}.${ProjectFormRoomLayout.roomFieldName}-${key}`
                 const roomValue = this.props.block.children.find((o) => o.id == key)
-                this.props.form.getFieldDecorator(roomFieldName, { initialValue: roomValue})
+                this.props.form.getFieldDecorator(roomFieldName, { initialValue: roomValue })
             }
         }
     }
-    
+
     render() {
         return (
             <div>
@@ -58,10 +58,20 @@ export class ProjectFormFloorBlock extends React.Component<OwnProps> {
                             this.props.form.getFieldDecorator(`${this.props.fieldName}.label`, {
                                 initialValue: this.props.block.label
                             })(
-                                <Input placeholder="Floor name" />
-                            )
+                                <Input placeholder="RoomLayout name" />
+                                )
                         }
                     </Form.Item>
+                    <Form.Item>
+                        {
+                            this.props.form.getFieldDecorator(`${this.props.fieldName}.layoutImage`, {
+                                initialValue: this.props.block.layoutImage,
+                            })(
+                                <FormFileSelect label="Select layout image" buttonStyle={{width: 150}} />
+                                )
+                        }
+                    </Form.Item>
+                    
                     <Collapse bordered={false} accordion>
                         {this.renderRooms()}
                     </Collapse>
@@ -76,12 +86,12 @@ export class ProjectFormFloorBlock extends React.Component<OwnProps> {
 
     renderRoomItem({ key, fieldName }) {
         const fieldNameHie = fieldName.split('.')
-        const towerFieldName = fieldNameHie[0]
-        const floorFieldName = fieldNameHie[1]
+        const roomTypeFieldName = fieldNameHie[0]
+        const roomLayoutFieldName = fieldNameHie[1]
         const roomFieldName = fieldNameHie[2]
 
-        const towerBlock = this.props.form.getFieldValue(towerFieldName)
-        let roomValue: ProjectBlockViewModel = towerBlock[floorFieldName][roomFieldName]
+        const roomType = this.props.form.getFieldValue(roomTypeFieldName)
+        let roomValue: ProjectBlockViewModel = roomType[roomLayoutFieldName][roomFieldName]
         if (!roomValue) {
             this.props.form.getFieldDecorator(fieldName, { initialValue: {} })
             roomValue = {}
@@ -105,22 +115,13 @@ export class ProjectFormFloorBlock extends React.Component<OwnProps> {
                             {this.props.form.getFieldDecorator(`${fieldName}.${nameof<ProjectBlockViewModel>((o) => o.packageId)}`, {
                                 initialValue: roomValue.packageId,
                                 rules: [{ required: true }]
-                            })(<ConnectedPackageSelect/>)}
+                            })(<ConnectedPackageSelect />)}
                         </Form.Item>
                     </Col>
                 </Row>
                 <div>
                     <div className="mb-2">
                         <div className="clearfix">
-                            <div className="float-left">
-                                {
-                                    this.props.form.getFieldDecorator(`${fieldName}.layoutImage`, {
-                                        initialValue: roomValue.layoutImage,
-                                    })(
-                                        <FormFileSelect label="Select layout image" />
-                                    )
-                                }
-                            </div>
                             <Button className="float-right" type="danger" shape="circle" icon="delete" onClick={this.removeRoom(key)} />
                         </div>
                     </div>
@@ -128,8 +129,8 @@ export class ProjectFormFloorBlock extends React.Component<OwnProps> {
                         this.props.form.getFieldDecorator(`${fieldName}.layoutPoints`, {
                             initialValue: roomValue.layoutPoints,
                         })(
-                            <ProjectFromRoomLayout file={roomValue && roomValue.layoutImage} />
-                        )
+                            <ProjectFromRoomPerspective file={this.props.block && this.props.block.layoutImage} />
+                            )
                     }
                 </div>
             </Collapse.Panel>
@@ -137,14 +138,14 @@ export class ProjectFormFloorBlock extends React.Component<OwnProps> {
     }
 
     renderRooms() {
-        const floorKeys: Array<any> = this.props.form.getFieldValue(this.roomKeysFieldName)
+        const roomLayoutKeys: Array<any> = this.props.form.getFieldValue(this.roomKeysFieldName)
 
-        const floorFields = floorKeys.map((key) => {
-            const newFieldName = `${this.props.fieldName}.${ProjectFormFloorBlock.roomFieldName}-${key}`
+        const roomLayoutFields = roomLayoutKeys.map((key) => {
+            const newFieldName = `${this.props.fieldName}.${ProjectFormRoomLayout.roomFieldName}-${key}`
             return this.renderRoomItem({ key, fieldName: newFieldName })
         })
 
-        return floorFields
+        return roomLayoutFields
     }
 
     @autobind

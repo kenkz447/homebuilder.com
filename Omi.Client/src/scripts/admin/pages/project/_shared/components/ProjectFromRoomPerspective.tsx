@@ -30,7 +30,7 @@ interface State {
     arrows: Array<Arrow>
 }
 
-export class ProjectFromRoomLayout extends React.Component<OwnProps, State> {
+export class ProjectFromRoomPerspective extends React.Component<OwnProps, State> {
     static defaultProps: OwnProps = {
         value: []
     }

@@ -7,6 +7,7 @@ import { ExtractImmutableHOC } from '../../../core'
 
 import { FileType, ModuleRootState, FileEntityInfo } from '../Types'
 import { OpenModal } from '../state'
+import { Image } from 'shared/modules/FileAndMedia'
 
 interface StateProps {
     selectedValue?: FileEntityInfo,
@@ -26,6 +27,7 @@ interface OwnProps {
     onClick?: () => void
     onModalClose?: () => void
     id?: string
+    buttonStyle?: React.CSSProperties
 }
 
 class Component extends React.Component<StateProps & DispatchProps & OwnProps> {
@@ -40,12 +42,22 @@ class Component extends React.Component<StateProps & DispatchProps & OwnProps> {
 
     render() {
         return (
-            <Button className={this.props.classNames}
-                icon={this.props.icon}
-                size={this.props.size}
-                onClick={this.props.openModal}>
-                {this.props.label}
-            </Button>
+            <div>
+                {
+                    this.props.selectedValue && (
+                        <div className="mb-2">
+                            <Image style={{ width: 150 }} fileEntityInfo={this.props.selectedValue} displayThumb/>
+                        </div>
+                    )
+                }
+                <Button className={this.props.classNames}
+                    style={this.props.buttonStyle}
+                    icon={this.props.icon}
+                    size={this.props.size}
+                    onClick={this.props.openModal}>
+                    {this.props.label}
+                </Button>
+            </div>
         )
     }
 }

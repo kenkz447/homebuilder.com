@@ -17,7 +17,7 @@ class LayoutSelect extends React.Component<OwnProps & DispathProps, any> {
         super(props)
 
         this.state = {
-            floors: props.projectBlocks[0].children,
+            roomLayouts: props.projectBlocks[0].children,
             rooms: props.projectBlocks[0].children[0].children,
             room: props.projectBlocks[0].children[0].children[0],
         }
@@ -35,15 +35,15 @@ class LayoutSelect extends React.Component<OwnProps & DispathProps, any> {
             <div className="project-layouts">
                 <Row gutter={20}>
                     <Col span={8}>
-                        <label>Tower</label>
-                        <select onChange={this.handeTowerChange}>
+                        <label>RoomType</label>
+                        <select onChange={this.handeRoomTypeChange}>
                             {this.props.projectBlocks.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
                         </select>
                     </Col>
                     <Col span={8}>
-                        <label>Floor</label>
-                        <select onChange={this.handleFloorChange}>
-                            {this.state.floors && this.state.floors.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
+                        <label>RoomLayout</label>
+                        <select onChange={this.handleRoomLayoutChange}>
+                            {this.state.roomLayouts && this.state.roomLayouts.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
                         </select>
                     </Col>
                     <Col span={8}>
@@ -82,24 +82,24 @@ class LayoutSelect extends React.Component<OwnProps & DispathProps, any> {
         )
     }
     @autobind
-    handeTowerChange(e) {
+    handeRoomTypeChange(e) {
         const target = e.target
-        const currentTower = this.props.projectBlocks.find((o) => o.id == +target.value)
+        const currentRoomType = this.props.projectBlocks.find((o) => o.id == +target.value)
 
         const newState = {
-            floors: currentTower.children,
-            rooms: currentTower.children[0].children,
-            room: currentTower.children[0].children[0]
+            roomLayouts: currentRoomType.children,
+            rooms: currentRoomType.children[0].children,
+            room: currentRoomType.children[0].children[0]
         }
         this.setState(newState)
     }
     @autobind
-    handleFloorChange(e) {
+    handleRoomLayoutChange(e) {
         const target = e.target
-        const floor = this.state.floors.find((o) => o.id == +target.value)
+        const roomLayout = this.state.roomLayouts.find((o) => o.id == +target.value)
 
         const newState = {
-            rooms: floor[0].children,
+            rooms: roomLayout[0].children,
         }
         this.setState(newState)
     }

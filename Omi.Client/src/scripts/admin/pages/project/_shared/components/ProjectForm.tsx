@@ -8,7 +8,7 @@ import { Button, Tabs, Form, Input, Row, Col, Select, Card, Collapse, Popover, S
 
 import { AvatarSelect } from 'shared/modules/FileAndMedia'
 import { ProjectViewModel, ProjectBlockViewModel } from '../../../../Types'
-import { ProjectFormTowerBlock } from './ProjectFormTowerBlock'
+import { ProjectFormRoomType } from './ProjectFormRoomType'
 
 export interface FormDispatchProps {
     getInitialViewModel?: () => void
@@ -36,19 +36,19 @@ const operations = [
 ]
 
 export class FormComponent extends React.Component<FormOwnProps & FormStateProps & FormDispatchProps> {
-    static towerFieldName = `${nameof<ProjectViewModel>((o) => o.projectBlocks)}`
-    static towerKeysFieldName = `${nameof<ProjectViewModel>((o) => o.projectBlocks)}-keys`
+    static roomTypeFieldName = `${nameof<ProjectViewModel>((o) => o.projectBlocks)}`
+    static roomTypeKeysFieldName = `${nameof<ProjectViewModel>((o) => o.projectBlocks)}-keys`
 
     componentWillReceiveProps(nextProps: FormStateProps) {
         if (nextProps.formPostResultProjectId && (this.props.formPostResultProjectId != nextProps.formPostResultProjectId))
             this.props.redirectToEdit(nextProps.formPostResultProjectId)
 
         if (this.props.initValue != nextProps.initValue) {
-            if (nextProps.initValue[FormComponent.towerKeysFieldName]) {
-                this.props.form.setFieldsValue({ [FormComponent.towerKeysFieldName]: nextProps.initValue[FormComponent.towerKeysFieldName] })
-                for (const towerKey of nextProps.initValue[FormComponent.towerKeysFieldName]) {
-                    const towerFieldName = `${[FormComponent.towerFieldName]}-${towerKey}`
-                    this.props.form.getFieldDecorator(towerFieldName, { initialValue: nextProps.initValue[towerFieldName] })
+            if (nextProps.initValue[FormComponent.roomTypeKeysFieldName]) {
+                this.props.form.setFieldsValue({ [FormComponent.roomTypeKeysFieldName]: nextProps.initValue[FormComponent.roomTypeKeysFieldName] })
+                for (const roomTypeKey of nextProps.initValue[FormComponent.roomTypeKeysFieldName]) {
+                    const roomTypeFieldName = `${[FormComponent.roomTypeFieldName]}-${roomTypeKey}`
+                    this.props.form.getFieldDecorator(roomTypeFieldName, { initialValue: nextProps.initValue[roomTypeFieldName] })
                 }
             }
         }
@@ -77,7 +77,7 @@ export class FormComponent extends React.Component<FormOwnProps & FormStateProps
                         </Row>
                     </TabPane>
                     <TabPane tab="Layouts" key="2">
-                        {this.renderTowers()}
+                        {this.renderRoomTypes()}
                     </TabPane>
                 </Tabs>
             </Form>
@@ -209,34 +209,34 @@ export class FormComponent extends React.Component<FormOwnProps & FormStateProps
         )
     }
 
-    renderTowers() {
-        this.props.form.getFieldDecorator(FormComponent.towerKeysFieldName, { initialValue: [] })
-        const towerBlockKeys: Array<any> = this.props.form.getFieldValue(FormComponent.towerKeysFieldName)
+    renderRoomTypes() {
+        this.props.form.getFieldDecorator(FormComponent.roomTypeKeysFieldName, { initialValue: [] })
+        const roomTypeKeys: Array<any> = this.props.form.getFieldValue(FormComponent.roomTypeKeysFieldName)
 
-        const towerBlockFields = towerBlockKeys.map((key) => {
-            const towerFieldName = `${FormComponent.towerFieldName}-${key}`
+        const roomTypeFields = roomTypeKeys.map((key) => {
+            const roomTypeFieldName = `${FormComponent.roomTypeFieldName}-${key}`
 
-            const block = this.props.form.getFieldValue(towerFieldName)
+            const block = this.props.form.getFieldValue(roomTypeFieldName)
 
             if (!block)
-                this.props.form.getFieldDecorator(towerFieldName, { initialValue: {} })
+                this.props.form.getFieldDecorator(roomTypeFieldName, { initialValue: {} })
 
             return (
-                <ProjectFormTowerBlock
+                <ProjectFormRoomType
                     key={key}
-                    towerFieldName={towerFieldName}
-                    towerBlock={block}
+                    roomTypeFieldName={roomTypeFieldName}
+                    roomType={block}
                     form={this.props.form}
-                    onRemove={this.towerRemove(key)}
+                    onRemove={this.roomTypeRemove(key)}
                 />
             )
         })
 
-        // chia các tower vào 3 cột.
+        // chia các roomType vào 3 cột.
         let division = 0
         const columnItems = [[], [], []]
-        for (var i = 0; i < towerBlockFields.length; i++) {
-            const block = towerBlockFields[i]
+        for (var i = 0; i < roomTypeFields.length; i++) {
+            const block = roomTypeFields[i]
             columnItems[division].push(block)
             division++
             if (division > 2)
@@ -252,30 +252,30 @@ export class FormComponent extends React.Component<FormOwnProps & FormStateProps
                 </div>
 
                 <div>
-                    <Button onClick={this.towerAdd}>Add</Button>
+                    <Button onClick={this.roomTypeAdd}>Add</Button>
                 </div>
             </fieldset>
         )
     }
 
     @autobind
-    towerAdd() {
-        const towerKeys: Array<any> = this.props.form.getFieldValue(FormComponent.towerKeysFieldName)
-        const newTowerKeys = uuid()
+    roomTypeAdd() {
+        const roomTypeKeys: Array<any> = this.props.form.getFieldValue(FormComponent.roomTypeKeysFieldName)
+        const newRoomTypeKeys = uuid()
 
-        towerKeys.push(newTowerKeys)
+        roomTypeKeys.push(newRoomTypeKeys)
 
         this.props.form.setFieldsValue({
-            [FormComponent.towerKeysFieldName]: towerKeys
+            [FormComponent.roomTypeKeysFieldName]: roomTypeKeys
         })
     }
 
-    towerRemove = (keyToRemove) => () => {
-        const towerKeys: Array<any> = this.props.form.getFieldValue(FormComponent.towerKeysFieldName)
-        const newTowerKeys = towerKeys.filter((key) => key !== keyToRemove)
+    roomTypeRemove = (keyToRemove) => () => {
+        const roomTypeKeys: Array<any> = this.props.form.getFieldValue(FormComponent.roomTypeKeysFieldName)
+        const newRoomTypeKeys = roomTypeKeys.filter((key) => key !== keyToRemove)
 
         this.props.form.setFieldsValue({
-            [FormComponent.towerKeysFieldName]: newTowerKeys
+            [FormComponent.roomTypeKeysFieldName]: newRoomTypeKeys
         })
     }
 
@@ -285,34 +285,34 @@ export class FormComponent extends React.Component<FormOwnProps & FormStateProps
             if (!err) {
                 const blocks: Array<ProjectBlockViewModel> = []
 
-                // Process tower block array
+                // Process roomType block array
                 for (const key of values['projectBlocks-keys']) {
-                    const towerKey = `projectBlocks-${key}`
-                    const tower = values[towerKey]
+                    const roomTypeKey = `projectBlocks-${key}`
+                    const roomType = values[roomTypeKey]
 
-                    const towerBlock: ProjectBlockViewModel = {
-                        label: tower.label,
+                    const roomTypeBlock: ProjectBlockViewModel = {
+                        label: roomType.label,
                         children: []
                     }
 
-                    if (Number.isInteger(tower.id))
-                        towerBlock.id = tower.id
+                    if (Number.isInteger(roomType.id))
+                        roomTypeBlock.id = roomType.id
 
-                    // Process floor block array
-                    for (const key of tower['children-keys']) {
-                        const floor = tower[`children-${key}`]
+                    // Process roomLayout block array
+                    for (const key of roomType['children-keys']) {
+                        const roomLayout = roomType[`children-${key}`]
 
-                        const floorBlock: ProjectBlockViewModel = {
-                            label: floor.label,
+                        const roomLayoutBlock: ProjectBlockViewModel = {
+                            label: roomLayout.label,
                             children: []
                         }
 
-                        if (Number.isInteger(floor.id))
-                            floorBlock.id = floor.id
+                        if (Number.isInteger(roomLayout.id))
+                            roomLayoutBlock.id = roomLayout.id
 
                         // Process room block array
-                        for (const key of floor['children-keys']) {
-                            const room = floor[`children-${key}`]
+                        for (const key of roomLayout['children-keys']) {
+                            const room = roomLayout[`children-${key}`]
                             const roomBlock: ProjectBlockViewModel = {
                                 label: room.label,
                                 packageId: room.packageId,
@@ -323,18 +323,18 @@ export class FormComponent extends React.Component<FormOwnProps & FormStateProps
                             if (Number.isInteger(room.id))
                                 roomBlock.id = room.id
 
-                            floorBlock.children.push(roomBlock)
+                            roomLayoutBlock.children.push(roomBlock)
                         }
-                        towerBlock.children.push(floorBlock)
+                        roomTypeBlock.children.push(roomLayoutBlock)
                     }
-                    blocks.push(towerBlock)
+                    blocks.push(roomTypeBlock)
                 }
 
                 const valueToPost = extend(true, values, { projectBlocks: blocks })
 
                 for (const key of valueToPost['projectBlocks-keys']) {
-                    const towerKey = `projectBlocks-${key}`
-                    delete valueToPost[towerKey]
+                    const roomTypeKey = `projectBlocks-${key}`
+                    delete valueToPost[roomTypeKey]
                 }
                 delete valueToPost['projectBlocks-keys']
 
