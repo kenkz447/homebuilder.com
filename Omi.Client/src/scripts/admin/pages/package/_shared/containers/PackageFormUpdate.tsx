@@ -3,7 +3,7 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { Form, notification } from 'antd'
 
-import { AvatarSelect, FileSelectModal, PictureWall } from 'shared/modules/FileAndMedia'
+import { AvatarSelect, FileSelectModal, PictureWall, CleanSelectedResult } from 'shared/modules/FileAndMedia'
 import { ModuleRootState, PackageViewModel } from '../../../../Types'
 import { RequestSend, ExtractImmutableHOC, ShowNotification } from 'shared/core'
 

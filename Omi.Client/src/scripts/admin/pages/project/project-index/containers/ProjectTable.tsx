@@ -7,7 +7,7 @@ import { PaginationProps } from 'antd/lib/pagination'
 import { RequestSend, ExtractImmutableHOC } from 'shared/core'
 import { PageEntityViewModel, pageItemRender } from 'shared/modules/website'
 
-import { ModuleRootState } from '../../../../Types'
+import { ModuleRootState, ProjectViewModel } from '../../../../Types'
 
 
 interface StateProps {
@@ -21,8 +21,8 @@ interface DispatchProps {
 const columns = [{
     title: 'Title',
     dataIndex: 'title',
-    render: (text, entity) => {
-        return <NavLink to={`/website/homebuilder/project/update?projectId=${entity.id}`}>{text}</NavLink>
+    render: (text, entity: ProjectViewModel) => {
+        return <NavLink to={`/website/admin/project/update?projectId=${entity.projectId}`}>{text}</NavLink>
     }
 }]
 

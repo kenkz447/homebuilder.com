@@ -8,11 +8,13 @@ import {
     MODAL_OK,
     MODAL_OPEN,
     SET_CHECKED_FILES,
+    DELETE_SELECTED_RESULT,
     OkModalAction,
     OpenModalAction,
     SetCheckedFilesAction,
     SET_RECENT_UPLOAD_FILES,
-    SetRecentUploadFilesAction
+    SetRecentUploadFilesAction,
+    CleanSelectedResultAction
 } from './actions'
 
 const openModal = (action: OpenModalAction) => (state: Map<any, any>) => state.set('visible', true)
@@ -25,6 +27,8 @@ const setSelectedResult = (action: OkModalAction) => (state: Map<any, any>) => {
 
     return state.setIn(['selected', state.get('handleKey')], allowSelectMulti ? CHECKED_FILE : CHECKED_FILE.first())
 }
+const deleteSelectedResult = ({ handleKey }: CleanSelectedResultAction) => (state: Map<any, any>) => state.deleteIn(['selected', handleKey])
+
 const setActiveHandleKey = (action: OpenModalAction) => (state: Map<any, any>) => state.set('handleKey', action.handleKey)
 const checkOrUncheckFile = (action: FileItemClickAction) => (state: Map<any, any>) => {
     const allowSelectMulti = state.get('allowSelectMulti') as boolean
@@ -50,6 +54,7 @@ const setInitCheckedFiles = ({ files }: SetCheckedFilesAction) => (state: Map<an
 
 const setRecentUploadFiles = ({ files }: SetRecentUploadFilesAction) => (state: Map<any, any>) => state.set('RECENT_UPLOAD_FILES', fromJS(files))
 const clearRecentUploadFiles = ({ files }: SetRecentUploadFilesAction) => (state: Map<any, any>) => state.delete('RECENT_UPLOAD_FILES')
+
 
 const initState = Map({
     CHECKED_FILE: List()
@@ -80,6 +85,8 @@ export const reducer = (state = initState, action) => {
             return statePipeWithAction([setCheckedFiles, setInitCheckedFiles], state, action)
         case SET_RECENT_UPLOAD_FILES:
             return statePipeWithAction([setRecentUploadFiles], state, action)
+        case DELETE_SELECTED_RESULT:
+            return statePipeWithAction([deleteSelectedResult], state, action)
     }
     return state
 }

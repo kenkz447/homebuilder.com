@@ -89,6 +89,7 @@ export class ProjectFromRoomPerspective extends React.Component<OwnProps, State>
                                                         icon="picture"
                                                         classNames="border-0 mr-2"
                                                         size="large"
+                                                        value={arrow.image}
                                                         onChange={this.selectImageOK(arrow.id)}
                                                         onClick={this.selectImageClick}
                                                         onModalClose={this.selectImageClose}

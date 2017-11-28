@@ -6,7 +6,7 @@ import { ButtonSize } from 'antd/lib/button/button'
 import { ExtractImmutableHOC } from '../../../core'
 
 import { FileType, ModuleRootState, FileEntityInfo } from '../Types'
-import { OpenModal } from '../state'
+import { OpenModal, CleanSelectedResult } from '../state'
 import { Image } from 'shared/modules/FileAndMedia'
 
 interface StateProps {
@@ -16,6 +16,7 @@ interface StateProps {
 
 interface DispatchProps {
     openModal?: () => void
+    cleanSelectedResult?: () => void
 }
 
 interface OwnProps {
@@ -28,13 +29,17 @@ interface OwnProps {
     onModalClose?: () => void
     id?: string
     buttonStyle?: React.CSSProperties
+    value?: FileEntityInfo
 }
 
 class Component extends React.Component<StateProps & DispatchProps & OwnProps> {
-    componentWillReceiveProps(nextProps: StateProps & DispatchProps) {
-        if (this.props.selectedValue.fileId != nextProps.selectedValue.fileId)
+    componentWillReceiveProps(nextProps: OwnProps & StateProps & DispatchProps) {
+        if (nextProps.value && nextProps.value.fileId == this.props.selectedValue.fileId)
+            // Clean Media Selected after form value setted
+            this.props.cleanSelectedResult()
+        else if (this.props.selectedValue.fileId != nextProps.selectedValue.fileId)
             this.props.onChange(nextProps.selectedValue)
-
+        
         if (this.props.modalVisible != nextProps.modalVisible)
             if (!nextProps.modalVisible && this.props.onModalClose)
                 this.props.onModalClose()
@@ -46,7 +51,7 @@ class Component extends React.Component<StateProps & DispatchProps & OwnProps> {
                 {
                     this.props.selectedValue && (
                         <div className="mb-2">
-                            <Image style={{ width: 150 }} fileEntityInfo={this.props.selectedValue} displayThumb/>
+                            <Image style={{ width: 150 }} fileEntityInfo={this.props.value} displayThumb />
                         </div>
                     )
                 }
@@ -80,6 +85,10 @@ const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
 
             if (ownProps.onClick)
                 ownProps.onClick()
+        },
+        cleanSelectedResult: () => {
+            const action = CleanSelectedResult({ handleKey: ownProps.id })
+            dispatch(action)
         }
     }
 }

@@ -5,6 +5,7 @@ import { FileEntityInfo } from '../Types'
 
 export interface AvatarSelectDispathProps {
     onClick?: (handleKey: string) => void
+    cleanSelectedResult?: () => void
 }
 export interface AvatarSelectStateProps {
     selectedValue?: FileEntityInfo
@@ -22,7 +23,11 @@ export class AvatarSelectComponent extends React.Component<AvatarSelectProps> {
     }
 
     componentWillReceiveProps(nextProps: AvatarSelectProps) {
-        if (this.props.selectedValue.fileId != nextProps.selectedValue.fileId)
+        
+        if (nextProps.value && nextProps.value.fileId == this.props.selectedValue.fileId)
+            // Clean Media Selected after form value setted
+            this.props.cleanSelectedResult()
+        else if (this.props.selectedValue.fileId != nextProps.selectedValue.fileId)
             this.props.onChange(nextProps.selectedValue)
     }
 

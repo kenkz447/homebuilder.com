@@ -13,8 +13,12 @@ namespace Omi.Modules.FileAndMedia.Misc
         }
 
         public string Dimension { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+
         public string ImageAlt { get; set; }
         public string ThumbnailFileName { get; set; }
+        public string Base64PlaceHolder { get; set; }
 
         public string ToJsonString()
             => Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings {
@@ -26,6 +30,9 @@ namespace Omi.Modules.FileAndMedia.Misc
 
         public int GetHeight()
         {
+            if (Height != default)
+                return Height;
+
             var height = Regex.Matches(Dimension, @"Height=(.*?)\s]");
             if (height.Count == 0)
                 return default;
@@ -34,6 +41,9 @@ namespace Omi.Modules.FileAndMedia.Misc
 
         public int GetWidth()
         {
+            if (Width != default)
+                return Width;
+
             var width = Regex.Matches(Dimension, @"Width=(.*?),");
             if (width.Count == 0)
                 return default;

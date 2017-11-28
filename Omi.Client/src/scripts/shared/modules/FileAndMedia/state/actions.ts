@@ -9,6 +9,8 @@ export const SET_CHECKED_FILES = 'FILE_AND_MEDIA@SET_CHECKED_FILES'
 export const SET_RECENT_UPLOAD_FILES = 'FILE_AND_MEDIA@SET_RECENT_UPLOAD_FILES'
 export const DELETE_FILE = 'FILE_AND_MEDIA@DELETE_FILE'
 
+export const DELETE_SELECTED_RESULT = 'FILE_AND_MEDIA@DELETE_SELECTED_VALUE'
+
 export interface OpenModalAction {
     handleKey: string
     acceptType: FileType
@@ -58,4 +60,11 @@ export const SetRecentUploadFiles = (payload: SetRecentUploadFilesAction): SetRe
 
 export const FileItemClick = (fileInfo: FileEntityInfo): FileItemClickAction => ({
     type: FILES_ITEM_CLICK, fileInfo
+})
+export interface CleanSelectedResultAction {
+    handleKey: string
+}
+export const CleanSelectedResult = (payload: CleanSelectedResultAction): CleanSelectedResultAction & Action => ({
+    type: DELETE_SELECTED_RESULT,
+    ...payload
 })

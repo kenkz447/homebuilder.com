@@ -72,15 +72,25 @@ namespace Omi.Modules.FileAndMedia.Services
 
                 if (fileType == FileType.Image)
                 {
-                    fileMeta.Dimension = FileUtilities.GetImageDimension(fileSavePath).ToString();
+                    var fileDimension = FileUtilities.GetImageDimension(fileSavePath);
+                    fileMeta.Height = fileDimension.Height;
+                    fileMeta.Width = fileDimension.Width;
+
                     fileMeta.ImageAlt = fileNameWithoutExtension;
 
                     var thumbFileName = $"{fileNameWithoutExtension}_thumb{fileExtension}";
                     var thumbFilePath = Path.Combine(destinationFolderPath, thumbFileName);
 
-                    var imageCropResult = FileUtilities.CropThumbnail(fileSavePath, thumbFilePath, new Size(150, 150));
-                    if (imageCropResult)
+                    var thubSize = int.Parse(Properties.Resources.THUMBNAIL_SIZE);
+                    var thumbnailCropResult = FileUtilities.CropAndSave(fileSavePath, thumbFilePath, 
+                        new SixLabors.ImageSharp.Processing.ResizeOptions { Mode= SixLabors.ImageSharp.Processing.ResizeMode.Crop, Size = new Size(thubSize) },
+                        (i) => i.Width > thubSize);
+
+                    if (thumbnailCropResult)
                         fileMeta.ThumbnailFileName = thumbFileName;
+
+                    fileMeta.Base64PlaceHolder = FileUtilities.CropToBase64(fileSavePath, thumbFilePath,
+                        new SixLabors.ImageSharp.Processing.ResizeOptions { Mode = SixLabors.ImageSharp.Processing.ResizeMode.Max, Size = new Size() { Width = 40 } }); ;
                 }
 
                 var fileURI = "/" + Path.Combine(rawPath, fileName).Replace("\\", "/");

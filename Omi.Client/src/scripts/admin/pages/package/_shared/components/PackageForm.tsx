@@ -9,6 +9,7 @@ export interface PackageFormDispatchProps {
     getInitialViewModel?: () => void
     post?: (FormValues: PackageViewModel) => void
     redirectToEdit?: (entityId: number) => void
+    cleanSelectedResult?: () => void
 }
 
 export interface PackageFormStateProps {
@@ -36,8 +37,10 @@ class PackageFormComponent extends React.Component<PackageFormProps> {
     }
 
     componentWillReceiveProps(nextProps: PackageFormProps) {
-        if (nextProps.formPostResultPackageId && (this.props.formPostResultPackageId != nextProps.formPostResultPackageId))
+        if (nextProps.formPostResultPackageId && (this.props.formPostResultPackageId != nextProps.formPostResultPackageId)) {
+            this.props.form.resetFields()
             this.props.redirectToEdit(nextProps.formPostResultPackageId)
+        }
     }
 
     componentWillMount() {

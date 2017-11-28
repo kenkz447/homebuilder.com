@@ -39,8 +39,10 @@ namespace Omi.Modules.FileAndMedia.ViewModel
 
         public long FileId { get; set; }
         public string Src { get; set; }
+
+        public string SrcThumb {get;set;}
+        public string Base64PlaceHolder { get; set; }
         public int Height { get; set; }
         public int Width { get; set; }
-        public string SrcThumb {get;set;}
     }
 }

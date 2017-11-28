@@ -22,7 +22,7 @@ const columns = [{
     dataIndex: 'title',
     render: (text, entity) => {
 
-        return <NavLink to={`/website/homebuilder/package/update?packageId=${entity.id}`}>{text}</NavLink>
+        return <NavLink to={`/website/admin/package/update?packageId=${entity.id}`}>{text}</NavLink>
     }
 }]
 

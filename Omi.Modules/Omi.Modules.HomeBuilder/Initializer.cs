@@ -6,6 +6,8 @@ using Omi.Extensions;
 using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Configuration;
+using AutoMapper;
+using Omi.Modules.HomeBuilder.Misc;
 
 namespace Omi.Modules.HomeBuilder
 {
@@ -35,6 +37,12 @@ namespace Omi.Modules.HomeBuilder
                     typeof(EntityTypeSeed)
                 });
             }
+
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<HomeBuilderAutoMapperProfile>();
+            });
         }
+
     }
 }

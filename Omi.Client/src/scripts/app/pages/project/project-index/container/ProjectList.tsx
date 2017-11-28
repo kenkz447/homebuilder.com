@@ -44,7 +44,7 @@ class ProjectListComponent extends React.Component<StateProps & DispatchProps> {
                 <Row className="project-list" gutter={30} >
                     {
                         this.props.projectPage && this.props.projectPage.entities.map((item) => (
-                            <Col key={item.id} span={8}>
+                            <Col key={item.projectId} span={8}>
                                 <ProjectItem project={item} />
                             </Col>)
                         )
@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch): DispatchProps => {
         loadMapMakers: (projects) => {
             const markers = projects.filter((o) => o.mapLatitude).map((project) => {
                 return {
-                    id: project.id,
+                    id: project.projectId,
                     lat: project.mapLatitude,
                     lng: project.mapLongitude,
                     height: 100,

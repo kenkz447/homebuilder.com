@@ -90,6 +90,7 @@ namespace Omi.Modules.HomeBuilder.Services
             .Include(o => o.ProjectBlocks).ThenInclude(o => o.ProjectBlockFiles)
             .Include(o => o.ProjectBlocks).ThenInclude(o => o.Children).ThenInclude(o => o.ProjectBlockDetails)
             .Include(o => o.ProjectBlocks).ThenInclude(o => o.Children).ThenInclude(o => o.ProjectBlockFiles)
+            .Include(o => o.ProjectBlocks).ThenInclude(o => o.Children).ThenInclude(o => o.ProjectBlockFiles).ThenInclude(o => o.FileEntity)
             .Include(o => o.ProjectBlocks).ThenInclude(o => o.Children).ThenInclude(o => o.Children).ThenInclude(o => o.ProjectBlockDetails)
             .Include(o => o.ProjectBlocks).ThenInclude(o => o.Children).ThenInclude(o => o.Children).ThenInclude(o => o.ProjectBlockFiles)
             .Include(o => o.ProjectBlocks).ThenInclude(o => o.Children).ThenInclude(o => o.Children).ThenInclude(o => o.ProjectBlockFiles).ThenInclude(o => o.FileEntity)

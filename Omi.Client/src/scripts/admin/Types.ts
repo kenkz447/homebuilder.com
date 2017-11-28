@@ -41,10 +41,10 @@ export interface ProjectBlockViewModel {
 }
 
 export interface ProjectViewModel {
-    id?: number,
+    projectId?: number,
     Name?: string,
     title?: string
-    invertor?: string
+    investor?: string
     street?: string
     website?: string
     language?: string

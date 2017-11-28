@@ -36,7 +36,7 @@ export class NextAndPrevPackage extends React.Component<OwnProps & StateProps & 
                 {
                     this.props.nextAndPrev.next && (
                         <div className="float-left">
-                            <NavLink to={`/package/${this.props.nextAndPrev.next.id}`}>
+                            <NavLink to={`/package/${this.props.nextAndPrev.next.projectId}`}>
                                 <div className="package-next">
                                     <span className="package-next-text">NEXT PACKAGE</span>
                                     <span className="package-next-icon"><Icon type="caret-left" /></span>
@@ -48,7 +48,7 @@ export class NextAndPrevPackage extends React.Component<OwnProps & StateProps & 
                 {
                     this.props.nextAndPrev.prev && (
                         <div className="float-right">
-                            <NavLink to={`/package/${this.props.nextAndPrev.prev.id}`}>
+                            <NavLink to={`/package/${this.props.nextAndPrev.prev.projectId}`}>
                                 <div className="package-prev">
                                     <span className="package-prev-icon"><Icon type="caret-right" /></span>
                                     <span className="package-prev-text">PREVIOUS PACKAGE</span>

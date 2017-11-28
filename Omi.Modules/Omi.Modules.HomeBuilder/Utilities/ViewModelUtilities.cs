@@ -28,7 +28,10 @@ namespace Omi.Modules.HomeBuilder.Utilities
                         viewModel.HouseTypeId, viewModel.DesignThemeId,
                     };
 
-            var pictureFileIds = new List<long>(viewModel.Pictures.Select(o => o.FileId));
+            var pictureFileIds = new List<long>();
+            if (viewModel.Pictures != null)
+                pictureFileIds = pictureFileIds.Concat(viewModel.Pictures.Select(o => o.FileId)).ToList();
+
             var detail = viewModel.GetPackageDetail();
 
             var addNewpackageServiceModel = new PackageServiceModel()

@@ -25,19 +25,40 @@ namespace Omi.Modules.FileAndMedia.Misc
             }
         }
 
-        public static bool CropThumbnail(string imagePath, string savePath, Size thumbnailSize)
+        /// <summary>
+        /// Crop image and save to given path
+        /// </summary>
+        /// <param name="pathToFile">Path to source file</param>
+        /// <param name="savePath">Save to... (include filename)</param>
+        /// <param name="toSize">crop size</param>
+        /// <param name="condition">Crop if condition return true</param>
+        /// <returns></returns>
+        public static bool CropAndSave(string pathToFile, string savePath, ResizeOptions options, Func<Image<Rgba32>, bool> condition = null)
         {
-            using (var image = Image.Load(imagePath))
+            using (var image = Image.Load(pathToFile))
             {
-                if (image.Height < thumbnailSize.Height && image.Width < thumbnailSize.Width)
+                if (condition != null && condition(image) == false)
                     return false;
 
-                image.Mutate(x => x.Resize(new ResizeOptions { Mode = ResizeMode.Crop, Size = thumbnailSize }));
+                image.Mutate(x => x.Resize(options));
                 image.Save(savePath);
-
                 return true;
             }
         }
+
+        public static string CropToBase64(string pathToFile, string savePath, ResizeOptions options, Func<Image<Rgba32>, bool> condition = null)
+        {
+            using (var image = Image.Load(pathToFile))
+            {
+                if (condition != null && condition(image) == false)
+                    return default;
+
+                image.Mutate(x => x.Resize(options));
+                
+                return image.ToBase64String(ImageFormats.Jpeg);
+            }
+        }
+
 
         public static Size GetImageDimension(string imagePath)
         {

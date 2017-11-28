@@ -63,13 +63,13 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
         public static ProjectServiceModel FromViewModel(ProjectViewModel viewModel)
         {
             var nestedProjectBlocks = viewModel.ProjectBlocks.Select(o => ProjectBlock.FromViewModel(o));
-            nestedProjectBlocks = nestedProjectBlocks.Process((tower) =>
+            nestedProjectBlocks = nestedProjectBlocks.Select((tower) =>
              {
-                 tower.ProjectId = viewModel.Id;
+                 tower.ProjectId = viewModel.ProjectId;
                  tower.EntityTypeId = EntityTypeSeed.RoomType.Id;
-                 tower.Children = tower.Children.Process(floor => {
+                 tower.Children = tower.Children.Select(floor => {
                      floor.EntityTypeId = EntityTypeSeed.RoomLayout.Id;
-                     floor.Children = floor.Children.Process(room =>
+                     floor.Children = floor.Children.Select(room =>
                      {
                          room.EntityTypeId = EntityTypeSeed.Perspective.Id;
                          return room;
@@ -87,22 +87,9 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
 
             return new ProjectServiceModel
             {
-                Id = viewModel.Id,
+                Id = viewModel.ProjectId,
                 Name = viewModel.Name,
-                Detail = new ProjectDetail
-                {
-                    ProjectId = viewModel.Id,
-                    Title = viewModel.Title,
-                    Area = viewModel.Area,
-                    Investor = viewModel.Invertor,
-                    StartedYear = viewModel.StartedYear,
-                    TotalApartment = viewModel.TotalApartment,
-                    Website = viewModel.Website,
-                    Street = viewModel.Street,
-                    MapLatitude = viewModel.MapLatitude,
-                    MapLongitude = viewModel.MapLongitude
-                },
-
+                Detail = AutoMapper.Mapper.Map<ProjectDetail>(viewModel),
                 ProjectBlocks = nestedProjectBlocks,
                 AvatarFileId = viewModel.Avatar.FileId,
                 TaxonomyIds = taxonomyIds,

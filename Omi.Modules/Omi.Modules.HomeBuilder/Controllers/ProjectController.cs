@@ -14,6 +14,7 @@ using Omi.Data;
 using Microsoft.AspNetCore.Authorization;
 using Omi.Base.ViewModel;
 using Omi.Modules.HomeBuilder.Entities;
+using Omi.Extensions;
 
 namespace Omi.Modules.HomeBuilder.Controllers
 {
@@ -76,7 +77,7 @@ namespace Omi.Modules.HomeBuilder.Controllers
 
             await _projectService.UpdateProjectAsync(projectServiceModel);
 
-            return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, model.Id);
+            return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, model.ProjectId);
         }
 
         #region Public
@@ -86,9 +87,9 @@ namespace Omi.Modules.HomeBuilder.Controllers
             var project = await _projectService.GetProjectById(projectId);
             var projectViewModel = ProjectViewModelExtended.FromEntity(project);
 
-            var resultViewModel = AutoMapper.Mapper.Map(EmptyProjectViewModel, projectViewModel);
+            var resultViewModel = projectViewModel.MergeWith(EmptyProjectViewModel);
 
-            return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, resultViewModel);
+            return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, projectViewModel);
         }
 
         [AllowAnonymous]

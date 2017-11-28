@@ -61,7 +61,7 @@ class ProjectDetail extends React.Component<OwnProps & StateProps & DispatchProp
                 </div>
                 <div>
                     <p><b>Loại dự án:</b> <span>{this.props.project.projectType.label}</span></p>
-                    <p><b>Chủ đầu tư:</b> <span>{this.props.project.invertor}</span></p>
+                    <p><b>Chủ đầu tư:</b> <span>{this.props.project.investor}</span></p>
                     <p><b>Vị trí:</b> <span>{this.props.project.street}</span></p>
                     <p><b>Quy mô diện tích:</b> <span>{this.props.project.area} m<sup>2</sup></span></p>
                     <p><b>Tổng số căn hộ: </b> <span>{this.props.project.totalApartment}</span></p>

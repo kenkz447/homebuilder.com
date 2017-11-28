@@ -10,6 +10,7 @@ namespace Omi.Modules.FileAndMedia
     {
         public void Init(IServiceCollection services)
         {
+
             var serviceProvider = services.BuildServiceProvider();
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
 
@@ -17,5 +18,6 @@ namespace Omi.Modules.FileAndMedia
 
             services.AddScoped<FileService>();
         }
+
     }
 }

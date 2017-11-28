@@ -11,7 +11,7 @@ interface OwnProps {
 export const ProjectItem = (props: OwnProps) => {
     return (
         <div className="project-item mb-4">
-            <NavLink className="project-link" to={`/project/${props.project.id}`}>
+            <NavLink className="project-link" to={`/project/${props.project.projectId}`}>
                 <div className="package-item-top">
                     <div className="clearfix">
                         <div className="float-left">

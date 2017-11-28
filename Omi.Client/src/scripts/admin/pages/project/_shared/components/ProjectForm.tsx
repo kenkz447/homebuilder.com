@@ -88,13 +88,8 @@ export class FormComponent extends React.Component<FormOwnProps & FormStateProps
         return (
             <div>
                 {
-                    this.props.form.getFieldDecorator('id', {
-                        initialValue: this.props.initValue.id
-                    })(<Input type="hidden" />)
-                }
-                {
-                    this.props.form.getFieldDecorator('language', {
-                        initialValue: this.props.initValue.language
+                    this.props.form.getFieldDecorator(nameof<ProjectViewModel>((o) => o.projectId), {
+                        initialValue: this.props.initValue.projectId
                     })(<Input type="hidden" />)
                 }
             </div>
@@ -140,9 +135,9 @@ export class FormComponent extends React.Component<FormOwnProps & FormStateProps
             <fieldset>
                 <h2 className="form-legend mb-4">Description</h2>
                 <FormItem label="Invertor">
-                    {this.props.form.getFieldDecorator('invertor', {
+                    {this.props.form.getFieldDecorator('investor', {
                         rules: [{ required: true }],
-                        initialValue: this.props.initValue.invertor
+                        initialValue: this.props.initValue.investor
                     })(<Input />)}
                 </FormItem>
                 <FormItem label="Started year">
@@ -304,6 +299,7 @@ export class FormComponent extends React.Component<FormOwnProps & FormStateProps
 
                         const roomLayoutBlock: ProjectBlockViewModel = {
                             label: roomLayout.label,
+                            layoutImage: roomLayout.layoutImage,
                             children: []
                         }
 
@@ -316,7 +312,6 @@ export class FormComponent extends React.Component<FormOwnProps & FormStateProps
                             const roomBlock: ProjectBlockViewModel = {
                                 label: room.label,
                                 packageId: room.packageId,
-                                layoutImage: room.layoutImage,
                                 layoutPoints: room.layoutPoints
                             }
 

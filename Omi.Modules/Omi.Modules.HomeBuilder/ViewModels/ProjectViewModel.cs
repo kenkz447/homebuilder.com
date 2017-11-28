@@ -14,14 +14,14 @@ namespace Omi.Modules.HomeBuilder.ViewModels
 {
     public class ProjectViewModel
     {
-        public long Id { get; set; }
+        public long ProjectId { get; set; }
 
         public string Name { get; set; }
 
         [Required]
         public string Title { get; set; }
 
-        public string Invertor { get; set; }
+        public string Investor { get; set; }
 
         public string Street { get; set; }
 
@@ -71,6 +71,8 @@ namespace Omi.Modules.HomeBuilder.ViewModels
             var resultViewModel = AutoMapper.Mapper.Map<ProjectViewModelExtended>(entityDetail);
 
             var projectType = entity.EntityTaxonomies.FirstOrDefault(o => o.Taxonomy.TaxonomyTypeId == ProjectTypeSeed.ProjectType.Id);
+
+            resultViewModel.CityId = entity.CityId;
 
             resultViewModel.ProjectTypeId = projectType.TaxonomyId;
             resultViewModel.ProjectType = TaxomonyViewModel.FromEntity(projectType.Taxonomy);

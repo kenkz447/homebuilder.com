@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch, ownProps): FormDispatchProps => {
         }
       })
       dispatch(showNotificationAction)
-      dispatch(push(`/website/homebuilder/project/update?projectId=${newProjectId}`))
+      dispatch(push(`/website/admin/project/update?projectId=${newProjectId}`))
     }
   }
 }

@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
-import { Form} from 'antd'
+import { Form } from 'antd'
 
-import { AvatarSelect, FileSelectModal, PictureWall } from 'shared/modules/FileAndMedia'
+import { AvatarSelect, FileSelectModal, PictureWall, CleanSelectedResult } from 'shared/modules/FileAndMedia'
 import { ModuleRootState, PackageViewModel } from '../../../../Types'
 import { RequestSend, ExtractImmutableHOC, ShowNotification } from 'shared/core'
 
@@ -11,7 +11,7 @@ import { PackageFormStateProps, PackageFormDispatchProps, PackageForm } from '..
 
 const mapStateToProps = (state: ModuleRootState, ownProps): PackageFormStateProps => {
   return {
-    initPackageViewModel: state.data.getIn(['initPackageViewModel', 'response', 'result'])  || {},
+    initPackageViewModel: state.data.getIn(['initPackageViewModel', 'response', 'result']) || {},
     formPostResultPackageId: state.data.getIn(['formPostResultPackageId', 'response', 'result'])
   }
 }
@@ -25,13 +25,14 @@ const mapDispatchToProps = (dispatch, ownProps): PackageFormDispatchProps => {
           requestInit: {
             method: 'Get',
             credentials: 'include'
-          }})
+          }
+        })
       dispatch(requestSendAction)
     },
     post(FormValues) {
       const requestSendAction = RequestSend(
         'formPostResultPackageId', {
-          url: `/package/createNewPackage`, 
+          url: `/package/createNewPackage`,
           requestInit: {
             method: 'POST',
             headers: new Headers({
@@ -55,7 +56,7 @@ const mapDispatchToProps = (dispatch, ownProps): PackageFormDispatchProps => {
         }
       })
       dispatch(showNotificationAction)
-      dispatch(push(`/website/homebuilder/package/update?packageId=${newPackageId}`))
+      dispatch(push(`/website/admin/package/update?packageId=${newPackageId}`))
     }
   }
 }
