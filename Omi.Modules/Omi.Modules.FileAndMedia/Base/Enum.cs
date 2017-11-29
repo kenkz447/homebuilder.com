@@ -8,6 +8,8 @@ namespace Omi.Modules.FileAndMedia.Base
     {
         Avatar = 0,
         Picture = 1,
-        Attacment = 2
+        Attacment = 2,
+        LocationImage = 3,
+        SiteMapImage = 4
     }
 }

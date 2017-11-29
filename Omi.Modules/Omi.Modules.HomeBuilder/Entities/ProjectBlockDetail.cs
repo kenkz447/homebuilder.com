@@ -13,6 +13,13 @@ namespace Omi.Modules.HomeBuilder.Entities
         IEntityWithLanguage
     {
         public string Label { get; set; }
+
+        // For Room Layout
+        public int Area { get; set; }
+        public int BedRoomCount { get; set; }
+        public int ToiletCount { get; set; }
+        public int TotalRoomOfLayout { get; set; }
+
         public string Language { get;set; }
 
         public long? ProjectBlockId { get; set; }

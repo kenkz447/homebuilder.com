@@ -200,6 +200,18 @@ export class FormComponent extends React.Component<FormOwnProps & FormStateProps
                         })(<Input style={{ width: '50%' }} placeholder="Longitude" />)}
                     </Group>
                 </FormItem>
+                <FormItem label="Location image">
+                    {this.props.form.getFieldDecorator('locationImage', {
+                        rules: [{ required: true }],
+                        initialValue: this.props.initValue.locationImage
+                    })(<AvatarSelect />)}
+                </FormItem>
+                <FormItem label="Location image">
+                    {this.props.form.getFieldDecorator('siteMapImage', {
+                        rules: [{ required: true }],
+                        initialValue: this.props.initValue.siteMapImage
+                    })(<AvatarSelect />)}
+                </FormItem>
             </fieldset>
         )
     }
@@ -297,23 +309,16 @@ export class FormComponent extends React.Component<FormOwnProps & FormStateProps
                     for (const key of roomType['children-keys']) {
                         const roomLayout = roomType[`children-${key}`]
 
-                        const roomLayoutBlock: ProjectBlockViewModel = {
-                            label: roomLayout.label,
-                            layoutImage: roomLayout.layoutImage,
-                            children: []
-                        }
-
+                        const roomLayoutBlock: ProjectBlockViewModel = Object.assign({}, roomLayout)
+                        roomLayoutBlock.children = []
+                        
                         if (Number.isInteger(roomLayout.id))
                             roomLayoutBlock.id = roomLayout.id
 
                         // Process room block array
                         for (const key of roomLayout['children-keys']) {
                             const room = roomLayout[`children-${key}`]
-                            const roomBlock: ProjectBlockViewModel = {
-                                label: room.label,
-                                packageId: room.packageId,
-                                layoutPoints: room.layoutPoints
-                            }
+                            const roomBlock: ProjectBlockViewModel = Object.assign({}, room)
 
                             if (Number.isInteger(room.id))
                                 roomBlock.id = room.id

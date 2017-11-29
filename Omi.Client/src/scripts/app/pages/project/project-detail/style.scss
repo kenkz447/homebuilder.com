@@ -3,19 +3,19 @@
         font-weight: bold;
         font-size: 1.3rem;
         margin-left: 15px;
-        margin-bottom: 15px;
+        margin-bottom: 30px;
     }
     &-details {
-        padding: 15px;
         background: #e8e8e8;
         font-size: .9rem;
         min-height: 100%;
         p {
             padding-left: 15px;
             padding-right: 15px;
+            font-size: 16px;
             &:not(:last-child) {
-                padding-bottom: 10px;
-                margin-bottom: 10px;
+                padding-bottom: 15px;
+                margin-bottom: 15px;
                 border-bottom: 1px solid lightgray;
             }
         }
@@ -31,4 +31,39 @@
             border: 0;
         }
     }
+    .location-and-sitemap {
+        .title {
+            color: #000;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    }
+    .room-types {
+        &-list {
+            &-item {
+                display: inline-block;
+                a {
+                    color: #000;
+                }
+                font-size: 18px;
+                &.active {
+                    font-weight: bold;
+                }
+                &:not(:first-child) {
+                    padding-left: 15px;
+                }
+                &:not(:last-child) {
+                    padding-right: 15px;
+                    border-right: 2px solid;
+                }
+            }
+        }
+    }
+}
+
+.head-text {
+    font-size: 16px;
+    background: #000;
+    color: #fff;
+    padding: 10px 30px;
 }

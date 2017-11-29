@@ -12,8 +12,11 @@ interface ImgProps {
     style?: React.CSSProperties
 }
 export class Image extends React.Component<ImgProps> {
-    // style={{ width: this.props.fileEntityInfo.width, height: this.props.fileEntityInfo.height }}
+    // style={{ width: this.props.fileEntityInfo.width, height: this.props.fileEntityInfo.height }} 
     render() {
+        if (!this.props.fileEntityInfo)
+            return null
+        
         return (
             <div className="mw-100">
                 <VisibilitySensor>

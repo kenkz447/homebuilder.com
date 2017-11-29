@@ -19,6 +19,9 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
         public long Id { get; set; }
         public string Name { get; set; }
         public long AvatarFileId { get; set; }
+        public long LocationImageId { get; set; }
+        public long SiteMapImageId { get; set; }
+
         public long CityId { get; set; }
           
         public ProjectDetail Detail { get; set; }
@@ -53,6 +56,18 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
                     {
                         UsingType = (int)FileUsingType.Avatar,
                         FileEntityId = AvatarFileId,
+                        EntityId = Id,
+                    },
+                    new ProjectFile
+                    {
+                        UsingType = (int)FileUsingType.LocationImage,
+                        FileEntityId = LocationImageId,
+                        EntityId = Id,
+                    },
+                    new ProjectFile
+                    {
+                        UsingType = (int)FileUsingType.SiteMapImage,
+                        FileEntityId = SiteMapImageId,
                         EntityId = Id,
                     },
                 };
@@ -91,7 +106,11 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
                 Name = viewModel.Name,
                 Detail = AutoMapper.Mapper.Map<ProjectDetail>(viewModel),
                 ProjectBlocks = nestedProjectBlocks,
+
                 AvatarFileId = viewModel.Avatar.FileId,
+                LocationImageId = viewModel.LocationImage.FileId,
+                SiteMapImageId = viewModel.SiteMapImage.FileId,
+
                 TaxonomyIds = taxonomyIds,
                 CityId = viewModel.CityId,
             };

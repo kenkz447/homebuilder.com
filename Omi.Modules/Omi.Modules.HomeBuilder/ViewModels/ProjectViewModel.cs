@@ -48,6 +48,12 @@ namespace Omi.Modules.HomeBuilder.ViewModels
         [Required]
         public FileEntityInfo Avatar { get; set; }
 
+        [Required]
+        public FileEntityInfo LocationImage { get; set; }
+
+        [Required]
+        public FileEntityInfo SiteMapImage { get; set; }
+
         public string MapLatitude { get; set; }
         public string MapLongitude { get; set; }
 
@@ -89,6 +95,14 @@ namespace Omi.Modules.HomeBuilder.ViewModels
 
             var avatarFile = entity.EnitityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.Avatar).FileEntity;
             resultViewModel.Avatar = FileEntityInfo.FromEntity(avatarFile);
+
+            var locationImage = entity.EnitityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.LocationImage)?.FileEntity;
+            if(locationImage != null)
+                resultViewModel.LocationImage = FileEntityInfo.FromEntity(locationImage);
+
+            var siteMapImage = entity.EnitityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.SiteMapImage)?.FileEntity;
+            if(locationImage != null)
+                resultViewModel.SiteMapImage = FileEntityInfo.FromEntity(siteMapImage);
 
             return resultViewModel;
         }

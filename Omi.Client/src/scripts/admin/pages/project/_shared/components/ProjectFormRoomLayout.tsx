@@ -53,25 +53,64 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
         return (
             <div>
                 <div className="mb-3">
-                    <Form.Item>
-                        {
-                            this.props.form.getFieldDecorator(`${this.props.fieldName}.label`, {
-                                initialValue: this.props.block.label
-                            })(
-                                <Input placeholder="RoomLayout name" />
-                                )
-                        }
-                    </Form.Item>
+                    <Row gutter={15}>
+                        <Col span={12}>
+                            <Form.Item>
+                                {
+                                    this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.label)}`, {
+                                        initialValue: this.props.block.label
+                                    })(<Input placeholder="RoomLayout name" />)
+                                }
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item>
+                                {
+                                    this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.area)}`, {
+                                        initialValue: this.props.block.area
+                                    })(<Input placeholder="Area" type="number"/>)
+                                }
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item>
+                                {
+                                    this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.bedRoomCount)}`, {
+                                        initialValue: this.props.block.bedRoomCount
+                                    })(<Input placeholder="Total bedroom"  type="number"/>)
+                                }
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item>
+                                {
+                                    this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.toiletCount)}`, {
+                                        initialValue: this.props.block.toiletCount
+                                    })(<Input placeholder="Total toilet" type="number" />)
+                                }
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item>
+                                {
+                                    this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.totalRoomOfLayout)}`, {
+                                        initialValue: this.props.block.totalRoomOfLayout
+                                    })(<Input placeholder="Total apartment" type="number"/>)
+                                }
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
                     <Form.Item>
                         {
                             this.props.form.getFieldDecorator(`${this.props.fieldName}.layoutImage`, {
                                 initialValue: this.props.block.layoutImage,
                             })(
-                                <FormFileSelect label="Select layout image" buttonStyle={{width: 150}} />
+                                <FormFileSelect label="Select layout image" buttonStyle={{ width: 150 }} />
                                 )
                         }
                     </Form.Item>
-                    
+
                     <Collapse bordered={false} accordion>
                         {this.renderRooms()}
                     </Collapse>

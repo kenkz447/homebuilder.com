@@ -56,8 +56,6 @@ namespace Omi.Modules.HomeBuilder.Controllers
         public BaseJsonResult GetEmptyProjectViewModel()
             => new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED, EmptyProjectViewModel);
 
-
-
         [HttpPost]
         public async Task<BaseJsonResult> CreateNewProject([FromBody]ProjectViewModel viewModel)
         {

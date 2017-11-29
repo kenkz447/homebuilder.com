@@ -42,7 +42,13 @@ namespace Omi.Modules.HomeBuilder.Services
                 entityEntry.Property(o => o.ParentId).IsModified = false;
 
                 if (entityEntry.Entity.Children.Count() != 0 && entity.Children.Count() != 0)
+                {
+                    foreach (var child in entity.Children)
+                    {
+                        child.ParentId = entityEntry.Entity.Id;
+                    }
                     context.TryUpdateProjectBlocks(entityEntry.Entity.Children, entity.Children, getKey);
+                }
 
                 context.TryUpdateManyToMany(existingItem.ProjectBlockFiles, entity.ProjectBlockFiles, o => o.FileEntityId);
 

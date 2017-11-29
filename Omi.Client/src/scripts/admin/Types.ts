@@ -32,6 +32,10 @@ export interface ProjectBlockViewModel {
     id?: number
     language?: string
     label?: string
+    area?: number
+    bedRoomCount?: number
+    toiletCount?: number
+    totalRoomOfLayout?: number
     entityTypeId?: number
     packageId?: number
     parentId?: number
@@ -61,4 +65,6 @@ export interface ProjectViewModel {
     projectBlocks?: Array<ProjectBlockViewModel>
     avaliableProjectTypes?: Array<TaxonomyViewModel>
     avaliableGeographicaLocations?: Array<GeographicaLocationViewModel>
+    locationImage?: FileEntityInfo
+    siteMapImage?: FileEntityInfo
 }

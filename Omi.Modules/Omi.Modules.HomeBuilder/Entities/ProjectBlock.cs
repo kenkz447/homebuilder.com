@@ -57,6 +57,9 @@ namespace Omi.Modules.HomeBuilder.Entities
                         };
                     }));
 
+            var detail = AutoMapper.Mapper.Map<ProjectBlockDetail>(viewModel);
+            detail.ProjectBlockId = viewModel.Id;
+
             var entity = new ProjectBlock
             {
                 Id = viewModel.Id,
@@ -66,11 +69,7 @@ namespace Omi.Modules.HomeBuilder.Entities
                 ProjectBlockFiles = files,
                 ProjectBlockDetails = new List<ProjectBlockDetail>
                     {
-                        new ProjectBlockDetail
-                        {
-                            Label = viewModel.Label,
-                            ProjectBlockId = viewModel.Id
-                        }
+                        detail
                     }
             };
 
