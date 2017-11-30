@@ -16,6 +16,11 @@ namespace Omi.Modules.HomeBuilder.Entities
     {
         public string Name { get; set; }
 
+        public bool? IsPerspective { get; set; }
+        public long? ProjectBlockId { get; set; }
+
+        public ProjectBlock ProjectBlock { get; set; }
+
         public virtual IEnumerable<PackageDetail> Details { get; set; }
         public virtual IEnumerable<PackageTaxonomy> EntityTaxonomies { get; set; }
         public virtual IEnumerable<PackageFile> EnitityFiles { get; set; }

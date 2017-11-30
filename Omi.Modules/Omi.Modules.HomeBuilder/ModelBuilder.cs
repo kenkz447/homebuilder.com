@@ -10,6 +10,13 @@ namespace Omi.Modules.HomeBuilder
         {
             builder.Entity<Package>()
                 .HasMany(o => o.Details);
+
+            builder.Entity<Package>()
+                .HasOne(o => o.ProjectBlock)
+                .WithOne(o => o.Package)
+                .HasForeignKey<Package>(o => o.ProjectBlockId);
+            
+
             builder.Entity<PackageDetail>();
 
             builder.Entity<PackageTaxonomy>()

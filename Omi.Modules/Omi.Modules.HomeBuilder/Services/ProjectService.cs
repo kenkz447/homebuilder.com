@@ -28,7 +28,9 @@ namespace Omi.Modules.HomeBuilder.Services
             dbSet.RemoveRange(deletedEntities);
 
             var addedEntities = newEntities.Except(currentEntities, getKey);
-            dbSet.AddRange(addedEntities);
+
+            if(addedEntities.Count() != 0)
+                dbSet.AddRange(addedEntities);
 
             var modifiedEntities = newEntities.Where(o => o.Id > 0);
 
@@ -170,6 +172,24 @@ namespace Omi.Modules.HomeBuilder.Services
             }
 
             _context.TryUpdateProjectBlocks(project.ProjectBlocks, serviceModel.ProjectBlocks, o => o.Id);
+
+            var packageSet = _context.Set<Package>();
+
+            foreach (var roomtype in project.ProjectBlocks)
+            {
+                foreach (var roomLayout in roomtype.Children)
+                {
+                    foreach (var roomPerspective in roomLayout.Children)
+                    {
+                        if (roomPerspective.PackageId != default)
+                        {
+                            var package = packageSet.Find(roomPerspective.PackageId);
+                            var entry = _context.Entry(package);
+                            entry.Property(o => o.ProjectBlockId).CurrentValue = roomPerspective.Id;
+                        }
+                    }
+                }
+            }
 
             _context.TryUpdateManyToMany(project.EnitityFiles, newProject.EnitityFiles, o => o.FileEntityId);
             _context.TryUpdateManyToMany(project.EntityTaxonomies, newProject.EntityTaxonomies, o => o.TaxonomyId);

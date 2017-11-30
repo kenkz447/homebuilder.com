@@ -10,6 +10,8 @@ export interface ModuleRootState extends RootState {
 
 export interface PackageViewModel {
     id?: number
+    projectBlockId?: number
+    
     title?: string
     sortText?: string
     price?: number

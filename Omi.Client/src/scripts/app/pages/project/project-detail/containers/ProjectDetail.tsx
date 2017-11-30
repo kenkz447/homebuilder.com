@@ -1,11 +1,10 @@
 import * as React from 'react'
 import { Row, Col } from 'antd'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 
 import { ProjectViewModel } from '../../../../../admin'
 import { WebsiteRootState } from '../../../../Types'
-import { ConnectedLayoutSelect } from './LayoutSelect'
 import { ConnectedProjectPackageDetail } from './ProjectPackageDetail'
 import { Image } from 'shared/modules/FileAndMedia'
 import * as classNames from 'classnames'
@@ -48,7 +47,7 @@ class ProjectDetail extends React.Component<OwnProps & StateProps & DispatchProp
                                 <div className="head-text">
                                     Location
                                 </div>
-                                <Image classNames="mw-100 w-100 d-block" fileEntityInfo={this.props.project.locationImage} />
+                                <Image className="mw-100 w-100 d-block" fileEntityInfo={this.props.project.locationImage} />
                             </div>
                         </Col>
                         <Col span={12}>
@@ -56,7 +55,7 @@ class ProjectDetail extends React.Component<OwnProps & StateProps & DispatchProp
                                 <div className="head-text">
                                     Site maps
                                 </div>
-                                <Image classNames="mw-100 w-100 d-block" fileEntityInfo={this.props.project.siteMapImage} />
+                                <Image className="mw-100 w-100 d-block" fileEntityInfo={this.props.project.siteMapImage} />
                             </div>
                         </Col>
                     </Row>
@@ -121,14 +120,15 @@ class ProjectDetail extends React.Component<OwnProps & StateProps & DispatchProp
                 <Row gutter={30}>
                     {
                         currentActiveRoomType && currentActiveRoomType.children.map((o) => {
+
                             return (
                                 <Col span={8}>
-                                    <a>
+                                    <Link to={`${location.pathname}/${currentActiveRoomType.id}/${o.id}`}>
                                         <div className="head-text">
                                             {o.label}
                                         </div>
-                                        <Image classNames="mw-100 w-100 d-block" fileEntityInfo={o.layoutImage} />
-                                    </a>
+                                        <Image className="mw-100 w-100 d-block" fileEntityInfo={o.layoutImage} />
+                                    </Link>
                                 </Col>
                             )
                         })

@@ -18,6 +18,7 @@ using Omi.Modules.HomeBuilder.Entities;
 using Omi.Base.ViewModel;
 using Omi.Modules.ModuleBase.ViewModels;
 using Omi.Extensions;
+using System.Collections.Generic;
 
 namespace Omi.Modules.HomeBuilder.Controllers
 {
@@ -56,6 +57,7 @@ namespace Omi.Modules.HomeBuilder.Controllers
         public BaseJsonResult GetEmptyPackageViewModel()         
             => new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED, EmptyPackageViewModel);
 
+        [AllowAnonymous]
         public async Task<BaseJsonResult> GetPackageViewModel(long packageId)
         {
             var package = await _packageService.GetPackageById(packageId);
@@ -72,6 +74,14 @@ namespace Omi.Modules.HomeBuilder.Controllers
             var next = ToPackageViewModel(nextPackage);
             var prev = ToPackageViewModel(prevPackage);
             return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, new { next, prev});
+        }
+
+        [AllowAnonymous]
+        public BaseJsonResult GetPackageByIds(IEnumerable<long> ids)
+        {
+            var packages = _packageService.GetPackageByIds(ids);
+            var result = packages.Select(package => ToPackageViewModel(package));
+            return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, result);
         }
 
         [AllowAnonymous]
@@ -144,6 +154,7 @@ namespace Omi.Modules.HomeBuilder.Controllers
             var packageViewModel = EmptyPackageViewModel;
 
             packageViewModel.Id = package.Id;
+            packageViewModel.ProjectBlockId = package.ProjectBlockId;
 
             var detail = package.Details.FirstOrDefault();
             packageViewModel.Price = detail.Price;

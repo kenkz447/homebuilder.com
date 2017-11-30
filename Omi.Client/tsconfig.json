@@ -2,7 +2,9 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "shared/*": ["src/scripts/shared/*"]
+            "shared/*": ["src/scripts/shared/*"],
+            "app/*": ["src/scripts/app/*"],
+            "admin/*": ["src/scripts/admin/*"]
         },
         "allowJs": true,
         "jsx": "react",

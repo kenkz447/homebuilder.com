@@ -34,16 +34,16 @@ namespace Omi.Modules.HomeBuilder.ViewModels
         {
             var detail = entity.ProjectBlockDetails.FirstOrDefault(o => o.ForCurrentRequestLanguage());
 
-            var viewModelResult = AutoMapper.Mapper.Map<ProjectBlockViewModel>(detail);
-
-            viewModelResult = viewModelResult.MergeWith(new ProjectBlockViewModel
+            var viewModelResult = new ProjectBlockViewModel
             {
                 Id = entity.Id,
                 EntityTypeId = entity.EntityTypeId,
                 PackageId = entity.PackageId,
                 ParentId = entity.PackageId,
                 Children = entity.Children?.Select(o => FromEnitity(o))
-            });
+            };
+
+            viewModelResult = viewModelResult.MergeWith(AutoMapper.Mapper.Map<ProjectBlockViewModel>(detail));
 
             var layoutImageFileEntity = entity.ProjectBlockFiles.FirstOrDefault(o => o.UsingType == 0);
             if (layoutImageFileEntity != null)
@@ -64,10 +64,10 @@ namespace Omi.Modules.HomeBuilder.ViewModels
         public long Id { get; set; }
         public string Label { get; set; }
 
-        public int Area { get; set; }
-        public int BedRoomCount { get; set; }
-        public int ToiletCount { get; set; }
-        public int TotalRoomOfLayout { get; set; }
+        public int? Area { get; set; }
+        public int? BedRoomCount { get; set; }
+        public int? ToiletCount { get; set; }
+        public int? TotalRoomOfLayout { get; set; }
 
         public long EntityTypeId { get; set; }
         public long? PackageId { get; set; }

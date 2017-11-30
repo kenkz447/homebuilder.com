@@ -7,7 +7,7 @@ import { Spin } from 'antd'
 
 interface ImgProps {
     fileEntityInfo: FileEntityInfo
-    classNames?: string
+    className?: string
     displayThumb?: boolean
     style?: React.CSSProperties
 }
@@ -21,7 +21,7 @@ export class Image extends React.Component<ImgProps> {
             <div className="mw-100">
                 <VisibilitySensor>
                     {({ isVisible }) =>
-                        <Img.default loader={<Spin />} className={this.props.classNames} src={`${window.baseUrl}${this.props.displayThumb ? this.props.fileEntityInfo.srcThumb : this.props.fileEntityInfo.src}`} />
+                        <Img.default loader={<Spin />} className={this.props.className} src={`${window.baseUrl}${this.props.displayThumb ? this.props.fileEntityInfo.srcThumb : this.props.fileEntityInfo.src}`} />
                     }
                 </VisibilitySensor>
             </div>

@@ -18,8 +18,8 @@ namespace Omi.Modules.HomeBuilder.Misc
                 .ForMember(member => member.Language, opt => opt.Ignore());
 
             CreateMap<ProjectBlockViewModel, ProjectBlockDetail>();
-            CreateMap<ProjectBlockDetail, ProjectBlockViewModel>();
 
+            CreateMap<ProjectBlockDetail, ProjectBlockViewModel>();
         }
     }
 }

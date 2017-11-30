@@ -44,6 +44,13 @@ namespace Omi.Modules.HomeBuilder.Services
             .ThenInclude(o => o.Details)
             .AsQueryable();
 
+
+        public IEnumerable<Package> GetPackageByIds(IEnumerable<long> ids)
+        {
+            var result = GetPackages().Where(o => ids.Contains(o.Id)).AsNoTracking();
+            return result;
+        }
+
         public async Task<PaginatedList<Package>> GetPackages(PackageFilterServiceModel serviceModel)
         {
             var packages = GetPackages().AsNoTracking();

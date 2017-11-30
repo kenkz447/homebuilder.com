@@ -17,6 +17,8 @@ namespace Omi.Modules.HomeBuilder.ViewModels
 
         public string SortText { get; set; }
 
+        public long? ProjectBlockId { get; set; }
+
         [Required]
         public int Price { get; set; }
 
