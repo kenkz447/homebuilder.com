@@ -1,0 +1,14 @@
+.c-project-layout-arrow {
+    cursor: pointer;
+}
+
+.slick-multi {
+    margin: 0 -15px;
+    &-wrapper {
+        overflow: hidden;
+    }
+    &-item {
+        padding: 15px;
+        cursor: pointer;
+    }
+}

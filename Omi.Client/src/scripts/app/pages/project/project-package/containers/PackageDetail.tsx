@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter, match } from 'react-router'
 import { Row, Col } from 'antd'
 
-import { RequestSend, ExtractImmutableHOC } from 'shared/core'
+import { RequestSend, ExtractImmutableHOC, SetTempValue } from 'shared/core'
 import { WebsiteRootState } from '../../../../Types'
 import { Carousel } from '../../../../components/components'
 import { PackageViewModel } from '../../../../../admin'
@@ -12,9 +12,13 @@ import { ProjectViewModel } from 'admin/Types'
 import { LayoutSelect } from './LayoutSelect'
 import * as classNames from 'classnames'
 
+import './style.scss'
+import { ConnectedLightbox } from './LightBox'
+
 interface DispatchProps {
     getPackage: () => void
     getProject: () => void
+    openLightBox?: (imageId) => void
 }
 
 interface StateProps {
@@ -47,15 +51,17 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
         const currentLayout = currentRoomType.children.find((o) => o.id == currentLayoutId)
 
         const currentPerspective = currentLayout.children.find((o) => o.id == this.props.package.projectBlockId)
+
+        const pictures = currentPerspective && currentPerspective.layoutPoints.map((o) => o.image) || []
         return (
             <div className="package-detail">
                 <div className="project-layouts">
                     <img className="mw-100" src={`${window.baseUrl}${currentLayout.layoutImage.src}`} />
                     {
                         (currentPerspective && currentPerspective.layoutPoints) && (
-                            currentPerspective.layoutPoints.map((o) => {
+                            currentPerspective.layoutPoints.map((o, i) => {
                                 return (
-                                    <div key={o.id} className={'c-project-layout-arrow-wrapper hint--html hint--bottom'}
+                                    <div key={i} className={'c-project-layout-arrow-wrapper hint--html hint--bottom'}
                                         style={{
                                             top: `${o.y}%`,
                                             left: `${o.x}%`
@@ -64,6 +70,7 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
                                             style={{
                                                 transform: `rotate(${o.rotate}deg)`
                                             }}
+                                            onClick={() => { this.props.openLightBox(i) }}
                                         />
                                         <div className="c-project-layout-arrow-image hint__content">
                                             <img className="w-100 mw-100" src={`${window.baseUrl}${o.image.src}`} />
@@ -74,9 +81,12 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
                         )
                     }
                 </div>
-
-                <div className="package-detail-header mb-5">
-                    <Carousel pictures={packageToRender.pictures} />
+                <div className="slick-multi-wrapper mb-5">
+                    <Carousel pictures={pictures}
+                        slidesToShow={4}
+                        itemClassName="slick-multi-item"
+                        itemClick={(itemIndex) => { this.props.openLightBox(itemIndex) }}
+                        containerClassName="slick-multi" />
                 </div>
                 <Row>
                     <Col span={16}>
@@ -84,6 +94,7 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
                         {this.renderWhatIncluded(packageToRender)}
                     </Col>
                 </Row>
+                <ConnectedLightbox images={pictures} />
             </div>
         )
     }
@@ -109,7 +120,7 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
                 <div className="clearfix pt-2">
                     {
                         renderPackage.packageIncludedItems && renderPackage.packageIncludedItems.map((o) => (
-                            <div className="package-detail-included-item">
+                            <div key={o.id} className="package-detail-included-item">
                                 <div className="package-detail-included-icon">
                                     <img src={`${o.icon}`} />
                                 </div>
@@ -154,6 +165,9 @@ const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
                 url: `/project/GetProject?projectId=${project}`
             })
             dispatch(requestSendAction)
+        },
+        openLightBox: (fileIndex) => {
+            dispatch(SetTempValue('PROJECT_PACKGE_PHOTO_INDEX', fileIndex))
         }
     }
 }

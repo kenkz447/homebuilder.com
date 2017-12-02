@@ -129,7 +129,9 @@ const mapDispatchToProps = (dispatch, ownProps): DispatchProps => {
         },
         getPackages: (packageIds) => {
             const search = new URLSearchParams()
-            search.append('ids', packageIds)
+            for (const packageId of packageIds)
+                search.append('ids', packageId)
+            
             const action = RequestSend('WEBSITE_VIEW_PROJECT_PACKAGES', {
                 url: `/package/GetPackageByIds?${search.toString()}`
             })
