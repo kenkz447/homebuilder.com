@@ -32,19 +32,25 @@ namespace Omi.Modular
                         {
                             var assembly = Assembly.Load(assemblyName);
                             var types = assembly.GetTypes();
-                            if (types.FirstOrDefault(type => !type.IsInterface && typeof(IModuleInitializer).IsAssignableFrom(type)) != null)
+                            var moduleInitializerType = types.FirstOrDefault(type => !type.IsInterface && typeof(IModuleInitializer).IsAssignableFrom(type));
+                            if (moduleInitializerType != null)
+                            {
+                                var moduleInitializer = (IModuleInitializer)Activator.CreateInstance(moduleInitializerType);
+
                                 _moduleAssemblies.Add(new ModuleInfo
                                 {
                                     ModuleName = library.Name,
-                                    Assembly = assembly
-                                });
+                                    Assembly = assembly,
+                                    LoadOrder = moduleInitializer.LoadOrder
+                            });
+                            }
                         }
                         catch (Exception)
                         {
                             continue;
                         }
                     }
-                    _modules = _moduleAssemblies;
+                    _modules = _moduleAssemblies.OrderBy(o => o.LoadOrder);
                 }
 
                 return _modules;

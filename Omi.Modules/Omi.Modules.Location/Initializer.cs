@@ -12,6 +12,12 @@ namespace Omi.Modules.Location
 {
     public class LocationInitializer : IModuleInitializer
     {
+        public int LoadOrder { get; set; }
+        public LocationInitializer()
+        {
+            LoadOrder = 0;
+        }
+
         public async void Init(IServiceCollection services)
         {
             services.AddDbContext<LocationDbContext>();

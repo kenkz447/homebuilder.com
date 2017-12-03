@@ -1,12 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Omi.Data.Entity;
+using Omi.Base;
 using Omi.Extensions;
-using Omi.Modular;
 using Omi.Modules.ModuleBase.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Omi.Modules.HomeBuilder.DbSeed
@@ -96,19 +92,6 @@ namespace Omi.Modules.HomeBuilder.DbSeed
                 }
             }
         };
-        public static TaxonomyEntity Furniture = new TaxonomyEntity
-        {
-            Name = "package-furniture",
-            Details = new List<TaxonomyDetail>
-            {
-                new TaxonomyDetail
-                {
-                    Label = "Furniture",
-                    Icon = "/images/package-furniture.png",
-                    Language = "vi"
-                }
-            }
-        };
         public static TaxonomyEntity Decoration = new TaxonomyEntity
         {
             Name = "package-decoration",
@@ -165,7 +148,6 @@ namespace Omi.Modules.HomeBuilder.DbSeed
             ElectricalWiring.TaxonomyTypeId = PackageIncludedItem.Id;
             Flooring.TaxonomyTypeId = PackageIncludedItem.Id;
             FalseCeiling.TaxonomyTypeId = PackageIncludedItem.Id;
-            Furniture.TaxonomyTypeId = PackageIncludedItem.Id;
             Decoration.TaxonomyTypeId = PackageIncludedItem.Id;
             Design.TaxonomyTypeId = PackageIncludedItem.Id;
             Painting.TaxonomyTypeId = PackageIncludedItem.Id;
@@ -178,7 +160,6 @@ namespace Omi.Modules.HomeBuilder.DbSeed
             ElectricalWiring = taxonomySet.SeedEntity(ElectricalWiring);
             Flooring = taxonomySet.SeedEntity(Flooring);
             FalseCeiling = taxonomySet.SeedEntity(FalseCeiling);
-            Furniture = taxonomySet.SeedEntity(Furniture);
             Decoration = taxonomySet.SeedEntity(Decoration);
             Design = taxonomySet.SeedEntity(Design);
             Painting = taxonomySet.SeedEntity(Painting);

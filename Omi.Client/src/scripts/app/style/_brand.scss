@@ -23,7 +23,7 @@ $brand-max-width: 1260px;
         }
     }
     &-logo {
-        height: 50px;
+        height: 30px;
         &-image {
             max-height: 100%;
         }
@@ -58,13 +58,13 @@ $brand-max-width: 1260px;
         &:not(:last-child) {
             .header-menu-link {
                 border-right: 1px solid;
-                padding-right: 15px;
+                padding-right: 30px;
             }
         }
     }
     &-link {
         font-size: 1rem;
-        padding-left: 15px;
+        padding-left: 30px;
         padding-bottom: 4px;
         padding-top: 4px;
         color: #000;

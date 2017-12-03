@@ -179,6 +179,89 @@ namespace Omi.DatabaseDesign.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Omi.Modules.Ecommerce.Product.Entities.ProductDetail", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long>("EntityId");
+
+                    b.Property<string>("Language");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("ProductDetail");
+                });
+
+            modelBuilder.Entity("Omi.Modules.Ecommerce.Product.Entities.ProductEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CreateByUserId");
+
+                    b.Property<DateTime?>("CreateDate");
+
+                    b.Property<string>("DeleteByUserId");
+
+                    b.Property<DateTime?>("DeleteDate");
+
+                    b.Property<string>("LastUpdateByUserId");
+
+                    b.Property<DateTime?>("LastUpdateDate");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("Price");
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("Name");
+
+                    b.HasIndex("CreateByUserId");
+
+                    b.HasIndex("DeleteByUserId");
+
+                    b.HasIndex("LastUpdateByUserId");
+
+                    b.ToTable("ProductEntity");
+                });
+
+            modelBuilder.Entity("Omi.Modules.Ecommerce.Product.Entities.ProductFile", b =>
+                {
+                    b.Property<long>("EntityId");
+
+                    b.Property<long>("FileEntityId");
+
+                    b.Property<int>("UsingType");
+
+                    b.HasKey("EntityId", "FileEntityId");
+
+                    b.HasIndex("FileEntityId");
+
+                    b.ToTable("ProductFile");
+                });
+
+            modelBuilder.Entity("Omi.Modules.Ecommerce.Product.Entities.ProductTaxonomy", b =>
+                {
+                    b.Property<long>("EntityId");
+
+                    b.Property<long>("TaxonomyId");
+
+                    b.HasKey("EntityId", "TaxonomyId");
+
+                    b.HasIndex("TaxonomyId");
+
+                    b.ToTable("ProductTaxonomy");
+                });
+
             modelBuilder.Entity("Omi.Modules.FileAndMedia.Entities.FileEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -204,8 +287,6 @@ namespace Omi.DatabaseDesign.Migrations
 
                     b.Property<string>("Src")
                         .IsRequired();
-
-                    b.Property<int>("Status");
 
                     b.HasKey("Id");
 
@@ -242,8 +323,6 @@ namespace Omi.DatabaseDesign.Migrations
                     b.Property<string>("Name");
 
                     b.Property<long?>("ProjectBlockId");
-
-                    b.Property<int>("Status");
 
                     b.HasKey("Id");
 
@@ -332,8 +411,6 @@ namespace Omi.DatabaseDesign.Migrations
                     b.Property<DateTime?>("LastUpdateDate");
 
                     b.Property<string>("Name");
-
-                    b.Property<int>("Status");
 
                     b.HasKey("Id");
 
@@ -521,8 +598,6 @@ namespace Omi.DatabaseDesign.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int>("Status");
-
                     b.HasKey("Id");
 
                     b.HasAlternateKey("Name");
@@ -584,8 +659,6 @@ namespace Omi.DatabaseDesign.Migrations
 
                     b.Property<long?>("ParentId");
 
-                    b.Property<int>("Status");
-
                     b.Property<long>("TaxonomyTypeId");
 
                     b.HasKey("Id");
@@ -627,8 +700,6 @@ namespace Omi.DatabaseDesign.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int>("Status");
-
                     b.HasKey("Id");
 
                     b.HasAlternateKey("Name");
@@ -663,8 +734,6 @@ namespace Omi.DatabaseDesign.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired();
-
-                    b.Property<int>("Status");
 
                     b.HasKey("Id");
 
@@ -744,6 +813,55 @@ namespace Omi.DatabaseDesign.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Omi.Modules.Ecommerce.Product.Entities.ProductDetail", b =>
+                {
+                    b.HasOne("Omi.Modules.Ecommerce.Product.Entities.ProductEntity", "Entity")
+                        .WithMany("Details")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Omi.Modules.Ecommerce.Product.Entities.ProductEntity", b =>
+                {
+                    b.HasOne("Omi.Data.ApplicationUser", "CreateByUser")
+                        .WithMany()
+                        .HasForeignKey("CreateByUserId");
+
+                    b.HasOne("Omi.Data.ApplicationUser", "DeleteByUser")
+                        .WithMany()
+                        .HasForeignKey("DeleteByUserId");
+
+                    b.HasOne("Omi.Data.ApplicationUser", "LastUpdateByUser")
+                        .WithMany()
+                        .HasForeignKey("LastUpdateByUserId");
+                });
+
+            modelBuilder.Entity("Omi.Modules.Ecommerce.Product.Entities.ProductFile", b =>
+                {
+                    b.HasOne("Omi.Modules.Ecommerce.Product.Entities.ProductEntity", "Entity")
+                        .WithMany("EntityFiles")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Omi.Modules.FileAndMedia.Entities.FileEntity", "FileEntity")
+                        .WithMany()
+                        .HasForeignKey("FileEntityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Omi.Modules.Ecommerce.Product.Entities.ProductTaxonomy", b =>
+                {
+                    b.HasOne("Omi.Modules.Ecommerce.Product.Entities.ProductEntity", "Entity")
+                        .WithMany("EntityTaxonomies")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Omi.Modules.ModuleBase.Entities.TaxonomyEntity", "Taxonomy")
+                        .WithMany()
+                        .HasForeignKey("TaxonomyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Omi.Modules.FileAndMedia.Entities.FileEntity", b =>
                 {
                     b.HasOne("Omi.Data.ApplicationUser", "CreateByUser")
@@ -789,7 +907,7 @@ namespace Omi.DatabaseDesign.Migrations
             modelBuilder.Entity("Omi.Modules.HomeBuilder.Entities.PackageFile", b =>
                 {
                     b.HasOne("Omi.Modules.HomeBuilder.Entities.Package", "Entity")
-                        .WithMany("EnitityFiles")
+                        .WithMany("EntityFiles")
                         .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -879,7 +997,7 @@ namespace Omi.DatabaseDesign.Migrations
             modelBuilder.Entity("Omi.Modules.HomeBuilder.Entities.ProjectFile", b =>
                 {
                     b.HasOne("Omi.Modules.HomeBuilder.Entities.Project", "Entity")
-                        .WithMany("EnitityFiles")
+                        .WithMany("EntityFiles")
                         .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade);
 

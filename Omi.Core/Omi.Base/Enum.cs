@@ -4,6 +4,12 @@ using System.Text;
 
 namespace Omi.Base
 {
+    public enum GetMode
+    {
+        Single = 0,
+        Multi = 1,
+    }
+
     public enum EntityStatus
     {
         Private = 0,

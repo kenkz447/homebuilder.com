@@ -15,8 +15,6 @@ namespace Omi.Data.Entity
         [Key]
         public long Id { get; set; }
 
-        public int Status { get; set; }
-
         public string DeleteByUserId { get; set; }
         public string CreateByUserId { get; set; }
         public string LastUpdateByUserId { get; set; }

@@ -40,7 +40,8 @@ namespace Omi.Modules.HomeBuilder.Controllers
             get
             {
                 var designThemes = _packageService.GetAllDesignThemes();
-                var packageIncludeItems = _packageService.GetAllPackageIncludedItems();
+                var packageIncludeItems = _packageService.GetAllPackageIncludedItem();
+                var packageFurnitureIncludeItems = _packageService.GetAllFurnitureIncludeItem();
                 var houseStyle = _packageService.GetAllHouseStyles();
 
                 var result = new PackageViewModel
@@ -48,6 +49,7 @@ namespace Omi.Modules.HomeBuilder.Controllers
                     AvaliableDesignThemes = designThemes.Select(o => TaxomonyViewModel.FromEntity(o)),
                     AvaliablePackageIncludedItems = packageIncludeItems.Select(o => TaxomonyViewModel.FromEntity(o)),
                     AvaliableHouseStyles = houseStyle.Select(o => TaxomonyViewModel.FromEntity(o)),
+                    AvaliablePackageFurnitureIncludedItems = packageFurnitureIncludeItems.Select(o => TaxomonyViewModel.FromEntity(o))
                 };
 
                 return result;
@@ -162,10 +164,10 @@ namespace Omi.Modules.HomeBuilder.Controllers
             packageViewModel.Title = detail.Title;
             packageViewModel.SortText = detail.SortText;
 
-            var avatarFile = package.EnitityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.Avatar);
+            var avatarFile = package.EntityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.Avatar);
             packageViewModel.Avatar = FileEntityInfo.FromEntity(avatarFile.FileEntity);
 
-            var pictureFiles = package.EnitityFiles.Where(o => o.UsingType == (int)FileUsingType.Picture);
+            var pictureFiles = package.EntityFiles.Where(o => o.UsingType == (int)FileUsingType.Picture);
             packageViewModel.Pictures = pictureFiles.Select(o => FileEntityInfo.FromEntity(o.FileEntity));
 
             var houseType = package.EntityTaxonomies.FirstOrDefault(o => o.Taxonomy.TaxonomyTypeId == HouseStyleSeed.HouseStyle.Id);
@@ -179,6 +181,10 @@ namespace Omi.Modules.HomeBuilder.Controllers
             var includedItems = package.EntityTaxonomies.Where(o => o.Taxonomy.TaxonomyTypeId == PackageIncludedSeed.PackageIncludedItem.Id);
             packageViewModel.PackageIncludedItemIds = includedItems.Select(o => o.TaxonomyId);
             packageViewModel.PackageIncludedItems = includedItems.Select(o => TaxomonyViewModel.FromEntity(o.Taxonomy));
+
+            var furnitureIncludedItems = package.EntityTaxonomies.Where(o => o.Taxonomy.TaxonomyTypeId == PackageFunitureIncludedSeed.PackageFunitureIncludedItem.Id);
+            packageViewModel.PackageFurnitureIncludedItemIds = furnitureIncludedItems.Select(o => o.TaxonomyId);
+            packageViewModel.PackageFurnitureIncludedItems = furnitureIncludedItems.Select(o => TaxomonyViewModel.FromEntity(o.Taxonomy));
 
             return packageViewModel;
         }

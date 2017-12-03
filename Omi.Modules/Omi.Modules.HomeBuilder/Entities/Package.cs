@@ -23,6 +23,6 @@ namespace Omi.Modules.HomeBuilder.Entities
 
         public virtual IEnumerable<PackageDetail> Details { get; set; }
         public virtual IEnumerable<PackageTaxonomy> EntityTaxonomies { get; set; }
-        public virtual IEnumerable<PackageFile> EnitityFiles { get; set; }
+        public virtual IEnumerable<PackageFile> EntityFiles { get; set; }
     }
 }

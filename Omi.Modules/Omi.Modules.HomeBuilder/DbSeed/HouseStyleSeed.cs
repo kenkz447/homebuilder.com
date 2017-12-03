@@ -1,12 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Omi.Data.Entity;
+using Omi.Base;
 using Omi.Extensions;
-using Omi.Modular;
 using Omi.Modules.ModuleBase.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Omi.Modules.HomeBuilder.DbSeed

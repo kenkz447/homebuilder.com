@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Omi.Base;
 using Omi.Data.Entity;
-using Omi.Modular;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
 

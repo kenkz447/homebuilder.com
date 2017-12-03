@@ -55,12 +55,8 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
                     </div>
                     <Carousel pictures={packageToRender.pictures} />
                 </div>
-                <Row>
-                    <Col span={16}>
-                        {this.renderProjectDescription(packageToRender)}
-                        {this.renderWhatIncluded(packageToRender)}
-                    </Col>
-                </Row>
+                {this.renderProjectDescription(packageToRender)}
+                {this.renderWhatIncluded(packageToRender)}
                 <ConnectedNextAndPrevPackage packageId={packageToRender.id} />
             </div>
         )
@@ -74,8 +70,9 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
                     <p><span>Design Theme: </span> <span>{renderPackage.designThemeLabel}</span></p>
                     <p><span>House Type: </span> <span>{renderPackage.houseTypeLabel}</span></p>
                     <p><span>Area: </span><span>{renderPackage.area} m<sup>2</sup></span></p>
-                    <p><span>Intro: </span> <span>{renderPackage.sortText}</span></p>
+                    <p className="package-intro"><span>Intro: </span> <span>{renderPackage.sortText}</span></p>
                 </div>
+                <button className="package-contact-us-button">Contact Us</button>
             </section>
         )
     }
@@ -87,9 +84,22 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
                 <div className="clearfix pt-2">
                     {
                         renderPackage.packageIncludedItems && renderPackage.packageIncludedItems.map((o) => (
-                            <div className="package-detail-included-item">
+                            <div key={o.id} className="package-detail-included-item">
                                 <div className="package-detail-included-icon">
-                                    <img src={`${o.icon}`} />
+                                    <img src={`${window.baseUrl}${o.icon}`} />
+                                </div>
+                                <label className="package-detail-included-label">{o.label}</label>
+                            </div>
+                        ))
+                    }
+                </div>
+                <hr className="mt-3 mb-3" />
+                <div className="clearfix">
+                    {
+                        renderPackage.packageFurnitureIncludedItems && renderPackage.packageFurnitureIncludedItems.map((o) => (
+                            <div key={o.id} className="package-detail-included-item">
+                                <div className="package-detail-included-icon">
+                                    <img src={`${window.baseUrl}${o.icon}`} />
                                 </div>
                                 <label className="package-detail-included-label">{o.label}</label>
                             </div>
@@ -99,7 +109,6 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
             </div>
         )
     }
-
     getFetchedPackage() {
         if (!this.props.packagePage)
             return
@@ -120,7 +129,7 @@ const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
     return {
         getPackage: (packageName) => {
             const requestSendAction = RequestSend('WEBSITE_VIEW_PACKAGE', {
-                url:`/package/GetPackage?packageName=${packageName}`
+                url: `/package/GetPackage?packageName=${packageName}`
             })
             dispatch(requestSendAction)
         }

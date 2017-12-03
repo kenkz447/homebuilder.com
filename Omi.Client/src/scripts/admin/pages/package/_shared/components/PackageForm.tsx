@@ -28,7 +28,7 @@ const { Option } = Select
 const { TextArea } = Input
 
 const operations = [
-    <Button type="primary" htmlType="submit">Submit</Button>
+    <Button key="submit" type="primary" htmlType="submit">Submit</Button>
 ]
 
 class PackageFormComponent extends React.Component<PackageFormProps> {
@@ -38,6 +38,7 @@ class PackageFormComponent extends React.Component<PackageFormProps> {
 
     componentWillReceiveProps(nextProps: PackageFormProps) {
         if (nextProps.formPostResultPackageId && (this.props.formPostResultPackageId != nextProps.formPostResultPackageId)) {
+            this.props.getInitialViewModel()
             this.props.form.resetFields()
             this.props.redirectToEdit(nextProps.formPostResultPackageId)
         }
@@ -67,7 +68,6 @@ class PackageFormComponent extends React.Component<PackageFormProps> {
                             </Col>
                         </Row>
                     </TabPane>
-                    <TabPane tab="SEO" key="2">Content of Tab Pane 2</TabPane>
                 </Tabs>
             </Form>
         )
@@ -77,7 +77,7 @@ class PackageFormComponent extends React.Component<PackageFormProps> {
         return (
             <div>
                 {
-                    this.props.form.getFieldDecorator('id', {
+                    this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.id), {
                         initialValue: this.props.initPackageViewModel.id
                     })(<Input key="id" type="hidden" />)
                 }
@@ -89,19 +89,19 @@ class PackageFormComponent extends React.Component<PackageFormProps> {
             <fieldset>
                 <h2 className="form-legend mb-4">Basic infomation</h2>
                 <FormItem>
-                    {this.props.form.getFieldDecorator('avatar', {
+                    {this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.avatar), {
                         rules: [{ required: true, message: 'Please select avatar!' }],
                         initialValue: this.props.initPackageViewModel.avatar
                     })(<AvatarSelect />)}
                 </FormItem>
                 <FormItem label="Title">
-                    {this.props.form.getFieldDecorator('title', {
+                    {this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.title), {
                         rules: [{ required: true, message: 'Title is required!' }],
                         initialValue: this.props.initPackageViewModel.title
                     })(<Input placeholder="Title" />)}
                 </FormItem>
                 <FormItem label="Price">
-                    {this.props.form.getFieldDecorator('price', {
+                    {this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.price), {
                         rules: [{ required: true, message: 'Price is required!' }],
                         initialValue: this.props.initPackageViewModel.price
                     })(<Input type="number" placeholder="Price" addonAfter="vnđ" />)}
@@ -115,7 +115,7 @@ class PackageFormComponent extends React.Component<PackageFormProps> {
             <fieldset>
                 <h2 className="form-legend mb-4">Description</h2>
                 <FormItem label="Design theme">
-                    {this.props.form.getFieldDecorator('designThemeId', {
+                    {this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.designThemeId), {
                         rules: [{ required: true, message: 'Please select design theme!' }],
                         initialValue: this.props.initPackageViewModel.designThemeId
                     })(
@@ -129,7 +129,7 @@ class PackageFormComponent extends React.Component<PackageFormProps> {
                         )}
                 </FormItem>
                 <FormItem label="House type">
-                    {this.props.form.getFieldDecorator('houseTypeId', {
+                    {this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.houseTypeId), {
                         rules: [{ required: true, message: 'Please select house type!' }],
                         initialValue: this.props.initPackageViewModel.houseTypeId
                     })(
@@ -143,23 +143,36 @@ class PackageFormComponent extends React.Component<PackageFormProps> {
                         )}
                 </FormItem>
                 <FormItem label="Area">
-                    {this.props.form.getFieldDecorator('area', {
+                    {this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.area), {
                         rules: [{ required: true, message: 'Area is required!' }],
                         initialValue: this.props.initPackageViewModel.area
                     })(<Input type="number" placeholder="Area" addonAfter="m2" />)}
                 </FormItem>
                 <FormItem>
-                    {this.props.form.getFieldDecorator('sortText', {
+                    {this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.sortText), {
                         initialValue: this.props.initPackageViewModel.sortText
                     })(<TextArea placeholder="Sort text" />)}
                 </FormItem>
                 <FormItem label="Included">
-                    {this.props.form.getFieldDecorator('packageIncludedItemIds', {
+                    {this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.packageIncludedItemIds), {
                         initialValue: this.props.initPackageViewModel.packageIncludedItemIds
                     })(
                         <Select placeholder="Include items" mode="multiple">
                             {
                                 this.props.initPackageViewModel.avaliablePackageIncludedItems && this.props.initPackageViewModel.avaliablePackageIncludedItems.map((e) => (
+                                    <Option key={e.id} value={e.id}>{e.label}</Option>
+                                ))
+                            }
+                        </Select>
+                        )}
+                </FormItem>
+                <FormItem label="Furniture">
+                    {this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.packageFurnitureIncludedItemIds), {
+                        initialValue: this.props.initPackageViewModel.packageFurnitureIncludedItemIds
+                    })(
+                        <Select placeholder="Include items" mode="multiple">
+                            {
+                                this.props.initPackageViewModel.avaliablePackageFurnitureIncludedItems && this.props.initPackageViewModel.avaliablePackageFurnitureIncludedItems.map((e) => (
                                     <Option key={e.id} value={e.id}>{e.label}</Option>
                                 ))
                             }

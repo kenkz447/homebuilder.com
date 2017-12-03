@@ -23,10 +23,15 @@ namespace Omi.Modules.HomeBuilder.Utilities
 
         public static PackageServiceModel ToPackageServiceModel(this PackageUpdateViewModel viewModel)
         {
-            var taxonomyIds = new List<long>(viewModel.PackageIncludedItemIds)
-                    {
+            var taxonomyIds = new List<long>() {
                         viewModel.HouseTypeId, viewModel.DesignThemeId,
                     };
+
+            if (viewModel.PackageIncludedItemIds != null)
+                taxonomyIds.AddRange(viewModel.PackageIncludedItemIds);
+
+            if (viewModel.PackageFurnitureIncludedItemIds != null)
+                taxonomyIds.AddRange(viewModel.PackageFurnitureIncludedItemIds);
 
             var pictureFileIds = new List<long>();
             if (viewModel.Pictures != null)

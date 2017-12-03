@@ -40,7 +40,7 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
                 Details = new List<ProjectDetail>() {
                     Detail
                 },
-                EnitityFiles = GetEntityFiles(),
+                EntityFiles = GetEntityFiles(),
                 EntityTaxonomies = new List<ProjectTaxonomy>(
                     TaxonomyIds.Select(taxonomyId => new ProjectTaxonomy { TaxonomyId = taxonomyId, EntityId = Id })),
                 CityId = CityId

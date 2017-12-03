@@ -23,7 +23,7 @@ namespace Omi.Modules.HomeBuilder.Entities
 
         public IEnumerable<ProjectDetail> Details { get; set; }
         public IEnumerable<ProjectTaxonomy> EntityTaxonomies { get; set; }
-        public IEnumerable<ProjectFile> EnitityFiles { get; set; } 
+        public IEnumerable<ProjectFile> EntityFiles { get; set; } 
         public IEnumerable<ProjectBlock> ProjectBlocks { get; set; }
     }
 }

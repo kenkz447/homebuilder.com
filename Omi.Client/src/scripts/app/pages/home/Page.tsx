@@ -24,7 +24,7 @@ class Index extends React.Component {
                     <Col span={6}><FilterByBudgetRange /></Col>
                     <Col span={6}><FilterByHouseType /></Col>
                 </Row>
-                <hr className="mt-5 mb-5"/>
+                <hr className="mt-4 mb-3"/>
                 <PackageList />
             </div>
         )

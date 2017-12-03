@@ -93,14 +93,14 @@ namespace Omi.Modules.HomeBuilder.ViewModels
 
             resultViewModel.ProjectBlocks = entity.ProjectBlocks.Select(o => ProjectBlockViewModelExtension.FromEnitity(o));
 
-            var avatarFile = entity.EnitityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.Avatar).FileEntity;
+            var avatarFile = entity.EntityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.Avatar).FileEntity;
             resultViewModel.Avatar = FileEntityInfo.FromEntity(avatarFile);
 
-            var locationImage = entity.EnitityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.LocationImage)?.FileEntity;
+            var locationImage = entity.EntityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.LocationImage)?.FileEntity;
             if(locationImage != null)
                 resultViewModel.LocationImage = FileEntityInfo.FromEntity(locationImage);
 
-            var siteMapImage = entity.EnitityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.SiteMapImage)?.FileEntity;
+            var siteMapImage = entity.EntityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.SiteMapImage)?.FileEntity;
             if(locationImage != null)
                 resultViewModel.SiteMapImage = FileEntityInfo.FromEntity(siteMapImage);
 

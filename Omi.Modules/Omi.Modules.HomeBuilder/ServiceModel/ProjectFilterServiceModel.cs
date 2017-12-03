@@ -6,10 +6,14 @@ using System.Text;
 
 namespace Omi.Modules.HomeBuilder.ServiceModel
 {
-    public class ProjectFilterServiceModel: BaseFilterServiceModel
+    public class ProjectFilterServiceModel: BaseFilterServiceModel<long>
     {
         public string CityName { get; set; }
         public List<string> TaxonomyNames { get; set; }
+
+        public string SortBy { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
 
         public static ProjectFilterServiceModel FromViewModel(ProjectFilterViewModel viewModel)
         {

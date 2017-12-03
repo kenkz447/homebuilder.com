@@ -30,5 +30,6 @@ namespace Omi.Modules.HomeBuilder.ViewModels
         public FileEntityInfo Avatar { get; set; }
         public IEnumerable<FileEntityInfo> Pictures { get; set; }
         public IEnumerable<long> PackageIncludedItemIds { get; set; }
+        public IEnumerable<long> PackageFurnitureIncludedItemIds { get; set; }
     }
 }

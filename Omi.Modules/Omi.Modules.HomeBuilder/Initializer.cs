@@ -13,6 +13,12 @@ namespace Omi.Modules.HomeBuilder
 {
     public class HomeBuilderInitializer : IModuleInitializer
     {
+        public int LoadOrder { get; set; }
+        public HomeBuilderInitializer()
+        {
+            LoadOrder = 1;
+        }
+
         public async void Init(IServiceCollection services)
         {
             services.AddDbContext<HomeBuilderDbContext>();
@@ -34,15 +40,11 @@ namespace Omi.Modules.HomeBuilder
                     typeof(HouseStyleSeed),
                     typeof(ProjectTypeSeed),
                     typeof(ProjectStatusSeed),
-                    typeof(EntityTypeSeed)
+                    typeof(EntityTypeSeed),
+                    typeof(PackageFunitureIncludedSeed),
+                    typeof(BrandSeed)
                 });
             }
-
-            Mapper.Initialize(cfg =>
-            {
-                cfg.AddProfile<HomeBuilderAutoMapperProfile>();
-            });
         }
-
     }
 }

@@ -1,12 +1,9 @@
-﻿using Omi.Modular;
-using Omi.Modules.Location.Entities;
+﻿using Omi.Modules.Location.Entities;
 using Omi.Modules.Location.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Omi.Extensions;
+using Omi.Base;
 
 namespace Omi.Modules.Location.DbSeed
 {

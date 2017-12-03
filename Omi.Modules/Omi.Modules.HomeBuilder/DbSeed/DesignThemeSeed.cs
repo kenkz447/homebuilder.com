@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Omi.Base;
 using Omi.Extensions;
-using Omi.Modular;
 using Omi.Modules.ModuleBase.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;

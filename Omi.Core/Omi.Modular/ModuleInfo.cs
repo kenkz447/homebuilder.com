@@ -9,5 +9,6 @@ namespace Omi.Modular
     {
         public string ModuleName { get; set; }
         public Assembly Assembly { get; set; }
+        public int LoadOrder { get; set; }
     }
 }

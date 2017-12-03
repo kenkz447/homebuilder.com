@@ -35,10 +35,16 @@ namespace Omi.Modules.HomeBuilder.ViewModels
 
         public FileEntityInfo Avatar { get; set; }
         public IEnumerable<FileEntityInfo> Pictures { get; set; }
+
         public IEnumerable<long> PackageIncludedItemIds { get; set; }
+        public IEnumerable<long> PackageFurnitureIncludedItemIds { get; set; }
+
         public IEnumerable<TaxomonyViewModel> PackageIncludedItems { get; set; }
+        public IEnumerable<TaxomonyViewModel> PackageFurnitureIncludedItems { get; set; }
 
         public IEnumerable<TaxomonyViewModel> AvaliablePackageIncludedItems { get; set; }
+        public IEnumerable<TaxomonyViewModel> AvaliablePackageFurnitureIncludedItems { get; set; }
+
         public IEnumerable<TaxomonyViewModel> AvaliableDesignThemes { get; set; }
         public IEnumerable<TaxomonyViewModel> AvaliableHouseStyles { get; set; }
     }

@@ -8,6 +8,10 @@ export interface ModuleRootState extends RootState {
 
 }
 
+export interface ProductViewModel {
+    
+}
+
 export interface PackageViewModel {
     id?: number
     projectBlockId?: number
@@ -23,9 +27,12 @@ export interface PackageViewModel {
     avatar?: FileEntityInfo
     pictures?: Array<FileEntityInfo>
     packageIncludedItemIds?: Array<number>
+    packageFurnitureIncludedItemIds?: Array<number>
     packageIncludedItems?: Array<TaxonomyViewModel>
+    packageFurnitureIncludedItems?: Array<TaxonomyViewModel>
     language?: string
     avaliablePackageIncludedItems?: Array<TaxonomyViewModel>
+    avaliablePackageFurnitureIncludedItems?: Array<TaxonomyViewModel>
     avaliableDesignThemes?: Array<TaxonomyViewModel>
     avaliableHouseStyles?: Array<TaxonomyViewModel>
 }

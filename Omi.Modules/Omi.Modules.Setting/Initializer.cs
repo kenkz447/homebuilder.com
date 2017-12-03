@@ -6,6 +6,12 @@ namespace Omi.Modules.Setting
 {
     public class SettingInitializer : IModuleInitializer
     {
+        public int LoadOrder { get; set; }
+        public SettingInitializer()
+        {
+            LoadOrder = 0;
+        }
+
         public void Init(IServiceCollection services)
         {
             services.AddDbContext<SettingDbContext>();

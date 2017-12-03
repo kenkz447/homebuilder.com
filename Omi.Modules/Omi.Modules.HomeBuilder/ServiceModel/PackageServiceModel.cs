@@ -32,7 +32,7 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
                 Details = new List<PackageDetail>() {
                     Detail
                 },
-                EnitityFiles = GetEntityFiles(),
+                EntityFiles = GetEntityFiles(),
                 EntityTaxonomies = new List<PackageTaxonomy>(
                     TaxonomyIds.Select(taxonomyId => new PackageTaxonomy { TaxonomyId = taxonomyId, EntityId = Id }))
             };

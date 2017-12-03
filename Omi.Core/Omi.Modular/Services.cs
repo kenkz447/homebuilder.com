@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
@@ -14,31 +15,43 @@ namespace Omi.Modular
         {
             services.LoadOmiModules();
 
-
             return services;
         }
 
         private static IServiceCollection LoadOmiModules(this IServiceCollection services)
         {
-            // Using Singleton here, it will use for dbcontext
-            var moduleManager = ModuleManager.GetInstance();
-
             var serviceProvider = services.BuildServiceProvider();
 
-            using (var serviceScope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                foreach (var module in moduleManager.Modules)
-                {
-                    var types = module.Assembly.GetTypes();
-                    var moduleInitializerType = types.Where(x => typeof(IModuleInitializer).IsAssignableFrom(x))?.FirstOrDefault();
+            // Using Singleton here
+            var moduleManager = ModuleManager.GetInstance();
 
-                    if (moduleInitializerType != null)
-                    {
-                        var moduleInitializer = (IModuleInitializer)Activator.CreateInstance(moduleInitializerType);
-                        moduleInitializer.Init(services);
-                    }
+            // Init Automapper profile list
+            var autoMapperProfiles = new List<Type>();
+
+            foreach (var module in moduleManager.Modules)
+            {
+                var types = module.Assembly.GetTypes();
+
+                var moduleInitializerType = types.Where(x => typeof(IModuleInitializer).IsAssignableFrom(x)).FirstOrDefault();
+
+                if (moduleInitializerType != null)
+                {
+                    var moduleInitializer = (IModuleInitializer)Activator.CreateInstance(moduleInitializerType);
+                    moduleInitializer.Init(services);
                 }
+
+                // Get module's AutoMapper profiles
+                autoMapperProfiles.AddRange(types.Where(x => typeof(Profile).IsAssignableFrom(x)));
             }
+
+            // Using initialize to register all AutoMapper Profile
+            Mapper.Initialize(cfg =>
+            {
+                foreach (var profile in autoMapperProfiles)
+                {
+                    cfg.AddProfile(profile);
+                }
+            });
 
             return services;
         }

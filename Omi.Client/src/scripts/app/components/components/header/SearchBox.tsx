@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 export const SearchBox = () => (
-    <div className="header-search">
+    <div className="header-search d-none">
         <input placeholder="Search..." className="header-search-textbox" />
         <div className="header-search-icon">
             <i className=" fa fa-search"></i>

@@ -8,6 +8,12 @@ namespace Omi.Modules.FileAndMedia
 {
     public class ModuleBaseInitializer : IModuleInitializer
     {
+        public int LoadOrder { get; set; }
+        public ModuleBaseInitializer()
+        {
+            LoadOrder = 0;
+        }
+
         public void Init(IServiceCollection services)
         {
 

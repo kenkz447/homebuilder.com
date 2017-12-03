@@ -91,7 +91,7 @@ namespace Omi.Modules.HomeBuilder.Services
         private IQueryable<Project> GetProjects()
             => _context.Project
             .Include(o => o.Details)
-            .Include(o => o.EnitityFiles).ThenInclude(o => o.FileEntity)
+            .Include(o => o.EntityFiles).ThenInclude(o => o.FileEntity)
             .Include(o => o.EntityTaxonomies).ThenInclude(o => o.Taxonomy).ThenInclude(o => o.Details)
             .Include(o => o.City)
             .Include(o => o.ProjectBlocks).ThenInclude(o => o.ProjectBlockDetails)
@@ -136,7 +136,7 @@ namespace Omi.Modules.HomeBuilder.Services
                 Details = new List<ProjectDetail>() {
                     serviceModel.Detail
                 },
-                EnitityFiles = serviceModel.GetEntityFiles(),
+                EntityFiles = serviceModel.GetEntityFiles(),
                 EntityTaxonomies = new List<ProjectTaxonomy>(
                     serviceModel.TaxonomyIds.Select(taxonomyId => new ProjectTaxonomy { TaxonomyId = taxonomyId })),
                 CityId = serviceModel.CityId,
@@ -191,7 +191,7 @@ namespace Omi.Modules.HomeBuilder.Services
                 }
             }
 
-            _context.TryUpdateManyToMany(project.EnitityFiles, newProject.EnitityFiles, o => o.FileEntityId);
+            _context.TryUpdateManyToMany(project.EntityFiles, newProject.EntityFiles, o => o.FileEntityId);
             _context.TryUpdateManyToMany(project.EntityTaxonomies, newProject.EntityTaxonomies, o => o.TaxonomyId);
 
             await _context.SaveChangesAsync();

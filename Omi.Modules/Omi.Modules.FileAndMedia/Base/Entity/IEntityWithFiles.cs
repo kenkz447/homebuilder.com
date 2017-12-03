@@ -7,6 +7,6 @@ namespace Omi.Modules.FileAndMedia.Base.Entity
     public interface IEntityWithFiles<TEntityId, TEntity, TEntityFile>
         where TEntityFile : IEntityFile<TEntityId, TEntity>
     {
-        IEnumerable<TEntityFile> EnitityFiles { get; set; }
+        IEnumerable<TEntityFile> EntityFiles { get; set; }
     }
 }

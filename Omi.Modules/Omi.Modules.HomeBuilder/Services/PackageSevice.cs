@@ -28,16 +28,19 @@ namespace Omi.Modules.HomeBuilder.Services
         public IEnumerable<TaxonomyEntity> GetAllDesignThemes()
             => _context.TaxonomyEntity.Include(o => o.Details).Where(o => o.TaxonomyTypeId == DesignThemeSeed.DesignTheme.Id).AsNoTracking();
 
-        public IEnumerable<TaxonomyEntity> GetAllPackageIncludedItems()
+        public IEnumerable<TaxonomyEntity> GetAllPackageIncludedItem()
             => _context.TaxonomyEntity.Include(o => o.Details).Where(o => o.TaxonomyTypeId == PackageIncludedSeed.PackageIncludedItem.Id).AsNoTracking();
 
         public IEnumerable<TaxonomyEntity> GetAllHouseStyles()
             => _context.TaxonomyEntity.Include(o => o.Details).Where(o => o.TaxonomyTypeId == HouseStyleSeed.HouseStyle.Id).AsNoTracking();
 
+        public IEnumerable<TaxonomyEntity> GetAllFurnitureIncludeItem()
+            => _context.TaxonomyEntity.Include(o => o.Details).Where(o => o.TaxonomyTypeId == PackageFunitureIncludedSeed.PackageFunitureIncludedItem.Id).AsNoTracking();
+
         private IQueryable<Package> GetPackages()
             => _context.Package
             .Include(o => o.Details)
-            .Include(o => o.EnitityFiles)
+            .Include(o => o.EntityFiles)
             .ThenInclude(o => o.FileEntity)
             .Include(o => o.EntityTaxonomies)
             .ThenInclude(o => o.Taxonomy)
@@ -93,7 +96,7 @@ namespace Omi.Modules.HomeBuilder.Services
                 Details = new List<PackageDetail>() {
                     serviceModel.Detail
                 },
-                EnitityFiles = serviceModel.GetEntityFiles(),
+                EntityFiles = serviceModel.GetEntityFiles(),
                 EntityTaxonomies = new List<PackageTaxonomy>(
                     serviceModel.TaxonomyIds.Select(taxonomyId => new PackageTaxonomy { TaxonomyId = taxonomyId }))
             };
@@ -124,7 +127,7 @@ namespace Omi.Modules.HomeBuilder.Services
                 }
             }
 
-            _context.TryUpdateManyToMany(package.EnitityFiles, newPackage.EnitityFiles, o => o.FileEntityId);
+            _context.TryUpdateManyToMany(package.EntityFiles, newPackage.EntityFiles, o => o.FileEntityId);
             _context.TryUpdateManyToMany(package.EntityTaxonomies, newPackage.EntityTaxonomies, o => o.TaxonomyId);
 
             await _context.SaveChangesAsync();
