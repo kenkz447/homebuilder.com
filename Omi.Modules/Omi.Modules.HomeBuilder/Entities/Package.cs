@@ -14,6 +14,11 @@ namespace Omi.Modules.HomeBuilder.Entities
         IEntityWithTaxonomies<long, Package, PackageTaxonomy>,
         IEntityWithFiles<long, Package, PackageFile>
     {
+        public Package()
+        {
+            EntityProducts = new HashSet<PackageProduct>();
+        }
+
         public string Name { get; set; }
 
         public bool? IsPerspective { get; set; }
@@ -24,5 +29,6 @@ namespace Omi.Modules.HomeBuilder.Entities
         public virtual IEnumerable<PackageDetail> Details { get; set; }
         public virtual IEnumerable<PackageTaxonomy> EntityTaxonomies { get; set; }
         public virtual IEnumerable<PackageFile> EntityFiles { get; set; }
+        public virtual IEnumerable<PackageProduct> EntityProducts { get; set; }
     }
 }

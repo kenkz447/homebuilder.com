@@ -10,8 +10,8 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
     public class PackageServiceModel
     {
         public long Id { get; set; }
-
         public string Name { get; set; }
+        public bool? IsPerspective { get; set; }
 
         public PackageDetail Detail { get; set; }
 
@@ -20,6 +20,8 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
         public long AvatarFileId { get; set; }
         public IEnumerable<long> PictureFileIds { get; set; }
 
+        public IEnumerable<PackageProduct> PackageProducts { get; set; }
+
         public ApplicationUser User { get; set; }
 
         public Package ToEntity()
@@ -27,6 +29,7 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
             var newPackage = new Package
             {
                 Id = Id,
+                IsPerspective = IsPerspective,
                 Name = Name,
                 CreateByUserId = User.Id,
                 Details = new List<PackageDetail>() {
@@ -34,7 +37,8 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
                 },
                 EntityFiles = GetEntityFiles(),
                 EntityTaxonomies = new List<PackageTaxonomy>(
-                    TaxonomyIds.Select(taxonomyId => new PackageTaxonomy { TaxonomyId = taxonomyId, EntityId = Id }))
+                    TaxonomyIds.Select(taxonomyId => new PackageTaxonomy { TaxonomyId = taxonomyId, EntityId = Id })),
+                EntityProducts = PackageProducts
             };
             return newPackage;
         }

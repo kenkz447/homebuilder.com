@@ -74,3 +74,10 @@
         }
     }
 }
+
+.product-select {
+    &-item {
+        padding: 15px;
+        border: 1px solid lightgray;
+    }
+}

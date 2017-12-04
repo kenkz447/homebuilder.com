@@ -12,18 +12,19 @@ import { ProductFormStateProps, ProductFormDispatchProps, ProductForm, ProductFo
 const mapStateToProps = (state: ModuleRootState, ownProps): ProductFormStateProps => {
   return {
     initProductViewModel: state.data.getIn(['initProductViewModel', 'response', 'result']) || {},
-    formPostResultProductId: state.data.getIn(['formPostResultProductId', 'response', 'result']),
+    FORM_POST_RESULT_PRODUCT_ID: state.data.getIn(['FORM_POST_RESULT_PRODUCT_ID', 'response', 'result']),
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps: ProductFormProps): ProductFormDispatchProps => {
   return {
     getInitialViewModel: () => {
-      const searchParams = new URL(location.href).searchParams
-      
+      const params = new URL(location.href).searchParams
+      params.append('IsEditModel', String(true))
+
       const requestSendAction = RequestSend(
         'initProductViewModel', {
-          url: `/product/getProductViewModel?${searchParams.toString()}`,
+          url: `/product/get?${params.toString()}`,
           requestInit: {
             credentials: 'include'
           }}
@@ -32,8 +33,8 @@ const mapDispatchToProps = (dispatch, ownProps: ProductFormProps): ProductFormDi
     },
     post(FormValues) {
       const requestSendAction = RequestSend(
-        'formPostResultProductId', {
-          url: `/product/updateProduct`,
+        'FORM_POST_RESULT_PRODUCT_ID', {
+          url: `/product/update`,
           requestInit: {
             method: 'POST',
             headers: new Headers({
@@ -49,7 +50,7 @@ const mapDispatchToProps = (dispatch, ownProps: ProductFormProps): ProductFormDi
       dispatch(requestSendAction)
     },
 
-    redirectToEdit(newProductId) {
+    onPostSucceeded(newProductId) {
       const showNotificationAction = ShowNotification({
         notifyType: 'success',
         display: {
@@ -58,7 +59,6 @@ const mapDispatchToProps = (dispatch, ownProps: ProductFormProps): ProductFormDi
         }
       })
       dispatch(showNotificationAction)
-      dispatch(push(`${location.pathname}${location.search}`))
     }
   }
 }

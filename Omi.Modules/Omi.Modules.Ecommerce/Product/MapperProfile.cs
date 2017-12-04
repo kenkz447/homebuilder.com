@@ -19,7 +19,10 @@ namespace Omi.Modules.Ecommerce.Product
                 config.MapFrom(o => o.Id);
             });
 
+            CreateMap<ProductDetail, ProductViewModel>();
             CreateMap<ProductViewModel, ProductDetail>();
+
+            CreateMap<ProductViewModel, ProductEditViewModel>();
         }
     }
 }

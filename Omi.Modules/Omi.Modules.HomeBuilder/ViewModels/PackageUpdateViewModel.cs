@@ -10,6 +10,8 @@ namespace Omi.Modules.HomeBuilder.ViewModels
     {
         public long Id { get; set; }
 
+        public bool? IsPerspective { get; set; }
+
         [Required]
         public string Title { get; set; }
 
@@ -26,6 +28,8 @@ namespace Omi.Modules.HomeBuilder.ViewModels
 
         [Required]
         public long DesignThemeId { get; set; }
+
+        public IEnumerable<PackageProductViewModel> Products { get; set; }
 
         public FileEntityInfo Avatar { get; set; }
         public IEnumerable<FileEntityInfo> Pictures { get; set; }

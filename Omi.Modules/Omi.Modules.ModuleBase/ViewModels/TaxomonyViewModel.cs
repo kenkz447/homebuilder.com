@@ -1,4 +1,5 @@
-﻿using Omi.Modules.ModuleBase.Entities;
+﻿using Omi.Extensions;
+using Omi.Modules.ModuleBase.Entities;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -19,9 +20,7 @@ namespace Omi.Modules.ModuleBase.ViewModels
         {
             var currentCulture = CultureInfo.CurrentCulture;
 
-            var taxonomyDetail = entity.Details.FirstOrDefault(o => o.Language == currentCulture.Name);
-            if (taxonomyDetail == null)
-                taxonomyDetail = entity.Details.FirstOrDefault(o => o.Language == null);
+            var taxonomyDetail = entity.Details.FirstOrDefault(o => o.ForCurrentRequestLanguage());
 
             return new TaxomonyViewModel
             {

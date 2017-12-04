@@ -15,7 +15,6 @@ namespace Omi.Modules.HomeBuilder
                 .HasOne(o => o.ProjectBlock)
                 .WithOne(o => o.Package)
                 .HasForeignKey<Package>(o => o.ProjectBlockId);
-            
 
             builder.Entity<PackageDetail>();
 
@@ -24,6 +23,9 @@ namespace Omi.Modules.HomeBuilder
 
             builder.Entity<PackageFile>()
                 .HasKey(o => new { o.EntityId, o.FileEntityId });
+
+            builder.Entity<PackageProduct>()
+                .HasKey(o => new { o.EntityId, o.ProductId });
 
             builder.Entity<Project>()
                 .HasMany(o => o.Details);

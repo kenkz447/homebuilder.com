@@ -157,6 +157,7 @@ namespace Omi.Modules.HomeBuilder.Controllers
 
             packageViewModel.Id = package.Id;
             packageViewModel.ProjectBlockId = package.ProjectBlockId;
+            packageViewModel.IsPerspective = package.IsPerspective;
 
             var detail = package.Details.FirstOrDefault();
             packageViewModel.Price = detail.Price;
@@ -185,6 +186,8 @@ namespace Omi.Modules.HomeBuilder.Controllers
             var furnitureIncludedItems = package.EntityTaxonomies.Where(o => o.Taxonomy.TaxonomyTypeId == PackageFunitureIncludedSeed.PackageFunitureIncludedItem.Id);
             packageViewModel.PackageFurnitureIncludedItemIds = furnitureIncludedItems.Select(o => o.TaxonomyId);
             packageViewModel.PackageFurnitureIncludedItems = furnitureIncludedItems.Select(o => TaxomonyViewModel.FromEntity(o.Taxonomy));
+
+            packageViewModel.Products = new List<PackageProductViewModel>(package.EntityProducts.Select(o => PackageProductViewModel.FromEntity(o)));
 
             return packageViewModel;
         }

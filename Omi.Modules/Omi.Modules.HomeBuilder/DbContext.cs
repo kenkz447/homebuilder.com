@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Omi.Data;
 using Omi.Modular;
+using Omi.Modules.Ecommerce;
 using Omi.Modules.HomeBuilder.Entities;
 using Omi.Modules.ModuleBase;
 
@@ -19,6 +20,7 @@ namespace Omi.Modules.HomeBuilder
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.RegisterCustomMappings<EcommerceModelBuilder>();
             builder.RegisterCustomMappings<HomeBuilderModelBuilder>();
             base.OnModelCreating(builder);
         }

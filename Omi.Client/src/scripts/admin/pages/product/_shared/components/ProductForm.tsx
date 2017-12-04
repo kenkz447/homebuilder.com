@@ -8,13 +8,13 @@ import { ProductViewModel } from '../../../../Types'
 export interface ProductFormDispatchProps {
     getInitialViewModel?: () => void
     post?: (FormValues: ProductViewModel) => void
-    redirectToEdit?: (entityId: number) => void
+    onPostSucceeded?: (entityId: number) => void
     cleanSelectedResult?: () => void
 }
 
 export interface ProductFormStateProps {
     initProductViewModel?: ProductViewModel
-    formPostResultProductId?: number
+    FORM_POST_RESULT_PRODUCT_ID?: number
     searchParams?: string
 }
 
@@ -37,10 +37,10 @@ class ProductFormComponent extends React.Component<ProductFormProps> {
     }
 
     componentWillReceiveProps(nextProps: ProductFormProps) {
-        if (nextProps.formPostResultProductId && (this.props.formPostResultProductId != nextProps.formPostResultProductId)) {
+        if (nextProps.FORM_POST_RESULT_PRODUCT_ID && (this.props.FORM_POST_RESULT_PRODUCT_ID != nextProps.FORM_POST_RESULT_PRODUCT_ID)) {
             this.props.getInitialViewModel()
             this.props.form.resetFields()
-            this.props.redirectToEdit(nextProps.formPostResultProductId)
+            this.props.onPostSucceeded(nextProps.FORM_POST_RESULT_PRODUCT_ID)
         }
     }
 
@@ -63,9 +63,6 @@ class ProductFormComponent extends React.Component<ProductFormProps> {
                             <Col span={8}>
                                 {this.renderDesciption.bind(this)()}
                             </Col>
-                            <Col span={8}>
-                                {this.renderPictures.bind(this)()}
-                            </Col>
                         </Row>
                     </TabPane>
                 </Tabs>
@@ -76,11 +73,9 @@ class ProductFormComponent extends React.Component<ProductFormProps> {
     renderHidden() {
         return (
             <div>
-                {
-                    this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.id), {
-                        initialValue: this.props.initProductViewModel.id
-                    })(<Input key="id" type="hidden" />)
-                }
+                {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.entityId), {
+                        initialValue: this.props.initProductViewModel.entityId
+                    })(<Input key="id" type="hidden" />)}
             </div>)
     }
 
@@ -114,83 +109,19 @@ class ProductFormComponent extends React.Component<ProductFormProps> {
         return (
             <fieldset>
                 <h2 className="form-legend mb-4">Description</h2>
-                <FormItem label="Design theme">
-                    {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.designThemeId), {
-                        rules: [{ required: true, message: 'Please select design theme!' }],
-                        initialValue: this.props.initProductViewModel.designThemeId
+                <FormItem label="Brand">
+                    {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.brandId), {
+                        rules: [{ required: true, message: 'Brand is required!' }],
+                        initialValue: this.props.initProductViewModel.brandId
                     })(
-                        <Select placeholder="Design theme">
+                        <Select placeholder="Brand">
                             {
-                                this.props.initProductViewModel.avaliableDesignThemes && this.props.initProductViewModel.avaliableDesignThemes.map((e) => (
+                                this.props.initProductViewModel.avaliableBrands && this.props.initProductViewModel.avaliableBrands.map((e) => (
                                     <Option key={e.id} value={e.id}>{e.label}</Option>
                                 ))
                             }
                         </Select>
                         )}
-                </FormItem>
-                <FormItem label="House type">
-                    {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.houseTypeId), {
-                        rules: [{ required: true, message: 'Please select house type!' }],
-                        initialValue: this.props.initProductViewModel.houseTypeId
-                    })(
-                        <Select placeholder="House type">
-                            {
-                                this.props.initProductViewModel.avaliableHouseStyles && this.props.initProductViewModel.avaliableHouseStyles.map((e) => (
-                                    <Option key={e.id} value={e.id}>{e.label}</Option>
-                                ))
-                            }
-                        </Select>
-                        )}
-                </FormItem>
-                <FormItem label="Area">
-                    {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.area), {
-                        rules: [{ required: true, message: 'Area is required!' }],
-                        initialValue: this.props.initProductViewModel.area
-                    })(<Input type="number" placeholder="Area" addonAfter="m2" />)}
-                </FormItem>
-                <FormItem>
-                    {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.sortText), {
-                        initialValue: this.props.initProductViewModel.sortText
-                    })(<TextArea placeholder="Sort text" />)}
-                </FormItem>
-                <FormItem label="Included">
-                    {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.productIncludedItemIds), {
-                        initialValue: this.props.initProductViewModel.productIncludedItemIds
-                    })(
-                        <Select placeholder="Include items" mode="multiple">
-                            {
-                                this.props.initProductViewModel.avaliableProductIncludedItems && this.props.initProductViewModel.avaliableProductIncludedItems.map((e) => (
-                                    <Option key={e.id} value={e.id}>{e.label}</Option>
-                                ))
-                            }
-                        </Select>
-                        )}
-                </FormItem>
-                <FormItem label="Furniture">
-                    {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.productFurnitureIncludedItemIds), {
-                        initialValue: this.props.initProductViewModel.productFurnitureIncludedItemIds
-                    })(
-                        <Select placeholder="Include items" mode="multiple">
-                            {
-                                this.props.initProductViewModel.avaliableProductFurnitureIncludedItems && this.props.initProductViewModel.avaliableProductFurnitureIncludedItems.map((e) => (
-                                    <Option key={e.id} value={e.id}>{e.label}</Option>
-                                ))
-                            }
-                        </Select>
-                        )}
-                </FormItem>
-            </fieldset>
-        )
-    }
-
-    renderPictures() {
-        return (
-            <fieldset>
-                <h2 className="form-legend mb-4">Pictures</h2>
-                <FormItem label="Gallery">
-                    {this.props.form.getFieldDecorator('pictures', {
-                        initialValue: this.props.initProductViewModel.pictures
-                    })(<PictureWall />)}
                 </FormItem>
             </fieldset>
         )

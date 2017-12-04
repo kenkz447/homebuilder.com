@@ -45,6 +45,9 @@ namespace Omi.Modules.HomeBuilder.Services
             .Include(o => o.EntityTaxonomies)
             .ThenInclude(o => o.Taxonomy)
             .ThenInclude(o => o.Details)
+            .Include(o => o.EntityProducts).ThenInclude(o => o.Product).ThenInclude(o => o.Details)
+            .Include(o => o.EntityProducts).ThenInclude(o => o.Product).ThenInclude(o => o.EntityTaxonomies).ThenInclude(o => o.Taxonomy).ThenInclude(o => o.Details)
+            .Include(o => o.EntityProducts).ThenInclude(o => o.Product).ThenInclude(o => o.EntityFiles).ThenInclude(o => o.FileEntity)
             .AsQueryable();
 
 
@@ -98,7 +101,8 @@ namespace Omi.Modules.HomeBuilder.Services
                 },
                 EntityFiles = serviceModel.GetEntityFiles(),
                 EntityTaxonomies = new List<PackageTaxonomy>(
-                    serviceModel.TaxonomyIds.Select(taxonomyId => new PackageTaxonomy { TaxonomyId = taxonomyId }))
+                    serviceModel.TaxonomyIds.Select(taxonomyId => new PackageTaxonomy { TaxonomyId = taxonomyId })),
+                EntityProducts = serviceModel.PackageProducts
             };
 
             var add = await _context.Package.AddAsync(newPackage);
@@ -114,6 +118,7 @@ namespace Omi.Modules.HomeBuilder.Services
             var newPackage = serviceModel.ToEntity();
 
             _context.Entry(package).CurrentValues.SetValues(newPackage);
+            _context.Entry(package).Property(o => o.Name).IsModified = false;
             _context.Entry(package).Property(o => o.CreateByUserId).IsModified = false;
             _context.Entry(package).Property(o => o.CreateDate).IsModified = false;
 
@@ -129,6 +134,13 @@ namespace Omi.Modules.HomeBuilder.Services
 
             _context.TryUpdateManyToMany(package.EntityFiles, newPackage.EntityFiles, o => o.FileEntityId);
             _context.TryUpdateManyToMany(package.EntityTaxonomies, newPackage.EntityTaxonomies, o => o.TaxonomyId);
+
+            _context.TryUpdateManyToMany(package.EntityProducts, newPackage.EntityProducts, o => o.ProductId);
+            foreach (var entityProduct in package.EntityProducts)
+            {
+                var pdEntry = _context.Entry(entityProduct);
+                pdEntry.Property(o => o.Quantity).CurrentValue = newPackage.EntityProducts.FirstOrDefault(o => o.ProductId == entityProduct.ProductId).Quantity;
+            }
 
             await _context.SaveChangesAsync();
 

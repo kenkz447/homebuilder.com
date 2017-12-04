@@ -43,11 +43,18 @@ namespace Omi.Modules.HomeBuilder.Utilities
             {
                 Id = viewModel.Id,
                 Name = viewModel.Title.ToEntityName(),
+                IsPerspective = viewModel.IsPerspective,
                 Detail = detail,
                 TaxonomyIds = taxonomyIds,
                 AvatarFileId = viewModel.Avatar.FileId,
-                PictureFileIds = pictureFileIds
+                PictureFileIds = pictureFileIds,
+
             };
+
+            if (viewModel.Products != null)
+                addNewpackageServiceModel.PackageProducts = new List<PackageProduct>(
+                    viewModel.Products.Where(o => o.ProductId != default).Select(o => new PackageProduct { EntityId = viewModel.Id, ProductId = o.ProductId, Quantity = o.Quantity, })
+                    );
 
             return addNewpackageServiceModel;
         }

@@ -12,7 +12,7 @@ namespace Omi.Extensions
         public static IQueryable<TEntity> FilterByServiceModel<TType, TEntity>(this IQueryable<TEntity> list, BaseFilterServiceModel<TType> serviceModel)
             where TEntity : IEntityWithTypeId<TType>, IEntityWithStatus
         {
-            if (serviceModel.Ids != null)
+            if (serviceModel.Ids != null && serviceModel.Ids.Count() != 0)
                 list = list.Where(o => serviceModel.Ids.Contains(o.Id));
 
             if (serviceModel.EntityStatues != null)

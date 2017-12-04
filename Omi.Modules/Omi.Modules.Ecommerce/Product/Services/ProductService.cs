@@ -32,11 +32,11 @@ namespace Omi.Modules.Ecommerce.Product.Services
             _context = context;
         }
 
-        public IEnumerable<ProductEntity> GetProducts(BaseFilterServiceModel<long> serviceModel)
+        public IQueryable<ProductEntity> GetProducts(BaseFilterServiceModel<long> serviceModel)
         {
             var products = this.AllProduct.FilterByServiceModel(serviceModel);
 
-            return products.ToList();
+            return products;
         }
 
         public async Task<ProductEntity> CreateProductAsync(ProductServiceModel serviceModel)

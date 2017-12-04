@@ -11,6 +11,10 @@ using Omi.Modules.ModuleBase.ViewModels;
 using Omi.Modules.Ecommerce.Product.ServiceModel;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Omi.Base.Collection;
+using Omi.Modules.Ecommerce.Product.Entities;
+using Omi.Base.ViewModel;
+using System.Collections.Generic;
 
 namespace Omi.Modules.Ecommerce.Product
 {
@@ -31,21 +35,37 @@ namespace Omi.Modules.Ecommerce.Product
 
         [HttpGet]
         [AllowAnonymous]
-        public BaseJsonResult Get(ProductGetViewModel viewModel)
+        public async Task<BaseJsonResult> Get(ProductGetViewModel viewModel)
         {
+            var entityIds = new List<long>();
+            if (viewModel.EntityId != default)
+                entityIds.Add(viewModel.EntityId);
+
             var filterModel = new BaseFilterServiceModel<long> {
-                Ids = new[] { viewModel.Id }
+                Ids = entityIds
             };
 
             var products = _productService.GetProducts(filterModel);
             var baseJsonresult = new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED);
 
-            if (viewModel.GetMode == (int)GetMode.Multi)
-                baseJsonresult.Result = products.Select(o => ProductViewModel.FromEntity(o));
+            if (viewModel.GetMode == (int)GetMode.Paginated)
+            {
+                var pageList = await PaginatedList<ProductEntity>.CreateAsync(products, viewModel.PageIndex, viewModel.PageSize);
+                var result = new PageEntityViewModel<ProductEntity, ProductViewModel>(pageList, entity => ProductViewModel.FromEntity(entity));
+                baseJsonresult.Result = result;
+            }
+            else if(viewModel.GetMode == (int)GetMode.List)
+            {
+                var result = products.Select(o => ProductEditViewModel.FromEntity(o));
+                baseJsonresult.Result = result;
+            }
             else
             {
-                var product = products.First();
-                var result = ProductEditViewModel.FromEntity(product);
+                var product = products.FirstOrDefault(o => o.Id == viewModel.EntityId);
+                var result = new ProductEditViewModel();
+
+                if (product != null)
+                    result = ProductEditViewModel.FromEntity(product);
 
                 if (viewModel.IsEditModel)
                 {
@@ -60,29 +80,33 @@ namespace Omi.Modules.Ecommerce.Product
         }
 
         [HttpPost]
-        public async Task<BaseJsonResult> Create(ProductViewModel viewModel)
+        public async Task<BaseJsonResult> Create([FromBody]ProductViewModel viewModel)
         {
             var serviceModel = ProductServiceModel.FromViewModel(viewModel);
+            serviceModel.User = CurrentUser;
+
             var entityResult = await _productService.CreateProductAsync(serviceModel);
 
-            var result = ProductViewModel.FromEntity(entityResult);
-
-            return new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED, result);
+            return new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED, entityResult.Id);
         }
 
         [HttpPut]
-        public async Task<BaseJsonResult> Update(ProductViewModel viewModel)
+        public async Task<BaseJsonResult> Update([FromBody]ProductViewModel viewModel)
         {
             var serviceModel = ProductServiceModel.FromViewModel(viewModel);
-            var result = await _productService.UpdateProductAsync(serviceModel);
+            serviceModel.User = CurrentUser;
 
-            return new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED, result);
+            await _productService.UpdateProductAsync(serviceModel);
+
+            return new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED, viewModel.EntityId);
         }
 
         [HttpDelete]
-        public async Task<BaseJsonResult> Delete(ProductViewModel viewModel)
+        public async Task<BaseJsonResult> Delete([FromBody]ProductViewModel viewModel)
         {
             var serviceModel = ProductServiceModel.FromViewModel(viewModel);
+            serviceModel.User = CurrentUser;
+
             var result = await _productService.DeleteProductAsync(serviceModel);
 
             return new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED, result);

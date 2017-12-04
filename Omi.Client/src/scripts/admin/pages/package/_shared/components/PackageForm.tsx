@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Button, Tabs, Form, Input, Row, Col, Select } from 'antd'
+import { Button, Tabs, Form, Input, Row, Col, Select, Checkbox } from 'antd'
 
 import { AvatarSelect, PictureWall } from 'shared/modules/FileAndMedia'
 import { PackageViewModel } from '../../../../Types'
+import { ConnectedProductSelect } from './ProductSelect'
 
 export interface PackageFormDispatchProps {
     getInitialViewModel?: () => void
@@ -68,6 +69,13 @@ class PackageFormComponent extends React.Component<PackageFormProps> {
                             </Col>
                         </Row>
                     </TabPane>
+                    <TabPane tab="Products" key="2">
+                        <FormItem>
+                            {this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.products), {
+                                initialValue: this.props.initPackageViewModel.products
+                            })(<ConnectedProductSelect />)}
+                        </FormItem>
+                    </TabPane>
                 </Tabs>
             </Form>
         )
@@ -105,6 +113,12 @@ class PackageFormComponent extends React.Component<PackageFormProps> {
                         rules: [{ required: true, message: 'Price is required!' }],
                         initialValue: this.props.initPackageViewModel.price
                     })(<Input type="number" placeholder="Price" addonAfter="vnđ" />)}
+                </FormItem>
+                <FormItem>
+                    {this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.isPerspective), {
+                        valuePropName: 'checked',
+                        initialValue: this.props.initPackageViewModel.isPerspective
+                    })(<Checkbox>Perspective</Checkbox>)}
                 </FormItem>
             </fieldset>
         )
@@ -151,7 +165,7 @@ class PackageFormComponent extends React.Component<PackageFormProps> {
                 <FormItem>
                     {this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.sortText), {
                         initialValue: this.props.initPackageViewModel.sortText
-                    })(<TextArea placeholder="Sort text" />)}
+                    })(<TextArea placeholder="Sort text" rows={6}/>)}
                 </FormItem>
                 <FormItem label="Included">
                     {this.props.form.getFieldDecorator(nameof<PackageViewModel>(o => o.packageIncludedItemIds), {

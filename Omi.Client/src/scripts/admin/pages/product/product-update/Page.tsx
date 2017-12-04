@@ -2,12 +2,12 @@ import * as React from 'react'
 
 import { CreatePageWrap } from 'shared/core'
 
-import { PRODUCT_NEW, LAYOUT_PRODUCT_MASTER } from '../../../settings'
+import { PRODUCT_NEW, PRODUCT_LAYOUT_MASTER } from '../../../settings'
 import { ProductFormUpdate } from '../_shared/containers'
 
 const WithPageWrap = CreatePageWrap({
     pageKey: PRODUCT_NEW,
-    layoutType: LAYOUT_PRODUCT_MASTER
+    layoutType: PRODUCT_LAYOUT_MASTER
 })
 
 @(WithPageWrap as any)

@@ -11,17 +11,20 @@ import { ProductFormStateProps, ProductFormDispatchProps, ProductForm } from '..
 
 const mapStateToProps = (state: ModuleRootState, ownProps): ProductFormStateProps => {
   return {
-    initProductViewModel: state.data.getIn(['initProductViewModel', 'response', 'result']) || {},
-    formPostResultProductId: state.data.getIn(['formPostResultProductId', 'response', 'result'])
+    initProductViewModel: state.data.getIn(['INIT_PRODUCT_VIEW_MODEL', 'response', 'result']) || {},
+    FORM_POST_RESULT_PRODUCT_ID: state.data.getIn(['FORM_POST_RESULT_PRODUCT_ID', 'response', 'result'])
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps): ProductFormDispatchProps => {
   return {
     getInitialViewModel: () => {
+      const params = new URLSearchParams()
+      params.append('IsEditModel', String(true))
+
       const requestSendAction = RequestSend(
-        'initProductViewModel', {
-          url: `/product/GetEmptyProductViewModel`,
+        'INIT_PRODUCT_VIEW_MODEL', {
+          url: `/product/Get?${params.toString()}`,
           requestInit: {
             method: 'Get',
             credentials: 'include'
@@ -31,8 +34,8 @@ const mapDispatchToProps = (dispatch, ownProps): ProductFormDispatchProps => {
     },
     post(FormValues) {
       const requestSendAction = RequestSend(
-        'formPostResultProductId', {
-          url: `/product/createNewProduct`,
+        'FORM_POST_RESULT_PRODUCT_ID', {
+          url: `/product/create`,
           requestInit: {
             method: 'POST',
             headers: new Headers({
@@ -47,7 +50,7 @@ const mapDispatchToProps = (dispatch, ownProps): ProductFormDispatchProps => {
       dispatch(requestSendAction)
     },
 
-    redirectToEdit(newProductId) {
+    onPostSucceeded(newProductId) {
       const showNotificationAction = ShowNotification({
         notifyType: 'success',
         display: {
@@ -56,7 +59,7 @@ const mapDispatchToProps = (dispatch, ownProps): ProductFormDispatchProps => {
         }
       })
       dispatch(showNotificationAction)
-      dispatch(push(`/website/admin/product/update?productId=${newProductId}`))
+      dispatch(push(`/website/admin/product/update?${nameof<ProductViewModel>(o => o.entityId)}=${newProductId}`))
     }
   }
 }

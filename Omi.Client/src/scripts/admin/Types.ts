@@ -5,17 +5,28 @@ import { TaxonomyViewModel } from 'shared/modules/Modulebase'
 import { GeographicaLocationViewModel } from 'shared/modules/Location'
 
 export interface ModuleRootState extends RootState {
-
 }
 
 export interface ProductViewModel {
-    
+    entityId?: number
+    title?: number
+    price?: number
+    brandId?: number
+    brand?: TaxonomyViewModel
+    avatar?: FileEntityInfo
+    avaliableBrands?: Array<TaxonomyViewModel>
+}
+
+export interface PackageProductViewModel {
+    productId?: number
+    quantity?: number
+    productViewModel?: ProductViewModel
 }
 
 export interface PackageViewModel {
     id?: number
     projectBlockId?: number
-    
+    isPerspective?: boolean
     title?: string
     sortText?: string
     price?: number
@@ -30,11 +41,11 @@ export interface PackageViewModel {
     packageFurnitureIncludedItemIds?: Array<number>
     packageIncludedItems?: Array<TaxonomyViewModel>
     packageFurnitureIncludedItems?: Array<TaxonomyViewModel>
-    language?: string
     avaliablePackageIncludedItems?: Array<TaxonomyViewModel>
     avaliablePackageFurnitureIncludedItems?: Array<TaxonomyViewModel>
     avaliableDesignThemes?: Array<TaxonomyViewModel>
     avaliableHouseStyles?: Array<TaxonomyViewModel>
+    products?: Array<PackageProductViewModel>
 }
 
 export interface ProjectBlockViewModel {

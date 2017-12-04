@@ -7,7 +7,8 @@ namespace Omi.Base
     public enum GetMode
     {
         Single = 0,
-        Multi = 1,
+        Paginated = 1,
+        List = 2
     }
 
     public enum EntityStatus

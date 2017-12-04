@@ -3,22 +3,28 @@ using Omi.Modules.Ecommerce.Product.Entities;
 using Omi.Modules.FileAndMedia.Base;
 using Omi.Modules.FileAndMedia.ViewModel;
 using Omi.Modules.ModuleBase.ViewModels;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Omi.Modules.Ecommerce.Product.ViewModels
 {
     public class ProductViewModel
     {
+        [DefaultValue(0)]
         public long EntityId { get; set; }
 
+        [Required]
         public string Title { get; set; }
 
         public int Price { get; set; }
 
+        [Required, DefaultValue(0)]
         public long BrandId { get; set; }
-
+        
         public TaxomonyViewModel Brand { get; set; }
 
+        [Required]
         public FileEntityInfo Avatar { get; set; }
 
         public static ProductViewModel FromEntity(ProductEntity entity)
@@ -32,6 +38,7 @@ namespace Omi.Modules.Ecommerce.Product.ViewModels
 
             var brand = entity.EntityTaxonomies.FirstOrDefault(o => o.Taxonomy.TaxonomyTypeId == Seed.BaseBrandSeed.ProductBrand.Id).Taxonomy;
             viewModel.Brand = TaxomonyViewModel.FromEntity(brand);
+            viewModel.BrandId = brand.Id;
 
             var avatar = entity.EntityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.Avatar).FileEntity;
             viewModel.Avatar = FileEntityInfo.FromEntity(avatar);

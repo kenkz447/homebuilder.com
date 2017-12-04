@@ -1,4 +1,5 @@
 ﻿using Omi.Data;
+using Omi.Extensions;
 using Omi.Modules.Ecommerce.Product.Entities;
 using Omi.Modules.Ecommerce.Product.ViewModels;
 using Omi.Modules.FileAndMedia.Base;
@@ -39,13 +40,14 @@ namespace Omi.Modules.Ecommerce.Product.ServiceModel
                     },
                 };
 
+            product.Name = viewModel.Title.ToEntityName();
             product.Details = new List<ProductDetail>()
             {
                 detail
             };
 
             product.EntityFiles = files;
-            product.EntityTaxonomies = taxonomies;
+            product.EntityTaxonomies = taxonomies.ToList();
 
             return new ProductServiceModel
             {
