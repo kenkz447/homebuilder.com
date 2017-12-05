@@ -83,7 +83,7 @@ class ProjectDetail extends React.Component<OwnProps & StateProps & DispatchProp
                                 <p><b>Loại dự án:</b> <span>{this.props.project.projectType.label}</span></p>
                                 <p><b>Chủ đầu tư:</b> <span>{this.props.project.investor}</span></p>
                                 <p><b>Vị trí:</b> <span>{this.props.project.street}</span></p>
-                                <p><b>Quy mô diện tích:</b> <span>{this.props.project.area} m<sup>2</sup></span></p>
+                                <p><b>Quy mô Area:</b> <span>{this.props.project.area} m<sup>2</sup></span></p>
                                 <p><b>Tổng số căn hộ: </b> <span>{this.props.project.totalApartment}</span></p>
                                 <p><b>Năm Khởi công: </b> <span>{this.props.project.startedYear} </span></p>
                                 <p><b>Website: </b><a href={this.props.project.website}>{this.props.project.website}</a></p>
@@ -110,7 +110,7 @@ class ProjectDetail extends React.Component<OwnProps & StateProps & DispatchProp
                         this.props.project.projectBlocks.map((o, i) => {
                             const isActive = currentActiveRoomType && currentActiveRoomType.id == o.id
                             return (
-                                <li className={classNames('room-types-list-item', { active: isActive == true })}>
+                                <li key={o.id} className={classNames('room-types-list-item', { active: isActive == true })}>
                                     <a onClick={this.onRoomTypeClick(o.id)}>{o.label}</a>
                                 </li>
                             )
@@ -157,7 +157,7 @@ const mapDispatchToProps = (dispatch, ownProps): DispatchProps => {
         getProject: () => {
             const project = ownProps.match.params.project
             const requestSendAction = RequestSend('WEBSITE_VIEW_PROJECT', {
-                url: `/project/getProject?projectId=${project}`
+                url: `/project/GetProjectByName?projectName=${project}`
             })
             dispatch(requestSendAction)
         },

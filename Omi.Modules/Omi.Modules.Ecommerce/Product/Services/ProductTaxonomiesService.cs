@@ -18,5 +18,8 @@ namespace Omi.Modules.Ecommerce.Product.Services
 
         public IEnumerable<TaxonomyEntity> GetAllBrand()
             => _context.TaxonomyEntity.Include(o => o.Details).Where(o => o.TaxonomyTypeId == Seed.BaseBrandSeed.ProductBrand.Id).AsNoTracking();
+
+        public IEnumerable<TaxonomyEntity> GetAllProductType()
+            => _context.TaxonomyEntity.Include(o => o.Details).Where(o => o.TaxonomyTypeId == Seed.BaseProductTypeSeed.ProductType.Id).AsNoTracking();
     }
 }

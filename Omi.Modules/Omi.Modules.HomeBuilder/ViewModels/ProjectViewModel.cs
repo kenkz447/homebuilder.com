@@ -27,6 +27,10 @@ namespace Omi.Modules.HomeBuilder.ViewModels
 
         public string Website { get; set; }
 
+        public int BudgetMin { get; set; }
+
+        public int BudgetMax { get; set; }
+
         [Required]
         public int TotalApartment { get; set; }
 
@@ -79,6 +83,10 @@ namespace Omi.Modules.HomeBuilder.ViewModels
             var projectType = entity.EntityTaxonomies.FirstOrDefault(o => o.Taxonomy.TaxonomyTypeId == ProjectTypeSeed.ProjectType.Id);
 
             resultViewModel.CityId = entity.CityId;
+            resultViewModel.City = GeographicaLocationViewModel.FromEntity(entity.City);
+            resultViewModel.Name = entity.Name;
+            resultViewModel.BudgetMin = entity.BudgetMin;
+            resultViewModel.BudgetMax = entity.BudgetMax;
 
             resultViewModel.ProjectTypeId = projectType.TaxonomyId;
             resultViewModel.ProjectType = TaxomonyViewModel.FromEntity(projectType.Taxonomy);

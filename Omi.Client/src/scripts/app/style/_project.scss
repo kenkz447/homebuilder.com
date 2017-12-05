@@ -55,4 +55,51 @@
             }
         }
     }
+    &-list {
+        &-item {
+            border-top: 1px solid lightgray;
+            position: relative;
+            &:last-child {
+                border-bottom: 1px solid lightgray;
+            }
+            &-avatar {
+                max-width: 200px;
+                float: left;
+            }
+            &-details {
+                padding: 20px 30px;
+                float: left;
+            }
+            &-label {
+                font-weight: bold;
+                font-size: 17px;
+                color: #000;
+            }
+            &-text {
+                font-size: 17px;
+                display: block;
+                line-height: 1.8
+            }
+            &-viewmore {
+                width: 200px;
+                background: #e8e8e8;
+                padding: 15px;
+                font-size: .9rem;
+                color: #393939;
+                transition: all .2s;
+                &:hover {
+                    background: darken($color: #e8e8e8, $amount: 10)
+                }
+                &-btn {
+                    position: absolute;
+                    right: 0;
+                    top: 30px;
+                }
+                &-text {
+                    display: inline-block;
+                    width: 150px;
+                }
+            }
+        }
+    }
 }

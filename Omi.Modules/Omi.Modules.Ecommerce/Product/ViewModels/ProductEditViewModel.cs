@@ -9,6 +9,7 @@ namespace Omi.Modules.Ecommerce.Product.ViewModels
     public class ProductEditViewModel : ProductViewModel
     {
         public IEnumerable<TaxomonyViewModel> AvaliableBrands { get; set; }
+        public IEnumerable<TaxomonyViewModel> AvaliableProductTypes { get; set; }
 
         public static new ProductEditViewModel FromEntity(ProductEntity entity)
         {

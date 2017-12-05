@@ -71,8 +71,10 @@ const mapStateToProps = (state: WebsiteRootState): StateProps => {
 const mapDispatchToProps = (dispatch): DispatchProps => {
     return {
         getpackages: () => {
+            const params = new URLSearchParams(location.search)
+            params.append('getTypes', 'non-perspective')
             const requestSendAction = RequestSend('WEBSITE_PACKAGES', {
-                url: `/package/getPackages${location.search}`
+                url: `/package/getPackages?${params.toString()}`
             })
             dispatch(requestSendAction)
         }

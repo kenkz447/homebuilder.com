@@ -123,6 +123,20 @@ class ProductFormComponent extends React.Component<ProductFormProps> {
                         </Select>
                         )}
                 </FormItem>
+                <FormItem label="Type">
+                    {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.typeId), {
+                        rules: [{ required: true, message: 'Type is required!' }],
+                        initialValue: this.props.initProductViewModel.typeId
+                    })(
+                        <Select placeholder="Type">
+                            {
+                                this.props.initProductViewModel.avaliableProductTypes && this.props.initProductViewModel.avaliableProductTypes.map((e) => (
+                                    <Option key={e.id} value={e.id}>{e.label}</Option>
+                                ))
+                            }
+                        </Select>
+                        )}
+                </FormItem>
             </fieldset>
         )
     }

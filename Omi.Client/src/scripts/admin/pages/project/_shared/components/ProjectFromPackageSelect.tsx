@@ -8,6 +8,7 @@ import { RequestSend, ExtractImmutableHOC } from 'shared/core'
 
 interface DispathProps {
     getPackages?: () => void
+    onSelectChange?: (value) => void
 }
 
 interface StateProps {
@@ -17,7 +18,7 @@ interface StateProps {
 interface OwnProps {
     id?: any
     value?: any
-    onChange?: () => void
+    onChange?: (value) => void
     form?: any
 }
 
@@ -27,9 +28,11 @@ export function PackageSelect(props: OwnProps & StateProps & DispathProps) {
         return null
     }
 
+    const entities = props.packages.entities.filter(o => o.id == props.value || !o.projectBlockId)
+
     return (
-        <Select placeholder="Package" onChange={props.onChange} value={props.value} allowClear>
-            {props.packages.entities.map((o) => <Select.Option key={o.id} value={o.id}>{o.title}</Select.Option>)}
+        <Select placeholder="Package" onChange={props.onSelectChange} value={props.value} allowClear>
+            {entities.map((o) => <Select.Option key={o.id} value={o.id}>{o.title}</Select.Option>)}
         </Select>
     )
 }
@@ -40,17 +43,23 @@ const mapStateToProps = (state: ModuleRootState, ownProps: OwnProps): StateProps
     }
 }
  
-const mapDispatchToProps = (dispatch): DispathProps => {
+const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispathProps => {
     return {
         getPackages: () => {
+            const params = new URLSearchParams()
+            params.append('getTypes', 'perspective')
             const requestSendAction = RequestSend(
                 'packages', {
-                    url: `/package/getPackages`,
+                    url: `/package/getPackages?${params.toString()}`,
                     requestInit: {
                         credentials: 'include'
                     }}
                 )
             dispatch(requestSendAction)
+        },
+        onSelectChange: (value) => {
+            //const action = SetTempValue('PACKAGES_SELETED', [])
+            ownProps.onChange(value)
         }
     }
 }

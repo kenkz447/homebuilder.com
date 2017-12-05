@@ -36,7 +36,7 @@ const mapDispatchToProps = (dispatch, ownProps: ProductFormProps): ProductFormDi
         'FORM_POST_RESULT_PRODUCT_ID', {
           url: `/product/update`,
           requestInit: {
-            method: 'POST',
+            method: 'PUT',
             headers: new Headers({
               'Accept': 'application/json, text/plain, */*',
               'Content-Type': 'application/json'

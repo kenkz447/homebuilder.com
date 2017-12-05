@@ -24,6 +24,11 @@ namespace Omi.Modules.Ecommerce.Product.ViewModels
         
         public TaxomonyViewModel Brand { get; set; }
 
+        [Required, DefaultValue(0)]
+        public long TypeId { get; set; }
+
+        public TaxomonyViewModel Type { get; set; }
+
         [Required]
         public FileEntityInfo Avatar { get; set; }
 
@@ -39,6 +44,13 @@ namespace Omi.Modules.Ecommerce.Product.ViewModels
             var brand = entity.EntityTaxonomies.FirstOrDefault(o => o.Taxonomy.TaxonomyTypeId == Seed.BaseBrandSeed.ProductBrand.Id).Taxonomy;
             viewModel.Brand = TaxomonyViewModel.FromEntity(brand);
             viewModel.BrandId = brand.Id;
+
+            var type = entity.EntityTaxonomies.FirstOrDefault(o => o.Taxonomy.TaxonomyTypeId == Seed.BaseProductTypeSeed.ProductType.Id)?.Taxonomy;
+            if(type != null)
+            {
+                viewModel.Type = TaxomonyViewModel.FromEntity(type);
+                viewModel.TypeId = type.Id;
+            }
 
             var avatar = entity.EntityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.Avatar).FileEntity;
             viewModel.Avatar = FileEntityInfo.FromEntity(avatar);

@@ -19,6 +19,9 @@ namespace Omi.Modules.HomeBuilder.Entities
 
         public long CityId { get; set; }
 
+        public int BudgetMin { get; set; }
+        public int BudgetMax { get; set; }
+
         public GeographicaLocation City { get; set; }
 
         public IEnumerable<ProjectDetail> Details { get; set; }

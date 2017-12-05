@@ -91,6 +91,17 @@ namespace Omi.Modules.HomeBuilder.Controllers
         }
 
         [AllowAnonymous]
+        public async Task<BaseJsonResult> GetProjectByName(string projectName)
+        {
+            var project = await _projectService.GetProjectByName(projectName);
+            var projectViewModel = ProjectViewModelExtended.FromEntity(project);
+
+            var resultViewModel = projectViewModel.MergeWith(EmptyProjectViewModel);
+
+            return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, projectViewModel);
+        }
+
+        [AllowAnonymous]
         public BaseJsonResult GetAllCity()
         {
             var cities = _projectService.GetAllCity();

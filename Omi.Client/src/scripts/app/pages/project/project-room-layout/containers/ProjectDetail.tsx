@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Row, Col } from 'antd'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, NavLink } from 'react-router-dom'
 
 import { ProjectViewModel } from '../../../../../admin'
 import { WebsiteRootState } from '../../../../Types'
@@ -27,7 +27,7 @@ interface StateProps {
 }
 
 interface OwnProps {
-    match: any
+    match?: any
 }
 
 class ProjectRoomLayoutDetail extends React.Component<OwnProps & StateProps & DispatchProps> {
@@ -60,6 +60,13 @@ class ProjectRoomLayoutDetail extends React.Component<OwnProps & StateProps & Di
 
         return (
             <div>
+                <div className="breadcrumb-wrapper">
+                    <ul className="breadcrumb">
+                        <li className="breadcrumb-item"><NavLink className="breadcrumb-item-link" to={`/project/${this.props.project.name}`}>Project</NavLink></li>
+                        <li className="breadcrumb-item">/</li>
+                        <li className="breadcrumb-item"><span className="breadcrumb-item-link breadcrumb-item-link-disabled">A2-1404</span></li>
+                    </ul>
+                </div>
                 <div className="project-details mb-5">
                     <Row>
                         <Col span={12}>
@@ -73,10 +80,10 @@ class ProjectRoomLayoutDetail extends React.Component<OwnProps & StateProps & Di
                                     <h1 className="project-title">{currentLayout.label}</h1>
                                 </div>
                                 <div>
-                                    <p><b>Diện tích:</b> <span>{currentLayout.area}</span> m<sup>2</sup></p>
-                                    <p><b>Số phòng ngủ:</b> <span>{currentLayout.bedRoomCount}</span></p>
+                                    <p><b>Area:</b> <span>{currentLayout.area}</span> m<sup>2</sup></p>
+                                    <p><b>Bed room:</b> <span>{currentLayout.bedRoomCount}</span></p>
                                     <p><b>Toilet:</b> <span>{currentLayout.toiletCount}</span></p>
-                                    <p><b>Số lượng căn:</b> <span>{currentLayout.totalRoomOfLayout} m<sup>2</sup></span></p>
+                                    <p><b>Total apartment:</b> <span>{currentLayout.totalRoomOfLayout}</span></p>
                                 </div>
                             </div>
                         </Col>
@@ -109,21 +116,21 @@ class ProjectRoomLayoutDetail extends React.Component<OwnProps & StateProps & Di
 
 const ProjectDetailWithPureData = ExtractImmutableHOC(ProjectRoomLayoutDetail)
 
-const mapStateToProps = (state: WebsiteRootState, ownProps) => {
+const mapStateToProps = (state: WebsiteRootState, ownProps: OwnProps) => {
     return {
         project: state.data.getIn(['WEBSITE_VIEW_PROJECT', 'response', 'result']),
         activeRoomType: state.temp.get('ACTIVE_ROOM_TYPE'),
-        packages: state.data.getIn(['WEBSITE_VIEW_PROJECT_PACKAGES', 'response', 'result']),
-        getPackagesResultCode: state.data.getIn(['WEBSITE_VIEW_PROJECT_PACKAGES', 'response', 'code']),
+        packages: state.data.getIn([`WEBSITE_VIEW_PROJECT_PACKAGES_${ownProps.match.params.layout}`, 'response', 'result']),
+        getPackagesResultCode: state.data.getIn([`WEBSITE_VIEW_PROJECT_PACKAGES_${ownProps.match.params.layout}`, 'response', 'code']),
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps): DispatchProps => {
+const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
     return {
         getProject: () => {
             const project = ownProps.match.params.project
             const requestSendAction = RequestSend('WEBSITE_VIEW_PROJECT', {
-                url: `/project/getProject?projectId=${project}`
+                url: `/project/GetProjectByName?projectName=${project}`
             })
             dispatch(requestSendAction)
         },
@@ -132,7 +139,7 @@ const mapDispatchToProps = (dispatch, ownProps): DispatchProps => {
             for (const packageId of packageIds)
                 search.append('ids', packageId)
             
-            const action = RequestSend('WEBSITE_VIEW_PROJECT_PACKAGES', {
+            const action = RequestSend(`WEBSITE_VIEW_PROJECT_PACKAGES_${ownProps.match.params.layout}`, {
                 url: `/package/GetPackageByIds?${search.toString()}`
             })
             dispatch(action)
@@ -144,4 +151,4 @@ const mapDispatchToProps = (dispatch, ownProps): DispatchProps => {
     }
 }
 
-export const ConnectedProjectDetail = withRouter(connect(mapStateToProps, mapDispatchToProps)(ProjectDetailWithPureData))
+export const ConnectedProjectDetail = withRouter(connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(ProjectDetailWithPureData))

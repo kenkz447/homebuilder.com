@@ -19,6 +19,7 @@ using Omi.Base.ViewModel;
 using Omi.Modules.ModuleBase.ViewModels;
 using Omi.Extensions;
 using System.Collections.Generic;
+using Omi.Base.Collection;
 
 namespace Omi.Modules.HomeBuilder.Controllers
 {
@@ -28,7 +29,7 @@ namespace Omi.Modules.HomeBuilder.Controllers
 
         public PackageController(
             PackageService packageService,
-            ILogger<PackageController> logger, 
+            ILogger<PackageController> logger,
             UserManager<ApplicationUser> userManager) 
             : base(logger, userManager)
         {
@@ -116,9 +117,12 @@ namespace Omi.Modules.HomeBuilder.Controllers
         public async Task<BaseJsonResult> GetPackages(PackageFilterViewModel viewModel)
         {
             var serviceModel = viewModel.ToServiceModel();
-            var entities = await _packageService.GetPackages(serviceModel);
 
-            var viewModels = new PageEntityViewModel<Package, PackageViewModel>(entities, o => ToPackageViewModel(o));
+            var entities = _packageService.GetPackages(serviceModel);
+
+            var result = await PaginatedList<Package>.CreateAsync(entities, serviceModel.Page, serviceModel.PageSize);
+
+            var viewModels = new PageEntityViewModel<Package, PackageViewModel>(result, o => ToPackageViewModel(o));
 
             return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, viewModels);
         }

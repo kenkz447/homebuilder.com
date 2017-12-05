@@ -21,6 +21,8 @@ namespace Omi.Modules.HomeBuilder.ViewModels
         public int Page { get; set; }
         public int PageSize { get; set; }
 
+        public string[] GetTypes { get; set; }
+
         public PackageFilterServiceModel ToServiceModel()
             => new PackageFilterServiceModel
             {
@@ -29,7 +31,8 @@ namespace Omi.Modules.HomeBuilder.ViewModels
                 BudgetMin = BudgetMin,
                 TaxonomyIds = new List<long>() { DesignTheme, HouseType },
                 Page = Page,
-                PageSize = PageSize
+                PageSize = PageSize,
+                GetTypes = GetTypes
             };
     }
 }

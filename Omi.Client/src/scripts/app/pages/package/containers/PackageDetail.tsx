@@ -9,6 +9,7 @@ import { Carousel } from '../../../components/components'
 import { PackageViewModel } from '../../../../admin'
 import { PageEntityViewModel, toCurrency } from '../../../../shared/modules/website'
 import { ConnectedNextAndPrevPackage } from './NextAndPrevPackage'
+import { ProductList } from './ProductList'
 
 interface DispatchProps {
     getPackage: (packageName) => void
@@ -78,34 +79,13 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
     }
 
     renderWhatIncluded(renderPackage: PackageViewModel) {
+        if (!renderPackage.products)
+            return null
+
         return (
             <div className="package-detail-section package-detail-included mb-5">
                 <label className="package-detail-section-label">What's include in this Package</label>
-                <div className="clearfix pt-2">
-                    {
-                        renderPackage.packageIncludedItems && renderPackage.packageIncludedItems.map((o) => (
-                            <div key={o.id} className="package-detail-included-item">
-                                <div className="package-detail-included-icon">
-                                    <img src={`${window.baseUrl}${o.icon}`} />
-                                </div>
-                                <label className="package-detail-included-label">{o.label}</label>
-                            </div>
-                        ))
-                    }
-                </div>
-                <hr className="mt-3 mb-3" />
-                <div className="clearfix">
-                    {
-                        renderPackage.packageFurnitureIncludedItems && renderPackage.packageFurnitureIncludedItems.map((o) => (
-                            <div key={o.id} className="package-detail-included-item">
-                                <div className="package-detail-included-icon">
-                                    <img src={`${window.baseUrl}${o.icon}`} />
-                                </div>
-                                <label className="package-detail-included-label">{o.label}</label>
-                            </div>
-                        ))
-                    }
-                </div>
+                <ProductList items={renderPackage.products} />
             </div>
         )
     }

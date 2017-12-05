@@ -52,7 +52,7 @@ namespace Omi.Modules.Ecommerce.Product.Services
 
         public async Task<bool> UpdateProductAsync(ProductServiceModel serviceModel)
         {
-            var oldProduct = await _context.ProductEntity.FindAsync(serviceModel.Product.Id);
+            var oldProduct = await AllProduct.FirstOrDefaultAsync(o => o.Id == serviceModel.Product.Id);
 
             var productEntry = _context.Entry(oldProduct);
 

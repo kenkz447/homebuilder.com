@@ -132,6 +132,8 @@ namespace Omi.Modules.HomeBuilder.Services
             var newProject = new Project
             {
                 Name = serviceModel.Name,
+                BudgetMin =serviceModel.BudgetMin,
+                BudgetMax =serviceModel.BudgetMax,
                 CreateByUserId = serviceModel.User.Id,
                 Details = new List<ProjectDetail>() {
                     serviceModel.Detail

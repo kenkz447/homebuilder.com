@@ -123,18 +123,7 @@ export class Marker extends React.Component<any> {
                     this.props.showBallon ? 'hint--balloon' : '',
                     showHint ? 'hint--always' : 'hint--hidden')}
             >
-                <div
-                    style={styleMarkerMarker}
-                    className={classnames('map-marker__marker', imageClass)}>
-                    {
-                        this.props.withText ?
-                            <div style={textStyle}>
-                                {this.props.marker.number}
-                            </div>
-                            :
-                            <div />
-                    }
-                </div>
+                <div style={styleMarkerMarker} className={classnames('map-marker__marker', imageClass)} onClick={this.props.onClick}/>
                 <div style={hintBaloonHorizontalPosStyle} className={classnames('hint__content map-marker-hint', this.props.showBallon ? '' : 'noevents')}>
                     { this.props.renderMarkerContent && this.props.renderMarkerContent(this.props.marker) }
                 </div>

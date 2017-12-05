@@ -112,6 +112,18 @@ export class FormComponent extends React.Component<FormOwnProps & FormStateProps
                         initialValue: this.props.initValue.title
                     })(<Input placeholder="Title" />)}
                 </FormItem>
+                <FormItem label="Budget min">
+                    {this.props.form.getFieldDecorator(nameof<ProjectViewModel>(o => o.budgetMin), {
+                        rules: [{ required: true }],
+                        initialValue: this.props.initValue.budgetMin
+                    })(<Input defaultValue={0} type="number" suffix="VND"/>)}
+                </FormItem>
+                <FormItem label="Budget max">
+                    {this.props.form.getFieldDecorator(nameof<ProjectViewModel>(o => o.budgetMax), {
+                        rules: [{ required: true }],
+                        initialValue: this.props.initValue.budgetMax
+                    })(<Input defaultValue={0} type="number" suffix="VND"/>)}
+                </FormItem>
                 <FormItem label="Project type">
                     {this.props.form.getFieldDecorator('projectTypeId', {
                         rules: [{ required: true }],

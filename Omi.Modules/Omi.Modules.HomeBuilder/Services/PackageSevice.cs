@@ -57,7 +57,7 @@ namespace Omi.Modules.HomeBuilder.Services
             return result;
         }
 
-        public async Task<PaginatedList<Package>> GetPackages(PackageFilterServiceModel serviceModel)
+        public IQueryable<Package> GetPackages(PackageFilterServiceModel serviceModel)
         {
             var packages = GetPackages().AsNoTracking();
 
@@ -71,11 +71,17 @@ namespace Omi.Modules.HomeBuilder.Services
             if (serviceModel.BudgetMax != default)
                 packages = packages.Where(o => o.Details.FirstOrDefault(e => e.ForCurrentRequestLanguage()).Price <= serviceModel.BudgetMax);
 
+            if (serviceModel.GetTypes != null)
+            {
+                if(serviceModel.GetTypes.Contains("perspective"))
+                    packages = packages.Where(o => o.IsPerspective == true);
+                if (serviceModel.GetTypes.Contains("non-perspective"))
+                    packages = packages.Where(o => o.IsPerspective != true);
+            }
+
             packages = packages.OrderByDescending(o => o.Id);
 
-            var result = await PaginatedList<Package>.CreateAsync(packages, serviceModel.Page, serviceModel.PageSize);
-
-            return result;
+            return packages;
         }
 
         public async Task<Package> GetNextPackage(long packageId)

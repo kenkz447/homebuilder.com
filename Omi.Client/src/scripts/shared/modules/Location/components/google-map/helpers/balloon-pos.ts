@@ -1,4 +1,4 @@
-const K_MAX_BALLOON_HEIGHT = 120
+const K_MAX_BALLOON_HEIGHT = 195
 
 export function getHintBaloonVerticalPosClass(y, mapHeight, balloonHeight) {
     balloonHeight = balloonHeight || K_MAX_BALLOON_HEIGHT
@@ -13,12 +13,12 @@ export function getHintBaloonHorizontalPosStyle(x, markerWidth, markerOffset, ma
     // balloon with not more than map width
     const K_BALLOON_WIDTH = Math.min(K_BALLOON_WIDTH_BASE, mapWidth - 2 * K_BALLOON_MAP_OFFSET)
     // default ballon offset from arrow center i want
-    const K_BALLOON_DEFAULT_OFFSET = K_BALLOON_WIDTH * 0.15
+    const K_BALLOON_DEFAULT_OFFSET = K_BALLOON_WIDTH * 0
     // from corner
     const offset = -K_BALLOON_DEFAULT_OFFSET + markerWidth * 0.5
     // overflow in px (marker assymetric)
     const leftX = x + offset - markerWidth * markerOffset
-    const rightX = leftX + K_BALLOON_WIDTH
+    const rightX = leftX + K_BALLOON_WIDTH/2
     // recalc if overflow
     const mapOffset = offset + Math.min(0, (mapWidth - K_BALLOON_MAP_OFFSET) - rightX) + Math.max(0, K_BALLOON_MAP_OFFSET - leftX)
 

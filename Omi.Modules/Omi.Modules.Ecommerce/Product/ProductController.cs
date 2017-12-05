@@ -70,7 +70,10 @@ namespace Omi.Modules.Ecommerce.Product
                 if (viewModel.IsEditModel)
                 {
                     var allBrand = _productTaxonomiesService.GetAllBrand();
+                    var allType = _productTaxonomiesService.GetAllProductType();
+
                     result.AvaliableBrands = allBrand.Select(o => TaxomonyViewModel.FromEntity(o));
+                    result.AvaliableProductTypes = allType.Select(o => TaxomonyViewModel.FromEntity(o));
                 }
 
                 baseJsonresult.Result = result;

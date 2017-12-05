@@ -42,7 +42,8 @@ namespace Omi.Modules.HomeBuilder
                     typeof(ProjectStatusSeed),
                     typeof(EntityTypeSeed),
                     typeof(PackageFunitureIncludedSeed),
-                    typeof(BrandSeed)
+                    typeof(BrandSeed),
+                    typeof(ProductTypeSeed)
                 });
             }
         }

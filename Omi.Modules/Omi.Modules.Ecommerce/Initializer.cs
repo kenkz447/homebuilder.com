@@ -31,7 +31,8 @@ namespace Omi.Modules.Ecommerce
                 var dbContext = serviceProvider.GetService<EcommerceDbContext>();
                 await dbContext.Seed(new List<Type>
                 {
-                    typeof(BaseBrandSeed)
+                    typeof(BaseBrandSeed),
+                    typeof(BaseProductTypeSeed)
                 }); 
             }
         }

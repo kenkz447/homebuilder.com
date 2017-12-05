@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 import { PackageViewModel } from '../../../../../admin'
 import { toCurrency } from '../../../../../shared/modules/website'
+import { Icon } from 'antd';
 
 interface OwnProps {
     package: PackageViewModel
@@ -27,7 +28,7 @@ export const PackageItem = (props: OwnProps) => {
                         <figure className="effect-apollo">
                             <img src={`${window.baseUrl}${props.package.avatar.src}`} />
                             <figcaption>
-                                <p>Apollo's last game of pool was so strange.</p>
+                                <p>View Details <Icon type="right-circle-o" /></p>
                             </figcaption>
                         </figure>   
                     </div>

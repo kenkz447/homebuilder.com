@@ -21,7 +21,8 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
         public long AvatarFileId { get; set; }
         public long LocationImageId { get; set; }
         public long SiteMapImageId { get; set; }
-
+        public int BudgetMin { get; set; }
+        public int BudgetMax { get; set; }
         public long CityId { get; set; }
           
         public ProjectDetail Detail { get; set; }
@@ -36,6 +37,8 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
             {
                 Id = Id,
                 Name = Name,
+                BudgetMin = BudgetMin,
+                BudgetMax = BudgetMax,
                 CreateByUserId = User.Id,
                 Details = new List<ProjectDetail>() {
                     Detail
@@ -100,13 +103,15 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
             if (viewModel.ProjectStatusId != default)
                 taxonomyIds.Add(viewModel.ProjectStatusId);
 
+            var projectName = viewModel.Title.ToEntityName();
             return new ProjectServiceModel
             {
                 Id = viewModel.ProjectId,
-                Name = viewModel.Name,
+                Name = projectName,
                 Detail = AutoMapper.Mapper.Map<ProjectDetail>(viewModel),
                 ProjectBlocks = nestedProjectBlocks,
-
+                BudgetMin = viewModel.BudgetMin,
+                BudgetMax = viewModel.BudgetMax,
                 AvatarFileId = viewModel.Avatar.FileId,
                 LocationImageId = viewModel.LocationImage.FileId,
                 SiteMapImageId = viewModel.SiteMapImage.FileId,

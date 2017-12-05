@@ -22,7 +22,8 @@ namespace Omi.Modules.Ecommerce.Product.ServiceModel
 
             var taxonomyIds = new List<long>()
             {
-                viewModel.BrandId
+                viewModel.BrandId,
+                viewModel.TypeId
             };
 
             var taxonomies = taxonomyIds.Select(taxonomyId => new ProductTaxonomy {

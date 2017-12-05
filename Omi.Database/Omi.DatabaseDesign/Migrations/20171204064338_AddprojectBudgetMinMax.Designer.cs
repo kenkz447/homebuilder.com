@@ -11,9 +11,10 @@ using System;
 namespace Omi.DatabaseDesign.Migrations
 {
     [DbContext(typeof(OmiDbContext))]
-    partial class OmiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171204064338_AddprojectBudgetMinMax")]
+    partial class AddprojectBudgetMinMax
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -332,6 +333,10 @@ namespace Omi.DatabaseDesign.Migrations
 
                     b.HasIndex("LastUpdateByUserId");
 
+                    b.HasIndex("ProjectBlockId")
+                        .IsUnique()
+                        .HasFilter("[ProjectBlockId] IS NOT NULL");
+
                     b.ToTable("Package");
                 });
 
@@ -456,10 +461,6 @@ namespace Omi.DatabaseDesign.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EntityTypeId");
-
-                    b.HasIndex("PackageId")
-                        .IsUnique()
-                        .HasFilter("[PackageId] IS NOT NULL");
 
                     b.HasIndex("ParentId");
 
@@ -909,6 +910,10 @@ namespace Omi.DatabaseDesign.Migrations
                     b.HasOne("Omi.Data.ApplicationUser", "LastUpdateByUser")
                         .WithMany()
                         .HasForeignKey("LastUpdateByUserId");
+
+                    b.HasOne("Omi.Modules.HomeBuilder.Entities.ProjectBlock", "ProjectBlock")
+                        .WithOne("Package")
+                        .HasForeignKey("Omi.Modules.HomeBuilder.Entities.Package", "ProjectBlockId");
                 });
 
             modelBuilder.Entity("Omi.Modules.HomeBuilder.Entities.PackageDetail", b =>
@@ -984,10 +989,6 @@ namespace Omi.DatabaseDesign.Migrations
                         .WithMany()
                         .HasForeignKey("EntityTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Omi.Modules.HomeBuilder.Entities.Package", "Package")
-                        .WithOne("ProjectBlock")
-                        .HasForeignKey("Omi.Modules.HomeBuilder.Entities.ProjectBlock", "PackageId");
 
                     b.HasOne("Omi.Modules.HomeBuilder.Entities.ProjectBlock", "Parent")
                         .WithMany("Children")

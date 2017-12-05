@@ -38,6 +38,11 @@ namespace Omi.Modules.HomeBuilder
             builder.Entity<ProjectFile>()
                 .HasKey(o => new { o.EntityId, o.FileEntityId });
 
+            builder.Entity<ProjectBlock>()
+                .HasOne(o => o.Package)
+                .WithOne(o => o.ProjectBlock)
+                .HasForeignKey<ProjectBlock>(o => o.PackageId);
+
             builder.Entity<ProjectBlockFile>()
                 .HasKey(o => new { o.EntityId, o.FileEntityId });
         }

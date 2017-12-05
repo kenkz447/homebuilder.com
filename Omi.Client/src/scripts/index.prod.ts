@@ -1,7 +1,10 @@
 
 // Import styles
 import '../style/app.scss'
-
 // Global vars
 window.baseUrl = `${location.origin}/`
-require('shared/startup')()
+
+// Import main
+import initStartup from 'shared/startup'
+
+initStartup()

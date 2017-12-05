@@ -2,6 +2,8 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { withRouter, match } from 'react-router'
 import { Row, Col } from 'antd'
+import * as FacebookProvider from 'react-facebook'
+import { NavLink } from 'react-router-dom'
 
 import { RequestSend, ExtractImmutableHOC, SetTempValue } from 'shared/core'
 import { WebsiteRootState } from '../../../../Types'
@@ -12,8 +14,10 @@ import { ProjectViewModel } from 'admin/Types'
 import { LayoutSelect } from './LayoutSelect'
 import * as classNames from 'classnames'
 
-import './style.scss'
 import { ConnectedLightbox } from './LightBox'
+import { QuotationDetail } from './QuotationDetail'
+
+import './style.scss'
 
 interface DispatchProps {
     getPackage: () => void
@@ -32,7 +36,6 @@ interface OwnProps {
 }
 
 class PackageComponent extends React.Component<StateProps & DispatchProps & OwnProps> {
-
     componentWillMount() {
         this.props.getProject()
         this.props.getPackage()
@@ -50,12 +53,25 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
         const currentLayoutId = +this.props.match.params.layout
         const currentLayout = currentRoomType.children.find((o) => o.id == currentLayoutId)
 
-        const currentPerspective = currentLayout.children.find((o) => o.id == this.props.package.projectBlockId)
+        const currentPerspective = currentLayout.children.find((o) => o.id == packageToRender.projectBlockId)
 
         const pictures = currentPerspective && currentPerspective.layoutPoints.map((o) => o.image) || []
         return (
             <div className="package-detail">
-                <div className="project-layouts">
+                {
+                    currentPerspective && (
+                        <div className="breadcrumb-wrapper">
+                            <ul className="breadcrumb">
+                                <li className="breadcrumb-item"><NavLink className="breadcrumb-item-link" to={`/project/${this.props.project.name}`}>Project</NavLink></li>
+                                <li className="breadcrumb-item">/</li>
+                                <li className="breadcrumb-item"><NavLink className="breadcrumb-item-link" to={`/project/${this.props.project.name}/${currentRoomTypeId}/${currentLayoutId}`}>A2-1404</NavLink></li>
+                                <li className="breadcrumb-item">/</li>
+                                <li className="breadcrumb-item"><span className="breadcrumb-item-link breadcrumb-item-link-disabled">{currentPerspective.label}</span></li>
+                            </ul>
+                        </div>
+                    )
+                }
+                <div className="project-layouts mb-2">
                     <img className="mw-100" src={`${window.baseUrl}${currentLayout.layoutImage.src}`} />
                     {
                         (currentPerspective && currentPerspective.layoutPoints) && (
@@ -88,12 +104,8 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
                         itemClick={(itemIndex) => { this.props.openLightBox(itemIndex) }}
                         containerClassName="slick-multi" />
                 </div>
-                <Row>
-                    <Col span={16}>
-                        {this.renderProjectDescription(packageToRender)}
-                        {this.renderWhatIncluded(packageToRender)}
-                    </Col>
-                </Row>
+                {this.renderProjectDescription(packageToRender)}
+                {this.renderWhatIncluded(packageToRender)}
                 <ConnectedLightbox images={pictures} />
             </div>
         )
@@ -109,6 +121,7 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
                     <p><span>Area: </span><span>{renderPackage.area} m<sup>2</sup></span></p>
                     <p><span>Intro: </span> <span>{renderPackage.sortText}</span></p>
                 </div>
+                <button className="package-contact-us-button">Contact Us</button>
             </section>
         )
     }
@@ -122,13 +135,32 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
                         renderPackage.packageIncludedItems && renderPackage.packageIncludedItems.map((o) => (
                             <div key={o.id} className="package-detail-included-item">
                                 <div className="package-detail-included-icon">
-                                    <img src={`${o.icon}`} />
+                                    <img src={`${window.baseUrl}${o.icon}`} />
                                 </div>
                                 <label className="package-detail-included-label">{o.label}</label>
                             </div>
                         ))
                     }
                 </div>
+                <hr className="mt-3 mb-3" />
+                <div className="clearfix mb-3">
+                    {
+                        renderPackage.packageFurnitureIncludedItems && renderPackage.packageFurnitureIncludedItems.map((o) => (
+                            <div key={o.id} className="package-detail-included-item">
+                                <div className="package-detail-included-icon">
+                                    <img src={`${window.baseUrl}${o.icon}`} />
+                                </div>
+                                <label className="package-detail-included-label">{o.label}</label>
+                            </div>
+                        ))
+                    }
+                </div>
+                <div className="mb-5">
+                    <QuotationDetail items={renderPackage.products} />
+                </div>
+                <FacebookProvider.default appId="1925738257700931">
+                    <FacebookProvider.Comments href={window.location} width="100%" />
+                </FacebookProvider.default>
             </div>
         )
     }
@@ -162,7 +194,7 @@ const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
         getProject: () => {
             const project = ownProps.match.params.project
             const requestSendAction = RequestSend('WEBSITE_VIEW_PROJECT', {
-                url: `/project/GetProject?projectId=${project}`
+                url: `/project/GetProjectByName?projectName=${project}`
             })
             dispatch(requestSendAction)
         },

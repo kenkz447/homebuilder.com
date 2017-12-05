@@ -13,8 +13,11 @@ export interface ProductViewModel {
     price?: number
     brandId?: number
     brand?: TaxonomyViewModel
+    typeId?: number
+    type?: TaxonomyViewModel
     avatar?: FileEntityInfo
     avaliableBrands?: Array<TaxonomyViewModel>
+    avaliableProductTypes?: Array<TaxonomyViewModel>
 }
 
 export interface PackageProductViewModel {
@@ -66,7 +69,9 @@ export interface ProjectBlockViewModel {
 
 export interface ProjectViewModel {
     projectId?: number,
-    Name?: string,
+    name?: string
+    budgetMin?: number
+    budgetMax?: number
     title?: string
     investor?: string
     street?: string

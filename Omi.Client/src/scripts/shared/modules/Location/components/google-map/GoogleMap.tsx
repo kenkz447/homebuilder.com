@@ -68,6 +68,8 @@ export class GoogleMap extends React.Component<any> {
                     lat={marker.lat}
                     lng={marker.lng}
                     height={marker.height}
+                    onClick={marker.onClick}
+
                     // any user props
                     showBallon={marker.id === this.props.showBalloonForMarker}
                     onCloseClick={this.onBalloonCloseClick}

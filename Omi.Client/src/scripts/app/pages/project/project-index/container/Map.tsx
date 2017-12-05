@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { ExtractImmutableHOC } from '../../../../../shared/core'
 import { GoogleMap } from "../../../../../shared/modules/Location"
 import { WebsiteRootState } from '../../../../Types'
+import { Image } from 'shared/modules/FileAndMedia/components';
 
 interface StateProps {
     markers: Array<any>
@@ -18,11 +19,14 @@ class Component extends React.Component<StateProps> {
             />
         )
     }
-    
+
     renderMarkerContent(marker) {
         return (
-            <div style={{width: 230}}>
-                <img src={`${window.baseUrl}${marker.thumbnail}`} style={{maxWidth: '100%'}}/>
+            <div className="map-marker-project" style={{ width: 230 }}>
+                <div className="map-marker-project-thumbnail" >
+                    <Image className="d-block mw-100 w-100" fileEntityInfo={marker.thumbnail} />
+                </div>
+                <figure className="map-marker-project-title">{marker.title}</figure>
             </div>
         )
     }

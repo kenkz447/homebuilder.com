@@ -3,12 +3,16 @@ import { connect } from 'react-redux'
 import { Row, Col } from 'antd'
 
 import { ExtractImmutableHOC, RequestSend, SetTempValue } from '../../../../../shared/core'
-import { PageEntityViewModel,Pager, Transition } from '../../../../../shared/modules/website'
+import { PageEntityViewModel, Pager, Transition } from '../../../../../shared/modules/website'
 import { ProjectViewModel } from '../../../../../admin'
+import { Image } from 'shared/modules/FileAndMedia'
 
 import { WebsiteRootState } from '../../../../Types'
 
 import { ProjectItem } from './project-list/ProjectItem'
+import { push } from 'react-router-redux'
+import { toCurrency } from 'shared/modules/website/utilities';
+import { NavLink } from 'react-router-dom';
 
 interface DispatchProps {
     getProjects: () => void
@@ -25,9 +29,9 @@ class ProjectListComponent extends React.Component<StateProps & DispatchProps> {
     componentWillReceiveProps(nextProps: StateProps) {
         if (this.props.search != nextProps.search)
             this.props.getProjects()
-        
+
         if (nextProps.projectPage)
-            this.props.loadMapMakers(nextProps.projectPage.entities)    
+            this.props.loadMapMakers(nextProps.projectPage.entities)
     }
 
     componentWillMount() {
@@ -37,30 +41,37 @@ class ProjectListComponent extends React.Component<StateProps & DispatchProps> {
     render() {
         if (!this.props.projectPage)
             return null
+        const items = this.props.projectPage.entities
 
         return (
             <Transition>
                 <div className="mb-3"><h2><b>Nearby Projects</b></h2></div>
-                <Row className="project-list" gutter={30} >
-                    {
-                        this.props.projectPage && this.props.projectPage.entities.map((item) => (
-                            <Col key={item.projectId} span={8}>
-                                <ProjectItem project={item} />
-                            </Col>)
-                        )
-                    }
-                    {
-                        this.props.projectPage.entities.length &&
-                        <Col span={24}>
-                            <div className="clearfix">
-                                <div className="float-right">
-                                    <ProjectListPager baseURL={new URL(location.href)}  {...this.props.projectPage.pager} />
+                <ul className="project-list">
+                    {items.map(o => {
+                        return (
+                            <li key={o.projectId} className="project-list-item clearfix">
+                                <div className={'project-list-item-container'}>
+                                    <div className="project-list-item-avatar">
+                                        <Image className="d-block mw-100 w-100" fileEntityInfo={o.avatar} />
+                                    </div>
+                                    <div className="project-list-item-details">
+                                        <label className="project-list-item-text">{o.title}</label>
+                                        <span className="project-list-item-label">VND {toCurrency(o.budgetMin)} | {toCurrency(o.budgetMax)}</span>
+                                        <span className="project-list-item-text">{o.city.label} | {o.projectType.label}</span>
+                                    </div>
+                                    <NavLink className="project-list-item-viewmore-btn" aria-current="false" to={`/project/${o.name}`}>
+                                        <div className="project-list-item-viewmore">
+                                            <span className="project-list-item-viewmore-text">View More</span>
+                                            <span className="project-list-item-viewmore-icon">
+                                                <i className="anticon anticon-caret-right"></i>
+                                            </span>
+                                        </div>
+                                    </NavLink>
                                 </div>
-                            </div>
-                        </Col>
-                    }
-
-                </Row>
+                            </li>
+                        )
+                    })}
+                </ul>
             </Transition>
         )
     }
@@ -87,8 +98,13 @@ const mapDispatchToProps = (dispatch): DispatchProps => {
                     id: project.projectId,
                     lat: project.mapLatitude,
                     lng: project.mapLongitude,
-                    height: 100,
-                    thumbnail: project.avatar.src
+                    height: 250,
+                    thumbnail: project.avatar,
+                    title: project.title,
+                    onClick: () => {
+                        const toDetailAction = push(`/project/${project.name}`)
+                        dispatch(toDetailAction)
+                    }
                 }
             })
 

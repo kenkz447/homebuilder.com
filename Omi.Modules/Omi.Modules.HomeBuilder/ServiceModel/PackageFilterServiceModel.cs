@@ -14,5 +14,7 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
         public int BudgetMin { get; set; }
         public int BudgetMax { get; set; }
         public List<long> TaxonomyIds { get; set; }
+
+        public string[] GetTypes { get; set; }
     }
 }
