@@ -48,9 +48,12 @@ namespace Omi.Modules.Ecommerce.Product.ViewModels
 
             var viewModel = viewModelFromProduct.MergeWith(viewModelFromProductDetail);
 
-            var brand = entity.EntityTaxonomies.FirstOrDefault(o => o.Taxonomy.TaxonomyTypeId == Seed.BaseBrandSeed.ProductBrand.Id).Taxonomy;
-            viewModel.Brand = TaxomonyViewModel.FromEntity(brand);
-            viewModel.BrandId = brand.Id;
+            var brand = entity.EntityTaxonomies.FirstOrDefault(o => o.Taxonomy.TaxonomyTypeId == Seed.BaseBrandSeed.ProductBrand.Id)?.Taxonomy;
+            if(brand != null)
+            {
+                viewModel.Brand = TaxomonyViewModel.FromEntity(brand);
+                viewModel.BrandId = brand.Id;
+            }
 
             var type = entity.EntityTaxonomies.FirstOrDefault(o => o.Taxonomy.TaxonomyTypeId == Seed.BaseProductTypeSeed.ProductType.Id)?.Taxonomy;
             if(type != null)
@@ -59,8 +62,9 @@ namespace Omi.Modules.Ecommerce.Product.ViewModels
                 viewModel.TypeId = type.Id;
             }
 
-            var avatar = entity.EntityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.Avatar).FileEntity;
-            viewModel.Avatar = FileEntityInfo.FromEntity(avatar);
+            var avatar = entity.EntityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.Avatar)?.FileEntity;
+            if(avatar != null)
+                viewModel.Avatar = FileEntityInfo.FromEntity(avatar);
 
             var pictures = entity.EntityFiles.Where(o => o.UsingType == (int)FileUsingType.Picture);
             viewModel.Pictures = pictures.Select(picture => FileEntityInfo.FromEntity(picture.FileEntity));

@@ -50,6 +50,18 @@ namespace Omi.Modules.Ecommerce.Product.Services
             return entry.Entity;
         }
 
+        public async Task<int> CreateProductAsync(IEnumerable<ProductServiceModel> serviceModels)
+        {
+            var result = new List<ProductEntity>();
+            foreach (var serviceModel in serviceModels)
+            {
+                var newProduct = await CreateProductAsync(serviceModel);
+                result.Add(newProduct);
+            }
+
+            return result.Count;
+        }
+
         public async Task<bool> UpdateProductAsync(ProductServiceModel serviceModel)
         {
             var oldProduct = await AllProduct.FirstOrDefaultAsync(o => o.Id == serviceModel.Product.Id);

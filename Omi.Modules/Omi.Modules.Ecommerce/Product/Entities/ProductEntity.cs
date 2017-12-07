@@ -13,6 +13,11 @@ namespace Omi.Modules.Ecommerce.Product.Entities
         IEntityWithTaxonomies<long, ProductEntity, ProductTaxonomy>,
         IEntityWithFiles<long, ProductEntity, ProductFile>
     {
+        public ProductEntity()
+        {
+            EntityFiles = new HashSet<ProductFile>();
+        }
+
         public string Name { get; set; }
         public string Price { get; set; }
         public string Code { get; set; }

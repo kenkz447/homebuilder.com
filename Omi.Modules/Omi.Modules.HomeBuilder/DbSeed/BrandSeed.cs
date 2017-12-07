@@ -12,14 +12,14 @@ namespace Omi.Modules.HomeBuilder.DbSeed
     {
         public static TaxonomyEntity Curator9102 = new TaxonomyEntity
         {
-            Name = "product-brand-curator9102",
+            Name = "product-brand-curator",
             Details = new List<TaxonomyDetail>
             {
                 new TaxonomyDetail
                 {
                     Label = "Curator9102",
                     Language = "vi"
-                }
+                },
             }
         };
 

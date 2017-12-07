@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Omi.Modules.ModuleBase.Entities;
 using Omi.Extensions;
 using Omi.Base;
+using System.Collections.Generic;
 
 namespace Omi.Modules.Ecommerce.Seed
 {
@@ -10,13 +11,31 @@ namespace Omi.Modules.Ecommerce.Seed
     {
         public static TaxonomyType ProductBrand = new TaxonomyType
         {
-            Name ="ecommerce-brand"
+            Name = "ecommerce-brand"
+        };
+
+        public static TaxonomyEntity Uncategorized = new TaxonomyEntity
+        {
+            Name = "ecommerce-brand-uncategorized",
+            Details = new List<TaxonomyDetail>()
+            {
+                new TaxonomyDetail
+                {
+                    Label = "Uncategorized",
+                    Language = "vi"
+                }
+            }
         };
 
         public async Task SeedAsync(DbContext dbConext)
         {
             var taxonomyTypeSet = dbConext.Set<TaxonomyType>();
             ProductBrand = taxonomyTypeSet.SeedEntity(ProductBrand);
+
+            var taxonomySet = dbConext.Set<TaxonomyEntity>();
+
+            Uncategorized.TaxonomyTypeId = ProductBrand.Id;
+            Uncategorized = taxonomySet.SeedEntity(Uncategorized);
 
             await dbConext.SaveChangesAsync();
         }
