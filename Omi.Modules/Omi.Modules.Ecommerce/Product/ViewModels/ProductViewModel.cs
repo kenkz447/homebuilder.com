@@ -3,6 +3,7 @@ using Omi.Modules.Ecommerce.Product.Entities;
 using Omi.Modules.FileAndMedia.Base;
 using Omi.Modules.FileAndMedia.ViewModel;
 using Omi.Modules.ModuleBase.ViewModels;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,6 +17,10 @@ namespace Omi.Modules.Ecommerce.Product.ViewModels
 
         [Required]
         public string Title { get; set; }
+
+        public string Description { get; set; }
+        public string Code { get; set; }
+        public string Dimension { get; set; }
 
         public int Price { get; set; }
 
@@ -31,6 +36,8 @@ namespace Omi.Modules.Ecommerce.Product.ViewModels
 
         [Required]
         public FileEntityInfo Avatar { get; set; }
+
+        public IEnumerable<FileEntityInfo> Pictures { get; set; }
 
         public static ProductViewModel FromEntity(ProductEntity entity)
         {
@@ -54,6 +61,9 @@ namespace Omi.Modules.Ecommerce.Product.ViewModels
 
             var avatar = entity.EntityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.Avatar).FileEntity;
             viewModel.Avatar = FileEntityInfo.FromEntity(avatar);
+
+            var pictures = entity.EntityFiles.Where(o => o.UsingType == (int)FileUsingType.Picture);
+            viewModel.Pictures = pictures.Select(picture => FileEntityInfo.FromEntity(picture.FileEntity));
 
             return viewModel;
         }

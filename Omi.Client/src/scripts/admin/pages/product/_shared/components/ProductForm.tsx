@@ -63,6 +63,9 @@ class ProductFormComponent extends React.Component<ProductFormProps> {
                             <Col span={8}>
                                 {this.renderDesciption.bind(this)()}
                             </Col>
+                            <Col span={8}>
+                                {this.renderPictures.bind(this)()}
+                            </Col>
                         </Row>
                     </TabPane>
                 </Tabs>
@@ -74,8 +77,8 @@ class ProductFormComponent extends React.Component<ProductFormProps> {
         return (
             <div>
                 {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.entityId), {
-                        initialValue: this.props.initProductViewModel.entityId
-                    })(<Input key="id" type="hidden" />)}
+                    initialValue: this.props.initProductViewModel.entityId
+                })(<Input key="id" type="hidden" />)}
             </div>)
     }
 
@@ -109,6 +112,23 @@ class ProductFormComponent extends React.Component<ProductFormProps> {
         return (
             <fieldset>
                 <h2 className="form-legend mb-4">Description</h2>
+                <FormItem label="Code">
+                    {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.code), {
+                        rules: [{ required: true, message: 'Code is required!' }],
+                        initialValue: this.props.initProductViewModel.code
+                    })(<Input />)}
+                </FormItem>
+                <FormItem label="Dimension">
+                    {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.dimension), {
+                        rules: [{ required: true, message: 'Dimension is required!' }],
+                        initialValue: this.props.initProductViewModel.dimension
+                    })(<Input />)}
+                </FormItem>
+                <FormItem label="Description">
+                    {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.description), {
+                        initialValue: this.props.initProductViewModel.description
+                    })(<Input.TextArea rows={12} />)}
+                </FormItem>
                 <FormItem label="Brand">
                     {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.brandId), {
                         rules: [{ required: true, message: 'Brand is required!' }],
@@ -141,6 +161,18 @@ class ProductFormComponent extends React.Component<ProductFormProps> {
         )
     }
 
+    renderPictures() {
+        return (
+            <fieldset>
+                <h2 className="form-legend mb-4">Pictures</h2>
+                <FormItem label="Gallery">
+                    {this.props.form.getFieldDecorator(nameof<ProductViewModel>(o => o.pictures), {
+                        initialValue: this.props.initProductViewModel.pictures
+                    })(<PictureWall />)}
+                </FormItem>
+            </fieldset>
+        )
+    }
     handleSubmit = (e) => {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {

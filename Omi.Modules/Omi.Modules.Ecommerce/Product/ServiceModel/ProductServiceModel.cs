@@ -41,6 +41,14 @@ namespace Omi.Modules.Ecommerce.Product.ServiceModel
                     },
                 };
 
+            if (viewModel.Pictures != null)
+                files.AddRange(viewModel.Pictures.Select(picture => new ProductFile
+                {
+                    UsingType = (int)FileUsingType.Picture,
+                    FileEntityId = picture.FileId,
+                    EntityId = viewModel.EntityId,
+                }));
+
             product.Name = viewModel.Title.ToEntityName();
             product.Details = new List<ProductDetail>()
             {

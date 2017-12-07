@@ -15,7 +15,8 @@ namespace Omi.Modules.Ecommerce.Product.Entities
     {
         public string Name { get; set; }
         public string Price { get; set; }
-
+        public string Code { get; set; }
+        public string Dimension { get; set; }
         public int Status { get; set; }
 
         public IEnumerable<ProductDetail> Details { get; set; }

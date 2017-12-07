@@ -10,12 +10,16 @@ export interface ModuleRootState extends RootState {
 export interface ProductViewModel {
     entityId?: number
     title?: number
+    code?: string
+    description?: string
+    dimension?: string
     price?: number
     brandId?: number
     brand?: TaxonomyViewModel
     typeId?: number
     type?: TaxonomyViewModel
     avatar?: FileEntityInfo
+    pictures: Array<FileEntityInfo>
     avaliableBrands?: Array<TaxonomyViewModel>
     avaliableProductTypes?: Array<TaxonomyViewModel>
 }
