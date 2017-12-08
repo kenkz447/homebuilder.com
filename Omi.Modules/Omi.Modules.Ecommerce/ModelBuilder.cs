@@ -9,7 +9,7 @@ namespace Omi.Modules.Ecommerce
         public void Build(ModelBuilder builder)
         {
             builder.Entity<ProductEntity>()
-                .HasAlternateKey(o => o.Name);
+                .HasIndex(o => o.Name);
 
             builder.Entity<ProductTaxonomy>()
                 .HasKey(o => new { o.EntityId, o.TaxonomyId });

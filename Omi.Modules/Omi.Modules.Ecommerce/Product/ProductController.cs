@@ -50,7 +50,7 @@ namespace Omi.Modules.Ecommerce.Product
 
             if (viewModel.GetMode == (int)GetMode.Paginated)
             {
-                var pageList = await PaginatedList<ProductEntity>.CreateAsync(products, viewModel.PageIndex, viewModel.PageSize);
+                var pageList = await PaginatedList<ProductEntity>.CreateAsync(products, viewModel.Page, viewModel.PageSize);
                 var result = new PageEntityViewModel<ProductEntity, ProductViewModel>(pageList, entity => ProductViewModel.FromEntity(entity));
                 baseJsonresult.Result = result;
             }

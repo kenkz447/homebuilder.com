@@ -22,6 +22,7 @@ namespace Omi.Modules.Ecommerce.Product.Services
                 .Include(o => o.Details)
                 .Include(o => o.EntityTaxonomies)
                 .ThenInclude(o => o.Taxonomy)
+                .ThenInclude(o => o.Details)
                 .Include(o => o.EntityFiles)
                 .ThenInclude(o => o.FileEntity);
             }
@@ -35,31 +36,31 @@ namespace Omi.Modules.Ecommerce.Product.Services
         public IQueryable<ProductEntity> GetProducts(BaseFilterServiceModel<long> serviceModel)
         {
             var products = this.AllProduct.FilterByServiceModel(serviceModel);
-
+            products = products.OrderByDescending(o => o.Id);
             return products;
         }
 
-        public async Task<ProductEntity> CreateProductAsync(ProductServiceModel serviceModel)
+        public async Task<ProductEntity> CreateProductAsync(ProductServiceModel serviceModel, bool save = true)
         {
             var newProduct = serviceModel.Product;
             newProduct.CreateByUserId = serviceModel.User.Id;
 
             var entry = _context.ProductEntity.Add(newProduct);
-            await _context.SaveChangesAsync();
+
+            if(save == true)
+                await _context.SaveChangesAsync();
 
             return entry.Entity;
         }
 
         public async Task<int> CreateProductAsync(IEnumerable<ProductServiceModel> serviceModels)
         {
-            var result = new List<ProductEntity>();
             foreach (var serviceModel in serviceModels)
             {
-                var newProduct = await CreateProductAsync(serviceModel);
-                result.Add(newProduct);
+                var newProduct = await CreateProductAsync(serviceModel, false);
             }
-
-            return result.Count;
+            
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<bool> UpdateProductAsync(ProductServiceModel serviceModel)

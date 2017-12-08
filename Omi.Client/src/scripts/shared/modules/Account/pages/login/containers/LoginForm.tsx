@@ -109,7 +109,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(requestSendAction)
     },
     redirectToDashboard: () => {
-      dispatch(push('/website/admin/construction'))
+      dispatch(push('/website/admin/package'))
     }
   }
 }

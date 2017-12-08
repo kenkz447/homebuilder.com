@@ -10,6 +10,9 @@ namespace Omi.Modules.Ecommerce.Product.Services
 {
     public class ProductTaxonomiesService
     {
+        public const string BRAND_NAME_PREFIX = "product-brand";
+        public const string TYPE_NAME_PREFIX = "product-type";
+
         private readonly EcommerceDbContext _context;
 
         public ProductTaxonomiesService(EcommerceDbContext context)
@@ -25,13 +28,13 @@ namespace Omi.Modules.Ecommerce.Product.Services
 
         public TaxonomyEntity GetBrandByLabel(string brandLabel)
         {
-            var brandEntityName = $"product-brand-{brandLabel.ToEntityName()}";
+            var brandEntityName = $"{BRAND_NAME_PREFIX}-{brandLabel.ToEntityName()}";
             return _context.TaxonomyEntity.FirstOrDefault(o => o.Name == brandEntityName);
         }
 
         public TaxonomyEntity AddBrand(string brandLabel, bool save = true)
         {
-            var brandEntityName = $"product-brand-{brandLabel.ToEntityName()}";
+            var brandEntityName = $"{BRAND_NAME_PREFIX}-{brandLabel.ToEntityName()}";
             var newBrand = new TaxonomyEntity
             {
                 Name = brandEntityName,
@@ -56,13 +59,13 @@ namespace Omi.Modules.Ecommerce.Product.Services
 
         public TaxonomyEntity GetProductTypeByLabel(string typeLabel)
         {
-            var brandEntityName = $"product-type-{typeLabel.ToEntityName()}";
+            var brandEntityName = $"{TYPE_NAME_PREFIX}-{typeLabel.ToEntityName()}";
             return _context.TaxonomyEntity.FirstOrDefault(o => o.Name == brandEntityName);
         }
 
         public TaxonomyEntity AddProductType(string typeLabel, bool save = true)
         {
-            var brandEntityName = $"product-type-{typeLabel.ToEntityName()}";
+            var brandEntityName = $"{TYPE_NAME_PREFIX}-{typeLabel.ToEntityName()}";
             var newType = new TaxonomyEntity
             {
                 Name = brandEntityName,

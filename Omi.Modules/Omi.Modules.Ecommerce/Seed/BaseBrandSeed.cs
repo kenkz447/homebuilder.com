@@ -16,7 +16,7 @@ namespace Omi.Modules.Ecommerce.Seed
 
         public static TaxonomyEntity Uncategorized = new TaxonomyEntity
         {
-            Name = "ecommerce-brand-uncategorized",
+            Name = "product-brand-uncategorized",
             Details = new List<TaxonomyDetail>()
             {
                 new TaxonomyDetail

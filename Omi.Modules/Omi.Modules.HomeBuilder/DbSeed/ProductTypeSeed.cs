@@ -17,7 +17,7 @@ namespace Omi.Modules.HomeBuilder.DbSeed
             {
                 new TaxonomyDetail
                 {
-                    Label = "Ghế bành",
+                    Label = "Armchair",
                     Language = "vi"
                 },
                 new TaxonomyDetail
@@ -35,7 +35,7 @@ namespace Omi.Modules.HomeBuilder.DbSeed
             {
                 new TaxonomyDetail
                 {
-                    Label = "Ghế sô pha",
+                    Label = "Sofa",
                     Language = "vi"
                 },
                 new TaxonomyDetail
@@ -53,7 +53,7 @@ namespace Omi.Modules.HomeBuilder.DbSeed
             {
                 new TaxonomyDetail
                 {
-                    Label = "Bàn",
+                    Label = "Table",
                     Language = "vi"
                 },
                 new TaxonomyDetail

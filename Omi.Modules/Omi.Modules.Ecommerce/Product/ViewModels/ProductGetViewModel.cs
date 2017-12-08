@@ -6,7 +6,7 @@ namespace Omi.Modules.Ecommerce.Product.ViewModels
 {
     public class ProductGetViewModel
     {
-        public int PageIndex { get; set; } = 1;
+        public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 9;
 
         public long EntityId { get; set; }
