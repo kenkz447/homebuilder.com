@@ -15,6 +15,7 @@ using Omi.Base.Collection;
 using Omi.Modules.Ecommerce.Product.Entities;
 using Omi.Base.ViewModel;
 using System.Collections.Generic;
+using Omi.Modules.ModuleBase.Base.ServiceModel;
 
 namespace Omi.Modules.Ecommerce.Product
 {
@@ -41,9 +42,8 @@ namespace Omi.Modules.Ecommerce.Product
             if (viewModel.EntityId != default)
                 entityIds.Add(viewModel.EntityId);
 
-            var filterModel = new BaseFilterServiceModel<long> {
-                Ids = entityIds
-            };
+            var filterModel = AutoMapper.Mapper.Map<ProductFilterServiceModel>(viewModel);
+            filterModel.Ids = entityIds;
 
             var products = _productService.GetProducts(filterModel);
             var baseJsonresult = new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED);
@@ -105,10 +105,13 @@ namespace Omi.Modules.Ecommerce.Product
         }
 
         [HttpDelete]
-        public async Task<BaseJsonResult> Delete([FromBody]ProductViewModel viewModel)
+        public async Task<BaseJsonResult> Delete([FromBody]EntityDeleteViewModel viewModel)
         {
-            var serviceModel = ProductServiceModel.FromViewModel(viewModel);
-            serviceModel.User = CurrentUser;
+            var serviceModel = new DeleteServiceModel
+            {
+                Ids = viewModel.Ids,
+                DeleteBy = CurrentUser
+            };
 
             var result = await _productService.DeleteProductAsync(serviceModel);
 

@@ -57,9 +57,9 @@ namespace Omi.Modules.FileAndMedia.Controllers
         [HttpPost]
         public async Task<BaseJsonResult> Delete(long id)
         {
-            var serviceModel = new BaseDeleteServiceModel()
+            var serviceModel = new DeleteServiceModel()
             {
-                EntityId = id,
+                Ids = new[] { id },
                 DeleteBy = CurrentUser
             };
 

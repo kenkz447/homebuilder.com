@@ -124,18 +124,16 @@ namespace Omi.Modules.FileAndMedia.Services
             return entities;
         }
 
-        public async Task<bool> Delete(BaseDeleteServiceModel model)
+        public async Task<bool> Delete(DeleteServiceModel model)
         {
             // TODO: Check role of the User before do anything;
+            foreach (var id in model.Ids)
+            {
+                var fileEntity = await _context.Set<FileEntity>().FindAsync(id);
+                _context.Remove(fileEntity);
+            }
 
-            var fileEntity = await _context.Set<FileEntity>().FindAsync(model.EntityId);
-
-            if (fileEntity == null)
-                return false;
-
-            _context.Remove(fileEntity);
             var result = await _context.SaveChangesAsync();
-
             return result > 0;
         }
     }

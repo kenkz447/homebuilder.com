@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Omi.Modules.Ecommerce.Product.Entities;
+using Omi.Modules.Ecommerce.Product.ServiceModel;
 using Omi.Modules.Ecommerce.Product.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,9 @@ namespace Omi.Modules.Ecommerce.Product
             CreateMap<ProductViewModel, ProductDetail>();
 
             CreateMap<ProductViewModel, ProductEditViewModel>();
+
+            CreateMap<ProductFilterServiceModel, ProductGetViewModel>();
+            CreateMap<ProductGetViewModel, ProductFilterServiceModel>();
         }
     }
 }

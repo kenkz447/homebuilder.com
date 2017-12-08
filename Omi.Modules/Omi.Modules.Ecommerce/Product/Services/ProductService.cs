@@ -3,6 +3,7 @@ using Omi.Base;
 using Omi.Extensions;
 using Omi.Modules.Ecommerce.Product.Entities;
 using Omi.Modules.Ecommerce.Product.ServiceModel;
+using Omi.Modules.ModuleBase.Base.ServiceModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,9 +34,16 @@ namespace Omi.Modules.Ecommerce.Product.Services
             _context = context;
         }
 
-        public IQueryable<ProductEntity> GetProducts(BaseFilterServiceModel<long> serviceModel)
+        public IQueryable<ProductEntity> GetProducts(ProductFilterServiceModel serviceModel)
         {
             var products = this.AllProduct.FilterByServiceModel(serviceModel);
+
+            if (!string.IsNullOrEmpty(serviceModel.Code))
+                products = products.Where(o => o.Code.Contains(serviceModel.Code) || serviceModel.Code.Contains(o.Code));
+
+            if(!string.IsNullOrEmpty(serviceModel.Title))
+                products = products.Where(o => o.Details.FirstOrDefault(d => d.Title != null && (d.Title.ToLower().Contains(serviceModel.Title.ToLower()) || serviceModel.Title.ToLower().Contains(d.Title.ToLower()))) != null);
+
             products = products.OrderByDescending(o => o.Id);
             return products;
         }
@@ -95,11 +103,14 @@ namespace Omi.Modules.Ecommerce.Product.Services
             return updateResultCount > 0;
         }
 
-        public async Task<bool> DeleteProductAsync(ProductServiceModel serviceModel)
+        public async Task<bool> DeleteProductAsync(DeleteServiceModel serviceModel)
         {
-            var oldProduct = await _context.ProductEntity.FindAsync(serviceModel.Product.Id);
-            var productEntry = _context.Entry(oldProduct);
-            productEntry.State = EntityState.Deleted;
+            foreach (var id in serviceModel.Ids)
+            {
+                var oldProduct = await _context.ProductEntity.FindAsync(id);
+                var productEntry = _context.Entry(oldProduct);
+                productEntry.State = EntityState.Deleted;
+            }
 
             var updateResultCount = await _context.SaveChangesAsync();
 

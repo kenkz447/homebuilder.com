@@ -40,7 +40,7 @@ namespace Omi.Modules.Ecommerce.Product.controllers
             _productTaxonomiesService = productTaxonomiesService;
         }
 
-        private async void Insert(FileInfo file)
+        private async Task Insert(FileInfo file)
         {
             using (var package = new ExcelPackage(file))
             {
@@ -51,7 +51,7 @@ namespace Omi.Modules.Ecommerce.Product.controllers
                 var rowCount = worksheet.Dimension.Rows;
                 var ColCount = worksheet.Dimension.Columns;
                 var productSeriviceCollection = new List<ProductServiceModel>();
-                var products = _productService.GetProducts(new BaseFilterServiceModel<long>());
+                var products = _productService.GetProducts(new ProductFilterServiceModel());
 
                 var addingTaxonomies = new List<TaxonomyEntity>();
 
@@ -147,7 +147,7 @@ namespace Omi.Modules.Ecommerce.Product.controllers
             }
 
             if(file != null)
-                Insert(file);
+                await Insert(file);
 
             return new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED);
         }
@@ -177,7 +177,7 @@ namespace Omi.Modules.Ecommerce.Product.controllers
                 worksheet.Cells[1, 6].Value = "Dimension";
                 worksheet.Cells[1, 7].Value = "Price";
 
-                var products = _productService.GetProducts(new BaseFilterServiceModel<long>()).OrderBy(o => o.Code).ToList();
+                var products = _productService.GetProducts(new ProductFilterServiceModel()).OrderBy(o => o.Code).ToList();
 
                 for (int i = 0; i < products.Count(); i++)
                 {

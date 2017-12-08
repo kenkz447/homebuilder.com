@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Omi.Modules.ModuleBase.Base.ServiceModel
 {
-    public class BaseDeleteServiceModel
+    public class DeleteServiceModel
     {
-        public long EntityId { get; set; }
+        public IEnumerable<long> Ids { get; set; }
         public ApplicationUser DeleteBy { get; set; }
     }
 }
