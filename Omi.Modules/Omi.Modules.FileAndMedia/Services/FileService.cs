@@ -51,6 +51,7 @@ namespace Omi.Modules.FileAndMedia.Services
                 var fileLength = file.Length;
                 var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.ToString().Trim('"');
                 var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+                fileNameWithoutExtension = fileNameWithoutExtension + "-" + Guid.NewGuid().ToString().Substring(0, 5);
                 var fileExtension = Path.GetExtension(fileName);
 
                 var rawPath = Path.Combine("Upload", uploader?.Id ?? "unknow", currentYear, currentMonth);
@@ -127,13 +128,24 @@ namespace Omi.Modules.FileAndMedia.Services
         public async Task<bool> Delete(DeleteServiceModel model)
         {
             // TODO: Check role of the User before do anything;
+            var fileList = new List<string>(); 
             foreach (var id in model.Ids)
             {
                 var fileEntity = await _context.Set<FileEntity>().FindAsync(id);
+                fileList.Add(fileEntity.Src);
                 _context.Remove(fileEntity);
             }
-
+            
             var result = await _context.SaveChangesAsync();
+
+            var uploadDirectory = WebRootDirectoryInfo.ToString();
+            foreach (var fileSrc in fileList)
+            {
+                var fileSavePath = Path.Combine(uploadDirectory, fileSrc);
+                if (File.Exists(fileSavePath))
+                    File.Delete(fileSavePath);
+            }
+
             return result > 0;
         }
     }

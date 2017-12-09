@@ -33,4 +33,7 @@
     <ProjectReference Include="..\..\Omi.Modules\Omi.Modules.Ecommerce\Omi.Modules.Ecommerce.csproj" />
     <ProjectReference Include="..\..\Omi.Modules\Omi.Modules.HomeBuilder\Omi.Modules.HomeBuilder.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\NewFolder\" />
+  </ItemGroup>
 </Project>

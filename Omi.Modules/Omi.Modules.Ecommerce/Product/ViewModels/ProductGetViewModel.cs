@@ -6,6 +6,9 @@ namespace Omi.Modules.Ecommerce.Product.ViewModels
 {
     public class ProductGetViewModel
     {
+        public string SortField { get; set; }
+        public string SortOrder { get; set; }
+
         public string Code { get; set; }
         public string Title { get; set; }
 

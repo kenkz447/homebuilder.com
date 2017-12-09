@@ -6,11 +6,13 @@ import { FileSelectModal } from 'shared/modules/FileAndMedia/index'
 
 import { PackageSiderMenu } from '../containers/SiderMenu'
 import { HeaderMenu } from '../containers/HeaderMenu'
+import { default as LoadingBar } from 'react-redux-loading-bar'
 
 const { Header, Content, Sider, Footer } = Layout
 
 export const BaseMasterPage = (props) => (
     <Layout className="layout">
+        <LoadingBar className="app-master-loading-bar" />
         <Header className="header">
             <div className="logo d-inline-block">
                 <NavLink to="/">HB</NavLink>

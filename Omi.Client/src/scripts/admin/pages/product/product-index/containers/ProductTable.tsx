@@ -30,13 +30,15 @@ interface DispatchProps {
 const columns = [{
     title: 'Code',
     dataIndex: 'code',
+    sorter: true,
     render: (text, entity: ProductViewModel) => {
         return <label>{text}</label>
     },
-    width: 100
+    width: 150
 }, {
     title: 'Title',
     dataIndex: 'title',
+    sorter: true,
     render: (text, entity: ProductViewModel) => {
         return <NavLink to={`/website/admin/product/update?${nameof<ProductViewModel>(o => o.entityId)}=${entity.entityId}`}>{text}</NavLink>
     }
@@ -90,9 +92,17 @@ class ProductTableComponent extends React.Component<StateProps & DispatchProps> 
                     pagination={pagination}
                     rowSelection={{ onChange: this.onSelectChange }}
                     columns={columns}
+                    onChange={this.handleTableChange}                    
                     dataSource={this.props.dataSource && this.props.dataSource.entities} />
             </div>
         )
+    }
+    @autobind
+    handleTableChange(pagination, filters, sorter) {
+        this.filters['sortField'] = sorter.field
+        this.filters['sortOrder'] = sorter.order
+
+        this.props.onFilter(this.filters)
     }
 
     @autobind
@@ -105,18 +115,24 @@ class ProductTableComponent extends React.Component<StateProps & DispatchProps> 
 
     @autobind
     deleteHandler() {
-        if (this.selectedIds.length)
+        if (this.selectedIds.length == 0)
+            return
+
+        const ok = confirm('Press OK button!')
+        if (ok)
             this.props.selectedDelete(this.selectedIds)
     }
 
     inputFilterHandler = (filterKey) => (e) => {
         this.filters[filterKey] = e.target.value
     }
+
     selectFilterHandler = (filterKey) => (value) => {
         this.filters[filterKey] = value
     }
     @autobind
     filterHander() {
+        this.filters['page'] = 1
         this.props.onFilter(this.filters)
     }
 

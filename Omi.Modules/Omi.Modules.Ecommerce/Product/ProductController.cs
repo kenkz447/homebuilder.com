@@ -42,16 +42,24 @@ namespace Omi.Modules.Ecommerce.Product
             if (viewModel.EntityId != default)
                 entityIds.Add(viewModel.EntityId);
 
-            var filterModel = AutoMapper.Mapper.Map<ProductFilterServiceModel>(viewModel);
-            filterModel.Ids = entityIds;
+            var filterServiceModel = AutoMapper.Mapper.Map<ProductFilterServiceModel>(viewModel);
+            filterServiceModel.Ids = entityIds;
 
-            var products = _productService.GetProducts(filterModel);
+            var products = _productService.GetProducts(filterServiceModel);
+            if (string.IsNullOrEmpty(viewModel.SortField) == false)
+            {
+                if (viewModel.SortField == "code")
+                    products = (viewModel.SortOrder == "ascend") ? products.OrderBy(o => o.Code) : products.OrderByDescending(o => o.Code);
+                if (viewModel.SortField == "title")
+                    products = (viewModel.SortOrder == "ascend") ? products.OrderBy(o => o.Details.FirstOrDefault().Title) : products.OrderByDescending(o => o.Details.FirstOrDefault().Title);
+            }
             var baseJsonresult = new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED);
 
             if (viewModel.GetMode == (int)GetMode.Paginated)
             {
                 var pageList = await PaginatedList<ProductEntity>.CreateAsync(products, viewModel.Page, viewModel.PageSize);
                 var result = new PageEntityViewModel<ProductEntity, ProductViewModel>(pageList, entity => ProductViewModel.FromEntity(entity));
+                
                 baseJsonresult.Result = result;
             }
             else if(viewModel.GetMode == (int)GetMode.List)
