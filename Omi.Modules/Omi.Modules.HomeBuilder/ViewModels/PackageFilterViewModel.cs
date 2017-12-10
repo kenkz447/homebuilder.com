@@ -13,6 +13,9 @@ namespace Omi.Modules.HomeBuilder.ViewModels
             PageSize = 9;
         }
 
+        public string SortField { get; set; }
+        public string SortOrder { get; set; }
+
         public string SortBy { get; set; }
         public long DesignTheme { get; set; }
         public long HouseType { get; set; }

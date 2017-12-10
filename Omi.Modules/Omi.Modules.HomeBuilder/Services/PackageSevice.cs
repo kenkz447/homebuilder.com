@@ -6,6 +6,7 @@ using Omi.Modules.FileAndMedia.Entities;
 using Omi.Modules.HomeBuilder.DbSeed;
 using Omi.Modules.HomeBuilder.Entities;
 using Omi.Modules.HomeBuilder.ServiceModel;
+using Omi.Modules.ModuleBase.Base.ServiceModel;
 using Omi.Modules.ModuleBase.Entities;
 using System;
 using System.Collections.Generic;
@@ -151,6 +152,20 @@ namespace Omi.Modules.HomeBuilder.Services
             await _context.SaveChangesAsync();
 
             return newPackage;
+        }
+
+        public async Task<bool> DeleteProductAsync(DeleteServiceModel serviceModel)
+        {
+            foreach (var id in serviceModel.Ids)
+            {
+                var oldProduct = await _context.Package.FindAsync(id);
+                var productEntry = _context.Entry(oldProduct);
+                productEntry.State = EntityState.Deleted;
+            }
+
+            var updateResultCount = await _context.SaveChangesAsync();
+
+            return updateResultCount > 0;
         }
     }
 }

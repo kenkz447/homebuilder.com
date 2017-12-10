@@ -4,7 +4,7 @@ import { Col } from 'antd'
 import { CreatePageWrap } from 'shared/core'
 
 import { PACKAGE_INDEX, LAYOUT_PACKAGE_MASTER } from '../../../settings'
-import { HBTable } from '../../../containers'
+import { PackageTable } from './containers'
 
 const WithPageWrap = CreatePageWrap({
     pageKey: PACKAGE_INDEX,
@@ -16,7 +16,7 @@ class Page extends React.Component {
     render() {
         return (
             <div>
-                <HBTable/>
+                <PackageTable/>
             </div>
         )
     }

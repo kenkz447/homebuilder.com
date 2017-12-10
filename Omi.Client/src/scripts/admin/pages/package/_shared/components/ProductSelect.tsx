@@ -4,6 +4,7 @@ import { Select, Spin, Button, Input, Col, Row } from 'antd'
 import { connect } from 'react-redux'
 import { ExtractImmutableHOC, RequestSend } from 'shared/core'
 import { autobind } from 'core-decorators'
+import { SelectBox } from './SelectBox'
 
 interface Stateprops {
     avaliableProduct: Array<ProductViewModel>
@@ -52,11 +53,7 @@ class ProductSelect extends React.Component<Props & Stateprops & DispathProps> {
             <Col key={index} span={4}>
                 <div className="product-select-item mb-3">
                     <label className="product-select-label">Product</label>
-                    <Select value={item.productId as any} onChange={this.onProductChange(index)}>
-                        {avaliableProduct.map((o) => {
-                            return (<Select.Option key={o.entityId} value={o.entityId}>{o.title}</Select.Option>)
-                        })}
-                    </Select>
+                    <SelectBox item={item} onProductChange={this.onProductChange(index)} avaliableProduct={avaliableProduct} />
                     <div className="mb-2">
                         <label className="product-select-label">Quantity</label>
                         <Input type="number" value={item.quantity} onChange={this.onQuantityChange(index).bind(this)} disabled={!item.productId} />
@@ -68,7 +65,6 @@ class ProductSelect extends React.Component<Props & Stateprops & DispathProps> {
             </Col>
         )
     }
-
 
     onItemRemove = (index) => () => {
         const newValue = this.props.value.concat([])

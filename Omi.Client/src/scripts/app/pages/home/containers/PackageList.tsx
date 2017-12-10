@@ -63,7 +63,7 @@ class PackageListComponent extends React.Component<StateProps & DispatchProps> {
 
 const mapStateToProps = (state: WebsiteRootState): StateProps => {
     return {
-        packagePage: state.data.getIn(['WEBSITE_PACKAGES', 'response', 'result']),
+        packagePage: state.data.getIn(['WEBSITE_PACKAGES', 'response']),
         search: state.router.location.search
     }
 }

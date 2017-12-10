@@ -19,6 +19,9 @@ namespace Omi.Modules.FileAndMedia.Misc
             {
                 case ".png":
                 case ".jpg":
+                case ".jpeg":
+                case ".svg":
+                case ".gif":
                     return FileType.Image;
                 default:
                     return FileType.Unknow;

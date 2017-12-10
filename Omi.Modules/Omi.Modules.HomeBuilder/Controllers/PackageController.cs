@@ -20,6 +20,7 @@ using Omi.Modules.ModuleBase.ViewModels;
 using Omi.Extensions;
 using System.Collections.Generic;
 using Omi.Base.Collection;
+using Omi.Modules.ModuleBase.Base.ServiceModel;
 
 namespace Omi.Modules.HomeBuilder.Controllers
 {
@@ -61,9 +62,9 @@ namespace Omi.Modules.HomeBuilder.Controllers
             => new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED, EmptyPackageViewModel);
 
         [AllowAnonymous]
-        public async Task<BaseJsonResult> GetPackageViewModel(long packageId)
+        public async Task<BaseJsonResult> GetPackageViewModel(long id)
         {
-            var package = await _packageService.GetPackageById(packageId);
+            var package = await _packageService.GetPackageById(id);
             var viewModel = ToPackageViewModel(package);
             return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, viewModel);
         }
@@ -114,17 +115,21 @@ namespace Omi.Modules.HomeBuilder.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<BaseJsonResult> GetPackages(PackageFilterViewModel viewModel)
+        public async Task<ObjectResult> GetPackages(PackageFilterViewModel viewModel)
         {
             var serviceModel = viewModel.ToServiceModel();
 
             var entities = _packageService.GetPackages(serviceModel);
 
+            if (string.IsNullOrEmpty(viewModel.SortField) == false)
+            {
+                if (viewModel.SortField == "title")
+                    entities = (viewModel.SortOrder == "ascend") ? entities.OrderBy(o => o.Details.FirstOrDefault().Title) : entities.OrderByDescending(o => o.Details.FirstOrDefault().Title);
+            }
+
             var result = await PaginatedList<Package>.CreateAsync(entities, serviceModel.Page, serviceModel.PageSize);
-
             var viewModels = new PageEntityViewModel<Package, PackageViewModel>(result, o => ToPackageViewModel(o));
-
-            return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, viewModels);
+            return Ok(viewModels);
         }
 
         [HttpPost]
@@ -150,6 +155,20 @@ namespace Omi.Modules.HomeBuilder.Controllers
             await _packageService.UpdatePackageAsync(packageServiceModel);
 
             return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, model.Id);
+        }
+
+        [HttpDelete]
+        public async Task<BaseJsonResult> Delete([FromBody]EntityDeleteViewModel viewModel)
+        {
+            var serviceModel = new DeleteServiceModel
+            {
+                Ids = viewModel.Ids,
+                DeleteBy = CurrentUser
+            };
+
+            var result = await _packageService.DeleteProductAsync(serviceModel);
+
+            return new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED, result);
         }
 
         private PackageViewModel ToPackageViewModel(Package package)
