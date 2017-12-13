@@ -13,6 +13,8 @@ using Omi.Base.Middwares;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Omi
 {
@@ -51,6 +53,23 @@ namespace Omi
                                     .AllowAnyHeader()
                                     .AllowAnyMethod()
                                     .AllowCredentials());
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    if (context.Request.Path.StartsWithSegments("/api")
+                        && context.Response.StatusCode == StatusCodes.Status200OK)
+                    {
+                        context.Response.Clear();
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        return Task.FromResult<object>(null);
+
+                    }
+                    context.Response.Redirect(context.RedirectUri);
+                    return Task.FromResult<object>(null);
+                };
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>

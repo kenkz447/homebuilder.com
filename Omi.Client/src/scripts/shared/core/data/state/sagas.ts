@@ -15,8 +15,11 @@ function* onRequestSend(action: RequestSendAction) {
     try {
         yield put(showLoading())
         const response = yield fetch(action.url, action.requestInit)
-        if (response.statusCode == 401) {
-            yield put(push('/account/login'))
+        if (response.redirected) {
+            const redirectUrl = new URL(response.url)
+            redirectUrl.searchParams.set('returnUrl', location.pathname)
+            location.href = `${redirectUrl.pathname}${redirectUrl.search}`
+            return
         }
         else {
             const responseContent = yield response.json()
