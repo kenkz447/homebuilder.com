@@ -146,6 +146,9 @@ namespace Omi.Modules.HomeBuilder.Services
             foreach (var entityProduct in package.EntityProducts)
             {
                 var pdEntry = _context.Entry(entityProduct);
+                if (pdEntry.State == EntityState.Deleted)
+                    continue;
+
                 pdEntry.Property(o => o.Quantity).CurrentValue = newPackage.EntityProducts.FirstOrDefault(o => o.ProductId == entityProduct.ProductId).Quantity;
             }
 

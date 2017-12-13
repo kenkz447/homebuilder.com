@@ -57,7 +57,8 @@ namespace Omi.Extensions
 
         public static void TryUpdateManyToMany<T, TKey>(this DbContext db, IEnumerable<T> currentEntities, IEnumerable<T> newEntities, Func<T, TKey> getKey) where T : class
         {
-            db.Set<T>().RemoveRange(currentEntities.Except(newEntities, getKey));
+            var deleteEntities = currentEntities.Except(newEntities, getKey);
+            db.Set<T>().RemoveRange(deleteEntities);
             db.Set<T>().AddRange(newEntities.Except(currentEntities, getKey));
         }
 
