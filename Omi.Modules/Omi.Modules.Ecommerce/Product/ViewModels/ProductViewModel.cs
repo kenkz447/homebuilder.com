@@ -34,7 +34,7 @@ namespace Omi.Modules.Ecommerce.Product.ViewModels
 
         public TaxomonyViewModel Type { get; set; }
 
-        [Required]
+        //[Required]
         public FileEntityInfo Avatar { get; set; }
 
         public IEnumerable<FileEntityInfo> Pictures { get; set; }

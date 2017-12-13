@@ -1,25 +1,19 @@
 const path = require('path');
-const keys = require('lodash/keys');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const UglifyESPlugin = require('uglify-es-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
-const pkg = require('./package.json');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
     entry: {
-        script: path.join(__dirname, 'src/scripts/index.prod.ts'),
-        vendor: keys(pkg.dependencies)
-            // font-awesome doesn't have a Javascript component, there's no package to find
-            .filter(name => (name != 'font-awesome'))
-            .filter(name => (name != 'bootstrap'))
+        app: path.join(__dirname, 'src/scripts/index.prod.ts')
     },
     output: {
         publicPath: '/',
         path: path.join(__dirname, 'dist'),
-        filename: 'app.js'
+        filename: 'app.[hash].js',
+        sourceMapFilename: 'bundle.map'
     },
     plugins: [
         new webpack.DefinePlugin({
@@ -28,17 +22,27 @@ module.exports = {
                 'NODE_ENV': JSON.stringify('production')
             }
         }),
+
         new BundleAnalyzerPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin(),
-        new UglifyESPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            minChunks: Infinity,
-            filename: 'vendor.js',
+            minChunks: ({ resource }) => /node_modules/.test(resource),
+            filename: 'vendor.[hash].js',
         }),
-        new ExtractTextPlugin('style.css', {
-            allChunks: true
+        new UglifyJsPlugin({
+            sourceMap: true
         }),
+        new webpack.SourceMapDevToolPlugin({
+            filename: '[name].[hash].js.map',
+            include: /\.js$/,
+            exclude: /vendor/g,
+        }),
+        new webpack.SourceMapDevToolPlugin({
+            filename: 'style.[hash].css.map',
+            include: /\.css$/
+        }),
+        new ExtractTextPlugin('style.[hash].css'),
         new HtmlWebpackPlugin({
             template: 'src/templates/index.html',
             inject: 'body'
@@ -54,20 +58,20 @@ module.exports = {
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [{
-                            loader: 'css-loader',
-                            options: {
-                                minimize: true
-                            }
-                        },
-                        {
-                            loader: 'postcss-loader',
-                        }, {
-                            loader: "resolve-url-loader",
-                        },
-                        {
-                            loader: 'sass-loader'
+                        loader: 'css-loader',
+                        options: {
+                            minimize: true,
+                            sourceMap: true
                         }
-                    ]
+                    }, {
+                        loader: 'postcss-loader',
+                        options: { sourceMap: true }
+                    }, {
+                        loader: "resolve-url-loader",
+                    }, {
+                        loader: 'sass-loader',
+                        options: { sourceMap: true }
+                    }, ]
                 })
             },
             {
@@ -78,6 +82,7 @@ module.exports = {
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
+                exclude: /fonts/,
                 use: [{
                     loader: 'file-loader?name=images/[name].[ext]'
                 }]
@@ -86,7 +91,8 @@ module.exports = {
     },
     resolve: {
         modules: [
-            path.resolve(__dirname, 'src', 'scripts'),
+            path.join(__dirname, 'src'),
+			path.join(__dirname, 'src', 'scripts'),
             'node_modules'
         ],
         extensions: ['.js', '.ts', '.tsx'],

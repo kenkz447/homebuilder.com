@@ -5,6 +5,6 @@ import '../style/app.scss'
 window.baseUrl = `${location.origin}/`
 
 // Import main
-import initStartup from 'shared/startup'
+import initStartup from './shared/startup'
 
 initStartup()

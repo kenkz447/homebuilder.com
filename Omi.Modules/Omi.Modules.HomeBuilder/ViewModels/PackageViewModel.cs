@@ -1,4 +1,5 @@
-﻿using Omi.Modules.Ecommerce.Product.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using Omi.Modules.Ecommerce.Product.Entities;
 using Omi.Modules.Ecommerce.Product.ViewModels;
 using Omi.Modules.FileAndMedia.ViewModel;
 using Omi.Modules.HomeBuilder.Entities;
@@ -10,6 +11,7 @@ using System.Text;
 
 namespace Omi.Modules.HomeBuilder.ViewModels
 {
+    [Bind(include: new[] { "ProductId", "Quantity" })]
     public class PackageProductViewModel
     {
         public long ProductId { get; set; }
