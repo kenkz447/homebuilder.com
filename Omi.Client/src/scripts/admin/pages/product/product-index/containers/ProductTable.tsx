@@ -189,7 +189,7 @@ class ProductTableComponent extends React.Component<StateProps & DispatchProps> 
 
 const mapStateToProps = (state: ModuleRootState): StateProps => {
     return {
-        dataSource: state.data.getIn(['PRODUCT', 'response', 'result']),
+        dataSource: state.data.getIn(['PRODUCT', 'response']),
         dataSourceProcessing: state.data.getIn(['PRODUCT', 'status', 'processing']),
         deleteResult: state.data.getIn(['PRODUCT_DELETE', 'response', 'result']),
         deleteProcessing: state.data.getIn(['PRODUCT_DELETE', 'status', 'processing'])

@@ -36,7 +36,7 @@ namespace Omi.Modules.Ecommerce.Product
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<BaseJsonResult> Get(ProductGetViewModel viewModel)
+        public async Task<OkObjectResult> Get(ProductGetViewModel viewModel)
         {
             var entityIds = new List<long>();
             if (viewModel.EntityId != default)
@@ -53,23 +53,25 @@ namespace Omi.Modules.Ecommerce.Product
                 if (viewModel.SortField == "title")
                     products = (viewModel.SortOrder == "ascend") ? products.OrderBy(o => o.Details.FirstOrDefault().Title) : products.OrderByDescending(o => o.Details.FirstOrDefault().Title);
             }
-            var baseJsonresult = new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED);
+
+            object actionOkResult = null;  
 
             if (viewModel.GetMode == (int)GetMode.Paginated)
             {
                 var pageList = await PaginatedList<ProductEntity>.CreateAsync(products, viewModel.Page, viewModel.PageSize);
                 var result = new PageEntityViewModel<ProductEntity, ProductViewModel>(pageList, entity => ProductViewModel.FromEntity(entity));
                 
-                baseJsonresult.Result = result;
+                actionOkResult = result;
             }
             else if(viewModel.GetMode == (int)GetMode.List)
             {
                 var result = products.Select(o => ProductEditViewModel.FromEntity(o));
-                baseJsonresult.Result = result;
+                actionOkResult = result;
             }
             else
             {
-                var product = products.FirstOrDefault(o => o.Id == viewModel.EntityId);
+                var product = products.FirstOrDefault(o => o.Id == viewModel.EntityId || o.Name == viewModel.Name);
+
                 var result = new ProductEditViewModel();
 
                 if (product != null)
@@ -84,10 +86,10 @@ namespace Omi.Modules.Ecommerce.Product
                     result.AvaliableProductTypes = allType.Select(o => TaxomonyViewModel.FromEntity(o));
                 }
 
-                baseJsonresult.Result = result;
+                actionOkResult = result;
             }
 
-            return baseJsonresult;
+            return Ok(actionOkResult);
         }
 
         [HttpPost]

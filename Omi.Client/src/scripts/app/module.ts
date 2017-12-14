@@ -7,13 +7,14 @@ import { supportedLanguages } from './settings'
 import {
     homeRoute as Home,
     packageRoute as Package,
-    ProjectRoutes
+    ProjectRoutes,
+    ProductDetails
 } from './pages'
 
 import { MainMaster } from './layout'
 
 export const Module: CRModule = {
-    routes: [ Home, Package, ...ProjectRoutes],
+    routes: [ Home, Package, ...ProjectRoutes, ProductDetails],
     masterPages: {
         [MAIN_MASTER]: MainMaster,
     },

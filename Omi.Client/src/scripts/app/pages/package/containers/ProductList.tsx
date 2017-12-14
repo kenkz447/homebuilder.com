@@ -2,6 +2,8 @@ import * as React from 'react'
 import { ProductViewModel, PackageProductViewModel } from 'admin/Types'
 import { Image } from 'shared/modules/FileAndMedia'
 import { toCurrency } from 'shared/modules/website'
+import { NavLink } from 'react-router-dom'
+
 interface Props {
     items: Array<PackageProductViewModel>
 }
@@ -23,14 +25,14 @@ export function ProductList(props: Props) {
                                     <span className="product-list-item-text">{product.type.label} | {product.brand.label}</span>
                                     <span className="product-list-item-text">Quantity: {o.quantity}</span>
                                 </div>
-                                <a className="product-list-item-viewmore-btn" aria-current="false" href="#">
+                                <NavLink className="product-list-item-viewmore-btn" aria-current="false" to={`${location.pathname}/product/${product.name}`}>
                                     <div className="product-list-item-viewmore">
                                         <span className="product-list-item-viewmore-text">View More</span>
                                         <span className="product-list-item-viewmore-icon">
                                             <i className="anticon anticon-caret-right"></i>
                                         </span>
                                     </div>
-                                </a>
+                                </NavLink>
                             </div>
                         </li>
                     )

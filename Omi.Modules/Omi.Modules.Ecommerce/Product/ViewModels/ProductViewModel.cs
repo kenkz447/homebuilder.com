@@ -15,6 +15,8 @@ namespace Omi.Modules.Ecommerce.Product.ViewModels
         [DefaultValue(0)]
         public long EntityId { get; set; }
 
+        public string Name { get; set; }
+
         [Required]
         public string Title { get; set; }
 

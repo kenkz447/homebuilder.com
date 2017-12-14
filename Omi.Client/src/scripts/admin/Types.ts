@@ -9,6 +9,7 @@ export interface ModuleRootState extends RootState {
 
 export interface ProductViewModel {
     entityId?: number
+    name?: string
     title?: string
     code?: string
     description?: string

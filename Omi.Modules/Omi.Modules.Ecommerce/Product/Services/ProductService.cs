@@ -44,6 +44,9 @@ namespace Omi.Modules.Ecommerce.Product.Services
             if(!string.IsNullOrEmpty(serviceModel.Title))
                 products = products.Where(o => o.Details.FirstOrDefault(d => d.Title != null && (d.Title.ToLower().Contains(serviceModel.Title.ToLower()) || serviceModel.Title.ToLower().Contains(d.Title.ToLower()))) != null);
 
+            if (!string.IsNullOrEmpty(serviceModel.Name))
+                products = products.Where(o => o.Name == serviceModel.Name);
+
             products = products.OrderByDescending(o => o.Id);
             return products;
         }

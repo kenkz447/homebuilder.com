@@ -11,7 +11,7 @@ import { ProductFormStateProps, ProductFormDispatchProps, ProductForm, ProductFo
 
 const mapStateToProps = (state: ModuleRootState, ownProps): ProductFormStateProps => {
   return {
-    initProductViewModel: state.data.getIn(['initProductViewModel', 'response', 'result']) || {},
+    initProductViewModel: state.data.getIn(['initProductViewModel', 'response']) || {},
     FORM_POST_RESULT_PRODUCT_ID: state.data.getIn(['FORM_POST_RESULT_PRODUCT_ID', 'response', 'result']),
   }
 }

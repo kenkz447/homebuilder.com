@@ -101,7 +101,7 @@ class ProductSelect extends React.Component<Props & Stateprops & DispathProps> {
 
 const mapStateToProps = (state: ModuleRootState): Stateprops => {
     return {
-        avaliableProduct: state.data.getIn(['AVALIABLE_PRODUCTS', 'response', 'result'])
+        avaliableProduct: state.data.getIn(['AVALIABLE_PRODUCTS', 'response'])
     }
 }
 
