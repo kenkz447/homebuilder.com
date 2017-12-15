@@ -72,6 +72,9 @@ namespace Omi.Modules.HomeBuilder.Services
             if (serviceModel.BudgetMax != default)
                 packages = packages.Where(o => o.Details.FirstOrDefault(e => e.ForCurrentRequestLanguage()).Price <= serviceModel.BudgetMax);
 
+            if (serviceModel.Title != null)
+                packages = packages.Where(o => o.Details.FirstOrDefault(d => d.Title != null && (d.Title.ToLower().Contains(serviceModel.Title.ToLower()) || serviceModel.Title.ToLower().Contains(d.Title.ToLower()))) != null);
+
             if (serviceModel.GetTypes != null)
             {
                 if(serviceModel.GetTypes.Contains("perspective"))
@@ -161,9 +164,15 @@ namespace Omi.Modules.HomeBuilder.Services
         {
             foreach (var id in serviceModel.Ids)
             {
-                var oldProduct = await _context.Package.FindAsync(id);
-                var productEntry = _context.Entry(oldProduct);
+                var oldpackage = await _context.Package.FindAsync(id);
+                var productEntry = _context.Entry(oldpackage);
                 productEntry.State = EntityState.Deleted;
+                if (oldpackage.ProjectBlockId != null)
+                {
+                    var block = _context.Set<ProjectBlock>().Find(oldpackage.ProjectBlockId);
+                    var blockEntry = _context.Entry(block);
+                    blockEntry.Property(o => o.PackageId).CurrentValue = null;
+                }
             }
 
             var updateResultCount = await _context.SaveChangesAsync();

@@ -6,7 +6,8 @@ using System.Text;
 namespace Omi.Modules.HomeBuilder.Entities
 {
     public class ProjectDetail : 
-        EntityWithTypeId<long>
+        EntityWithTypeId<long>,
+        IEntityWithLanguage
     {
         public string Title { get; set; }
         public string Investor { get; set; }

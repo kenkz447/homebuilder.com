@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Omi.Modules.HomeBuilder.Entities;
+using Omi.Modules.HomeBuilder.ServiceModel;
 using Omi.Modules.HomeBuilder.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,9 @@ namespace Omi.Modules.HomeBuilder.Misc
             CreateMap<ProjectBlockViewModel, ProjectBlockDetail>();
 
             CreateMap<ProjectBlockDetail, ProjectBlockViewModel>();
+
+            CreateMap<ProjectFilterViewModel, ProjectFilterServiceModel>();
+            CreateMap<ProjectFilterServiceModel, ProjectFilterViewModel>();
         }
     }
 }

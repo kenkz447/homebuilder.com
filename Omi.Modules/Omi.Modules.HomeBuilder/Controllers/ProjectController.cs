@@ -88,7 +88,7 @@ namespace Omi.Modules.HomeBuilder.Controllers
                 DeleteBy = CurrentUser
             };
 
-            var result = await _projectService.DeleteProductAsync(serviceModel);
+            var result = await _projectService.DeleteProjectAsync(serviceModel);
 
             return new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED, result);
         }

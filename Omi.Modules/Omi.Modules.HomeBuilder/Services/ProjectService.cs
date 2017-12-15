@@ -44,7 +44,7 @@ namespace Omi.Modules.HomeBuilder.Services
 
                 entityEntry.Property(o => o.ParentId).IsModified = false;
 
-                if (entityEntry.Entity.Children.Count() != 0 && entity.Children.Count() != 0)
+                if (entityEntry.Entity.Children.Count() != 0 || entity.Children.Count() != 0)
                 {
                     foreach (var child in entity.Children)
                     {
@@ -107,17 +107,20 @@ namespace Omi.Modules.HomeBuilder.Services
 
         public async Task<PaginatedList<Project>> GetProjects(ProjectFilterServiceModel serviceModel)
         {
-            var Projects = GetProjects().AsNoTracking();
+            var projects = GetProjects().AsNoTracking();
 
             foreach (var taxonomyName in serviceModel.TaxonomyNames)
-                Projects = Projects.Where(o => o.EntityTaxonomies.Select(e => e.Taxonomy.Name).Contains(taxonomyName));
+                projects = projects.Where(o => o.EntityTaxonomies.Select(e => e.Taxonomy.Name).Contains(taxonomyName));
 
-            if(serviceModel.CityName != null)
-                Projects = Projects.Where(o => o.City.Name == serviceModel.CityName);
+            if(serviceModel.City != null)
+                projects = projects.Where(o => o.City.Name == serviceModel.City);
 
-            Projects = Projects.OrderByDescending(o => o.Id);
+            if(serviceModel.Title != null)
+                projects = projects.Where(o => o.Details.FirstOrDefault(d => d.Title != null && (d.Title.ToLower().Contains(serviceModel.Title.ToLower()) || serviceModel.Title.ToLower().Contains(d.Title.ToLower()))) != null);
 
-            var result = await PaginatedList<Project>.CreateAsync(Projects, serviceModel.Page, serviceModel.PageSize);
+            projects = projects.OrderByDescending(o => o.Id);
+
+            var result = await PaginatedList<Project>.CreateAsync(projects, serviceModel.Page, serviceModel.PageSize);
 
             return result;
         }
@@ -202,7 +205,7 @@ namespace Omi.Modules.HomeBuilder.Services
             return newProject;
         }
 
-        public async Task<bool> DeleteProductAsync(DeleteServiceModel serviceModel)
+        public async Task<bool> DeleteProjectAsync(DeleteServiceModel serviceModel)
         {
             foreach (var id in serviceModel.Ids)
             {
@@ -210,10 +213,40 @@ namespace Omi.Modules.HomeBuilder.Services
                 var entry = _context.Entry(oldEntity);
                 entry.State = EntityState.Deleted;
 
-                foreach (var projectBlock in oldEntity.ProjectBlocks)
+                foreach (var roomType in oldEntity.ProjectBlocks)
                 {
-                    var projectBlockEntry = _context.Entry(projectBlock);
-                    projectBlockEntry.State = EntityState.Deleted;
+                    var roomTypeEntry = _context.Entry(roomType);
+                    roomTypeEntry.State = EntityState.Deleted;
+
+                    foreach (var roomLayout in roomTypeEntry.Entity.Children)
+                    {
+                        var roomLayoutEntry = _context.Entry(roomLayout);
+                        roomLayoutEntry.State = EntityState.Deleted;
+
+                        foreach (var perpective in roomLayoutEntry.Entity.Children)
+                        {
+                            var perpectiveEntry = _context.Entry(perpective);
+                            perpectiveEntry.State = EntityState.Deleted;
+
+                            foreach (var perpectiveDetail in perpectiveEntry.Entity.ProjectBlockDetails)
+                            {
+                                var perpectiveDetailEntry = _context.Entry(perpectiveDetail);
+                                perpectiveDetailEntry.State = EntityState.Deleted;
+                            }
+                        }
+
+                        foreach (var roomLayoutDetail in roomLayoutEntry.Entity.ProjectBlockDetails)
+                        {
+                            var roomLayoutDetailEntry = _context.Entry(roomLayoutDetail);
+                            roomLayoutDetailEntry.State = EntityState.Deleted;
+                        }
+                    }
+
+                    foreach (var projectBlockDetail in roomTypeEntry.Entity.ProjectBlockDetails)
+                    {
+                        var projectBlockDetailEntry = _context.Entry(projectBlockDetail);
+                        projectBlockDetailEntry.State = EntityState.Deleted;
+                    }
                 }
             }
 

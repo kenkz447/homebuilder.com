@@ -7,11 +7,14 @@ namespace Omi.Modules.HomeBuilder.ViewModels
 {
     public class PackageFilterViewModel
     {
+
         public PackageFilterViewModel()
         {
             Page = 1;
             PageSize = 9;
         }
+
+        public string Title { get; set; }
 
         public string SortField { get; set; }
         public string SortOrder { get; set; }
@@ -35,7 +38,8 @@ namespace Omi.Modules.HomeBuilder.ViewModels
                 TaxonomyIds = new List<long>() { DesignTheme, HouseType },
                 Page = Page,
                 PageSize = PageSize,
-                GetTypes = GetTypes
+                GetTypes = GetTypes,
+                Title = Title
             };
     }
 }

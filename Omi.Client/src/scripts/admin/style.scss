@@ -49,6 +49,8 @@
                 width: 200px;
                 background: #fff;
                 transform: translateX(-50%);
+                z-index: 1;
+                border: 1px solid lightgray
             }
             &-image {
                 top: 20px!important;

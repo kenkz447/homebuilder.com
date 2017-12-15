@@ -59,7 +59,7 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
                                 {
                                     this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.label)}`, {
                                         initialValue: this.props.block.label
-                                    })(<Input placeholder="RoomLayout name" />)
+                                    })(<Input placeholder="Room layout name" />)
                                 }
                             </Form.Item>
                         </Col>
@@ -116,7 +116,7 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
                     </Collapse>
                 </div>
                 <div className="text-right">
-                    <Button className="border-0" type="primary" icon="plus" onClick={this.addRoom} ghost>Add new room</Button>
+                    <Button className="border-0" type="primary" icon="plus" onClick={this.addRoom} ghost>Add new Prespective</Button>
                     <Button className="border-0" type="danger" icon="close" onClick={this.props.onRemove} ghost>Remove</Button>
                 </div>
             </div>

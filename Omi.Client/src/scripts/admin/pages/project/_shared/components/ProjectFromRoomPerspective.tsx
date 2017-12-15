@@ -87,14 +87,14 @@ export class ProjectFromRoomPerspective extends React.Component<OwnProps, State>
                                                     <FormFileSelect
                                                         id={arrow.id}
                                                         icon="picture"
-                                                        classNames="border-0 mr-2"
+                                                        classNames="w-100 mb-1"
                                                         size="large"
                                                         value={arrow.image}
                                                         onChange={this.selectImageOK(arrow.id)}
                                                         onClick={this.selectImageClick}
                                                         onModalClose={this.selectImageClose}
                                                     />
-                                                    <Button className="border-0" size="large" icon="delete" onClick={this.arrowRemove(arrow.id)} />
+                                                    <Button className="w-100" size="large" icon="delete" onClick={this.arrowRemove(arrow.id)} />
                                                 </div>
                                             </div>
                                         )

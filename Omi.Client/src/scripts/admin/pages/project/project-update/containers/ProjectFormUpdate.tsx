@@ -99,7 +99,7 @@ const mapDispatchToProps = (dispatch): FormDispatchProps => {
         }
       })
       dispatch(showNotificationAction)
-      dispatch(push(`${location.pathname}${location.search}`))
+      window.location.reload()
     }
   }
 }

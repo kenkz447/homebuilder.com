@@ -7,6 +7,8 @@ namespace Omi.Modules.HomeBuilder.ViewModels
 {
     public class ProjectFilterViewModel
     {
+        public string Title { get; set; }
+
         public ProjectFilterViewModel()
         {
             Page = 1;
@@ -15,6 +17,7 @@ namespace Omi.Modules.HomeBuilder.ViewModels
 
         public string SortBy { get; set; }
         public string City { get; set; }
+
         public string ProjectType { get; set; }
         public int Page { get; set; }
         public int PageSize { get; set; }

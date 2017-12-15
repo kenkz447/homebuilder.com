@@ -7,6 +7,8 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
 {
     public class PackageFilterServiceModel : BaseFilterServiceModel<long>
     {
+        public string Title { get; set; }
+
         public string SortBy { get; set; }
         public int Page { get; set; }
         public int PageSize { get; set; }

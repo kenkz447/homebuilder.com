@@ -8,7 +8,8 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
 {
     public class ProjectFilterServiceModel: BaseFilterServiceModel<long>
     {
-        public string CityName { get; set; }
+        public string Title { get; set; }
+        public string City { get; set; }
         public List<string> TaxonomyNames { get; set; }
 
         public string SortBy { get; set; }
@@ -17,18 +18,13 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
 
         public static ProjectFilterServiceModel FromViewModel(ProjectFilterViewModel viewModel)
         {
-            var taxonomyNames = new List<string>();
-            if (viewModel.ProjectType != null)
-                taxonomyNames.Add(viewModel.ProjectType);
+            var serviceModel = AutoMapper.Mapper.Map<ProjectFilterServiceModel>(viewModel);
 
-            return new ProjectFilterServiceModel
-            {
-                Page = viewModel.Page,
-                PageSize = viewModel.PageSize,
-                SortBy = viewModel.SortBy,
-                CityName = viewModel.City,
-                TaxonomyNames = taxonomyNames
-            };
+            serviceModel.TaxonomyNames = new List<string>();
+            if (viewModel.ProjectType != null)
+                serviceModel.TaxonomyNames.Add(viewModel.ProjectType);
+
+            return serviceModel;
         }
     }
 }
