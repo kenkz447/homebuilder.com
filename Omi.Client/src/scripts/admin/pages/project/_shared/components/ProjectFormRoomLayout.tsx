@@ -68,7 +68,7 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
                                 {
                                     this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.area)}`, {
                                         initialValue: this.props.block.area
-                                    })(<Input placeholder="Area" type="number"/>)
+                                    })(<Input placeholder="Area" type="number" />)
                                 }
                             </Form.Item>
                         </Col>
@@ -77,7 +77,7 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
                                 {
                                     this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.bedRoomCount)}`, {
                                         initialValue: this.props.block.bedRoomCount
-                                    })(<Input placeholder="Total bedroom"  type="number"/>)
+                                    })(<Input placeholder="Total bedroom" type="number" />)
                                 }
                             </Form.Item>
                         </Col>
@@ -95,7 +95,7 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
                                 {
                                     this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.totalRoomOfLayout)}`, {
                                         initialValue: this.props.block.totalRoomOfLayout
-                                    })(<Input placeholder="Total apartment" type="number"/>)
+                                    })(<Input placeholder="Total apartment" type="number" />)
                                 }
                             </Form.Item>
                         </Col>
@@ -137,18 +137,8 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
         }
 
         return (
-            <Collapse.Panel key={fieldName} header="Room">
+            <Collapse.Panel key={fieldName} header="Perspective">
                 <Row gutter={15}>
-                    <Col span={12}>
-                        <Form.Item>
-                            <Form.Item>
-                                {this.props.form.getFieldDecorator(`${fieldName}.${nameof<ProjectBlockViewModel>((o) => o.label)}`, {
-                                    initialValue: roomValue.label,
-                                    rules: [{ required: true }]
-                                })(<Input placeholder="Room name" />)}
-                            </Form.Item>
-                        </Form.Item>
-                    </Col>
                     <Col span={12}>
                         <Form.Item>
                             {this.props.form.getFieldDecorator(`${fieldName}.${nameof<ProjectBlockViewModel>((o) => o.packageId)}`, {
@@ -157,13 +147,13 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
                             })(<ConnectedPackageSelect />)}
                         </Form.Item>
                     </Col>
-                </Row>
-                <div>
-                    <div className="mb-2">
+                    <Col span={12}>
                         <div className="clearfix">
                             <Button className="float-right" type="danger" shape="circle" icon="delete" onClick={this.removeRoom(key)} />
                         </div>
-                    </div>
+                    </Col>
+                </Row>
+                <div>
                     {
                         this.props.form.getFieldDecorator(`${fieldName}.layoutPoints`, {
                             initialValue: roomValue.layoutPoints,

@@ -16,7 +16,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-    getProduct?: () => void
+    getProduct?: (product) => void
     getPackage?: () => void
 }
 
@@ -31,13 +31,13 @@ interface OwnProps extends RouteComponentProps<Params> {
 
 class ProductDetails extends React.Component<OwnProps & DispatchProps & StateProps> {
     componentWillMount() {
-        this.props.getProduct()
+        this.props.getProduct(this.props.match.params.product)
         this.props.getPackage()
     }
 
     componentWillReceiveProps(nextProps: OwnProps) {
         if (this.props.location.pathname != nextProps.location.pathname)
-            this.props.getProduct()
+            this.props.getProduct(nextProps.match.params.product)
     }
 
     render() {
@@ -113,10 +113,9 @@ const mapStateToProps = (state: WebsiteRootState): StateProps => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
-    const product = ownProps.match.params.product
     const packageName = ownProps.match.params.packageName
     return {
-        getProduct: () => {
+        getProduct: (product) => {
             const action = RequestSend('PRODUCT', {
                 url: `/product/get?name=${product}`
             })

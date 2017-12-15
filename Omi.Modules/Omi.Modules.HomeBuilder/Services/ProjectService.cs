@@ -15,6 +15,7 @@ using Omi.Modules.Location.Services;
 using Omi.Modules.Location.Entities;
 using Omi.Extensions;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Omi.Modules.ModuleBase.Base.ServiceModel;
 
 namespace Omi.Modules.HomeBuilder.Services
 {
@@ -201,5 +202,24 @@ namespace Omi.Modules.HomeBuilder.Services
             return newProject;
         }
 
+        public async Task<bool> DeleteProductAsync(DeleteServiceModel serviceModel)
+        {
+            foreach (var id in serviceModel.Ids)
+            {
+                var oldEntity = await GetProjects().FirstAsync(o => o.Id == id);
+                var entry = _context.Entry(oldEntity);
+                entry.State = EntityState.Deleted;
+
+                foreach (var projectBlock in oldEntity.ProjectBlocks)
+                {
+                    var projectBlockEntry = _context.Entry(projectBlock);
+                    projectBlockEntry.State = EntityState.Deleted;
+                }
+            }
+
+            var updateResultCount = await _context.SaveChangesAsync();
+
+            return updateResultCount > 0;
+        }
     }
 }

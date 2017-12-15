@@ -87,8 +87,10 @@ namespace Omi.Modules.HomeBuilder.ServiceModel
                  tower.EntityTypeId = EntityTypeSeed.RoomType.Id;
                  tower.Children = tower.Children.Select(floor => {
                      floor.EntityTypeId = EntityTypeSeed.RoomLayout.Id;
+                     floor.ProjectId = viewModel.ProjectId;
                      floor.Children = floor.Children.Select(room =>
                      {
+                         room.ProjectId = viewModel.ProjectId;
                          room.EntityTypeId = EntityTypeSeed.Perspective.Id;
                          return room;
                      }).ToList();

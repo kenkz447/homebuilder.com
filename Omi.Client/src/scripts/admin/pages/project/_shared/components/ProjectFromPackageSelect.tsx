@@ -39,7 +39,7 @@ export function PackageSelect(props: OwnProps & StateProps & DispathProps) {
 
 const mapStateToProps = (state: ModuleRootState, ownProps: OwnProps): StateProps => {
     return {
-        packages: state.data.getIn(['packages', 'response', 'result'])
+        packages: state.data.getIn(['packages', 'response'])
     }
 }
  

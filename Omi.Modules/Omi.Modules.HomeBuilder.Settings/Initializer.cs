@@ -2,6 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Omi.Modules.HomeBuilder.Settings.WebsiteSetting.Seed;
 using Omi.Modules.HomeBuilder.Settings.WebsiteSetting.Services;
+using Microsoft.Extensions.Configuration;
+using Omi.Extensions;
+using System.Collections.Generic;
+using System;
 
 namespace Omi.Modules.HomeBuilder.Settings
 {
@@ -20,10 +24,16 @@ namespace Omi.Modules.HomeBuilder.Settings
 
             var serviceProvider = services.BuildServiceProvider();
 
-            var dbContext = serviceProvider.GetService<HomeBuilderSettingsDbContext>();
+            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+            var isMigration = configuration.GetValue<bool>("Migration");
+            if (!isMigration)
+            {
+                var dbContext = serviceProvider.GetService<HomeBuilderSettingsDbContext>();
 
-            var websiteSettingSeed = new WebsiteSettingSeed();
-            await websiteSettingSeed.SeedAsync(dbContext);
+                await dbContext.Seed(new List<Type> {
+                    typeof(WebsiteSettingSeed)
+                });
+            }
         }
     }
 }

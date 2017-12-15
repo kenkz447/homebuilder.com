@@ -99,7 +99,7 @@ namespace Omi.Modules.HomeBuilder.ViewModels
                 resultViewModel.ProjectType = TaxomonyViewModel.FromEntity(projectStatus.Taxonomy);
             }
 
-            resultViewModel.ProjectBlocks = entity.ProjectBlocks.Select(o => ProjectBlockViewModelExtension.FromEnitity(o));
+            resultViewModel.ProjectBlocks = entity.ProjectBlocks.Where(o => o.ParentId == null).Select(o => ProjectBlockViewModelExtension.FromEnitity(o));
 
             var avatarFile = entity.EntityFiles.FirstOrDefault(o => o.UsingType == (int)FileUsingType.Avatar).FileEntity;
             resultViewModel.Avatar = FileEntityInfo.FromEntity(avatarFile);

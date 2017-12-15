@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Omi.Base.ViewModel;
 using Omi.Modules.HomeBuilder.Entities;
 using Omi.Extensions;
+using Omi.Modules.ModuleBase.Base.ServiceModel;
 
 namespace Omi.Modules.HomeBuilder.Controllers
 {
@@ -76,6 +77,20 @@ namespace Omi.Modules.HomeBuilder.Controllers
             await _projectService.UpdateProjectAsync(projectServiceModel);
 
             return new BaseJsonResult(Omi.Base.Properties.Resources.POST_SUCCEEDED, model.ProjectId);
+        }
+
+        [HttpDelete]
+        public async Task<BaseJsonResult> Delete([FromBody]EntityDeleteViewModel viewModel)
+        {
+            var serviceModel = new DeleteServiceModel
+            {
+                Ids = viewModel.Ids,
+                DeleteBy = CurrentUser
+            };
+
+            var result = await _projectService.DeleteProductAsync(serviceModel);
+
+            return new BaseJsonResult(Base.Properties.Resources.POST_SUCCEEDED, result);
         }
 
         #region Public

@@ -4,6 +4,7 @@ using Omi.Modular;
 using Omi.Modules.ModuleBase;
 using Omi.Modules.ModuleBase.Entities;
 using Omi.Modules.Setting;
+using Omi.Modules.Setting.Entities;
 using System.Collections.Generic;
 
 namespace Omi.Modules.HomeBuilder.Settings
@@ -16,8 +17,11 @@ namespace Omi.Modules.HomeBuilder.Settings
 
         }
 
+        public DbSet<SettingEntity> SettingEntity { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.RegisterCustomMappings<SettingModelBuilder>();
             builder.RegisterCustomMappings<HomeBuilderSettingsModelBuilder>();
             base.OnModelCreating(builder);
         }
