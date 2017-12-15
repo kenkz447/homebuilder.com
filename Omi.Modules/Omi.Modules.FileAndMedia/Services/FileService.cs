@@ -49,7 +49,7 @@ namespace Omi.Modules.FileAndMedia.Services
             foreach (var file in files)
             {
                 var fileLength = file.Length;
-                var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.ToString().Trim('"');
+                var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.ToString().Trim('"').ToLower();
                 var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
                 fileNameWithoutExtension = fileNameWithoutExtension + "-" + Guid.NewGuid().ToString().Substring(0, 5);
                 var fileExtension = Path.GetExtension(fileName);
