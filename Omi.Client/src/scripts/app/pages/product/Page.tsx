@@ -1,3 +1,5 @@
+import './style.scss'
+
 import * as React from 'react'
 
 import { CreatePageWrap } from '../../../shared/core'
@@ -8,7 +10,7 @@ import { ConnectedProductDetails } from './containers/ProductDetails'
 class Page extends React.Component {
     render() {
         return (
-            <div className="page project">
+            <div className="page product">
                 <ConnectedProductDetails />    
             </div>
         )

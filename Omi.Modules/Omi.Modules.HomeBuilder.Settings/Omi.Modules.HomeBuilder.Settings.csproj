@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Omi.Core\Omi.Base\Omi.Base.csproj" />
+    <ProjectReference Include="..\..\Omi.Core\Omi.Data\Omi.Data.csproj" />
+    <ProjectReference Include="..\..\Omi.Core\Omi.Extensions\Omi.Extensions.csproj" />
+    <ProjectReference Include="..\..\Omi.Core\Omi.Modular\Omi.Modular.csproj" />
+    <ProjectReference Include="..\..\Omi.Core\Omi.Packages\Omi.Packages.csproj" />
+    <ProjectReference Include="..\..\Omi.Core\Omi.Services\Omi.Services.csproj" />
+    <ProjectReference Include="..\Omi.Modules.ModuleBase\Omi.Modules.ModuleBase.csproj" />
+    <ProjectReference Include="..\Omi.Modules.Setting\Omi.Modules.Setting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.EntityFrameworkCore">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore\2.0.0\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
