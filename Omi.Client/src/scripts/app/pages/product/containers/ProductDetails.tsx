@@ -9,6 +9,8 @@ import { Row, Col } from 'antd'
 import { Image } from 'shared/modules/FileAndMedia'
 import { PackageViewModel } from 'src/scripts/admin'
 import { NavLink } from 'react-router-dom'
+import { Carousel } from 'app/components'
+import { Transition } from 'shared/modules/website'
 
 interface StateProps {
     product?: ProductViewModel
@@ -30,14 +32,20 @@ interface OwnProps extends RouteComponentProps<Params> {
 }
 
 class ProductDetails extends React.Component<OwnProps & DispatchProps & StateProps> {
+    state = {
+        currentImage: undefined
+    }
+
     componentWillMount() {
         this.props.getProduct(this.props.match.params.product)
         this.props.getPackage()
     }
 
     componentWillReceiveProps(nextProps: OwnProps) {
-        if (this.props.location.pathname != nextProps.location.pathname)
+        if (this.props.location.pathname != nextProps.location.pathname) {
             this.props.getProduct(nextProps.match.params.product)
+            this.setState({ currentImage: null })
+        }
     }
 
     render() {
@@ -45,29 +53,31 @@ class ProductDetails extends React.Component<OwnProps & DispatchProps & StatePro
             return null
         const quantity = this.props.package.products.find(o => o.productId == this.props.product.entityId)
         return (
-            <Row gutter={30}>
-                <Col span={24}>
-                    {this.renderBreacrumb()}
-                </Col>
-                <Col span={8}>
-                    <Image className="w-100" fileEntityInfo={this.props.product.avatar} />
-                </Col>
-                <Col span={12}>
-                    <div>
-                        <h1>{this.props.product.title}</h1>
-                        <label className="product-code">{this.props.product.code}</label>
-                        <p>Quantity in package: {quantity.quantity}</p>
-                        <p>Size: {this.props.product.dimension}</p>
-                        <p>Branch: {this.props.product.brand.label}</p>
-                        <p>Type: {this.props.product.type.label}</p>
-                        <p className="product-description">Info: {this.props.product.description}</p>
-                    </div>
-                </Col>
-                <Col span={24} className="pt-4">
-                    <label className="product-others-label">Other products</label>
-                    {this.renderOtherProducts()}
-                </Col>
-            </Row>
+            <Transition key={this.props.product.entityId} >
+                <Row gutter={30}>
+                    <Col span={24}>
+                        {this.renderBreacrumb()}
+                    </Col>
+                    <Col span={8}>
+                        {this.renderGallery()}
+                    </Col>
+                    <Col span={12}>
+                        <div>
+                            <h1>{this.props.product.title}</h1>
+                            <label className="product-code">{this.props.product.code}</label>
+                            <p>Quantity in package: {quantity.quantity}</p>
+                            <p>Size: {this.props.product.dimension}</p>
+                            <p>Branch: {this.props.product.brand.label}</p>
+                            <p>Type: {this.props.product.type.label}</p>
+                            <p className="product-description">Info: {this.props.product.description}</p>
+                        </div>
+                    </Col>
+                    <Col span={24} className="pt-4">
+                        <label className="product-others-label">Other products</label>
+                        {this.renderOtherProducts()}
+                    </Col>
+                </Row>
+            </Transition>
         )
     }
 
@@ -87,7 +97,7 @@ class ProductDetails extends React.Component<OwnProps & DispatchProps & StatePro
         const products = this.props.package.products.filter(o => o.productId != this.props.product.entityId)
 
         return (
-            <Row>
+            <Row gutter={5}>
                 {
                     products.map(o => {
                         return (
@@ -101,6 +111,29 @@ class ProductDetails extends React.Component<OwnProps & DispatchProps & StatePro
                     })
                 }
             </Row>
+        )
+    }
+
+    renderGallery() {
+        const current = this.state.currentImage || this.props.product.avatar
+        return (
+            <>
+            <Transition key={current.src} transitionName="fade">
+                <Image containerClassName="product-gallery-current" className="w-100 product-gallery-current-image" fileEntityInfo={current} />
+            </Transition>
+
+            {
+                this.props.product.pictures &&
+                <Carousel pictures={this.props.product.pictures}
+                    thumb={true}
+                    slidesToShow={4}
+                    itemClassName="product-gallery-item"
+                    itemClick={(itemIndex) => {
+                        this.setState({ currentImage: this.props.product.pictures[itemIndex] })
+                    }}
+                    containerClassName="product-gallery" />
+            }
+            </>
         )
     }
 }

@@ -3,7 +3,7 @@ import * as Img from 'react-image'
 
 import { FileEntityInfo } from '../Types'
 import { Spin } from 'antd'
-import * as classNames from 'classnames';
+import * as classNames from 'classnames'
 
 interface ImgProps {
     fileEntityInfo: FileEntityInfo
@@ -12,6 +12,7 @@ interface ImgProps {
     displayThumb?: boolean
     style?: React.CSSProperties
 }
+
 export class Image extends React.Component<ImgProps> {
     render() {
         if (!this.props.fileEntityInfo)

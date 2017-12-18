@@ -32,3 +32,21 @@
         }
     }
 }
+
+.product-gallery {
+    margin: 0 -5px;
+    &-wrapper {
+        overflow: hidden;
+    }
+    &-item {
+        padding: 5px;
+        cursor: pointer;
+    }
+    &-current {
+        padding-bottom: 100%;
+        position: relative;
+        &-image {
+            position: absolute;
+        }
+    }
+}

@@ -4,6 +4,7 @@ import { FileEntityInfo } from 'shared/modules/FileAndMedia'
 import * as classNames from 'classnames'
 
 interface OwnProps {
+    thumb?: boolean
     pictures: Array<FileEntityInfo>
     slidesToShow?: number
     itemClassName?: string
@@ -42,7 +43,7 @@ export const Carousel = (props: OwnProps) => {
             {
                 props.pictures && props.pictures.map((picture, i) => (
                     <div key={picture.fileId} className={classNames(props.itemClassName, 'detail-carousel-item')} onClick={() => { props.itemClick(i) }}>
-                        <img className="w-100" src={`${window.baseUrl}${picture.src}`} />
+                        <img className="w-100" src={`${window.baseUrl}${props.thumb ? picture.srcThumb : picture.src}`} />
                     </div>
                 ))
             }
