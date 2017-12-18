@@ -36,7 +36,10 @@ const mapStateToProps = (state: WebsiteRootState): StateProps => {
 const mapDispatchToProps = (dispatch): DispatchProps => {
     return {
         getWebsiteSetting: () => {
-
+            const action = RequestSend('WEBSITE_SETTING', {
+                url: '/websiteSetting/getSetting'
+            })
+            dispatch(action)
         }
     }
 }

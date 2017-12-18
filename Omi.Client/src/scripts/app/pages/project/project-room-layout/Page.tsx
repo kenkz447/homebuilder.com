@@ -9,7 +9,7 @@ import { ConnectedProjectDetail } from './containers/ProjectDetail'
 class Page extends React.Component {
     render() {
         return (
-            <div className="page project">
+            <div className="page project brand-container">
                 <ConnectedProjectDetail />
             </div>
         )

@@ -98,3 +98,25 @@ export interface ProjectViewModel {
     locationImage?: FileEntityInfo
     siteMapImage?: FileEntityInfo
 }
+export interface SettingValueViewModel {
+    id: number,
+    name: string,
+    value: any
+}
+
+export interface WebsiteSettingFormValue {
+    siteTitle?: SettingValueViewModel
+    siteDescription?: SettingValueViewModel
+    companyName?: SettingValueViewModel
+    companyLogo?: SettingValueViewModel
+    companyAddress?: SettingValueViewModel
+    socialNetworks?: SettingValueViewModel
+    contactBannerImage?: SettingValueViewModel
+    contactWelcomeHtml?: SettingValueViewModel
+    contactInfoHtml?: SettingValueViewModel
+    contactSendToEmail?: SettingValueViewModel
+    contactSendFromEmail?: SettingValueViewModel
+    contactSendFromEmailPassword?: SettingValueViewModel
+    contactMapLatitude?: SettingValueViewModel
+    contactMapLongitude?: SettingValueViewModel
+}

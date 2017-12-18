@@ -13,7 +13,7 @@ import { ProjectMap } from './container/Map'
 class Page extends React.Component {
     render() {
         return (
-            <div className="page">
+            <div className="page brand-container">
                 <Filter />
                 <div className="mt-4 mb-4" style={{height: 500}}>
                     <ProjectMap/>

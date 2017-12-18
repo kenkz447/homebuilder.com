@@ -1,0 +1,125 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+.contact {
+    &-info {
+        padding: 50px 30px;
+        margin-bottom: 50px;
+        font-size: 17px;
+        color: #fff;
+        line-height: 1.8;
+        &-heading {
+            color: #fff;
+            font-size: 1rem;
+            +.sub-heading {
+                font-weight: 300;
+                font-size: 1.2rem;
+            }
+        }
+        &-label {
+            font-size: 1rem;
+        }
+        .call-us {
+            margin-bottom: 15px;
+            a {
+                color: #fff;
+            }
+            .icon {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                margin-right: .5rem;
+                font-weight: bold;
+                width: 2.2rem;
+                height: 2.2rem;
+                background: #878787;
+            }
+        }
+        input,
+        textarea {
+            padding-left: 15px;
+            background: transparent;
+            color: #fff;
+        }
+    }
+    &-map {
+        height: 500px;
+        .map-marker-hint {
+            background: transparent;
+            padding: 0;
+        }
+        .b-marker {
+            width: 350px;
+            left: 190px;
+            top: 12px;
+            position: relative;
+            >div:last-child {
+                background: #272727;
+                padding: .5rem;
+                width: 250px;
+            }
+            &-logo {
+                height: 80px;
+                width: auto !important;
+            }
+        }
+        h4 {
+            margin-top: 5px;
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+        .map-marker-hint {
+            background-color: transparent!important;
+            box-shadow: none!important;
+            left: -27px!important;
+        }
+        .map-marker.hint--top:before {
+            border-top-color: #272727;
+        }
+    }
+}
+
+@include media-breakpoint-up(xl) {
+    .construction {
+        &-info {
+            padding: 50px 0;
+            margin-bottom: 50px;
+            font-size: 17px;
+            line-height: 1.8;
+            &-heading {
+                font-size: 30px;
+                +.sub-heading {
+                    font-size: 20px;
+                }
+            }
+            &-label {
+                font-size: 20px;
+            }
+            .call-us {
+                margin-bottom: 15px;
+                .icon {
+                    border-radius: 50%;
+                    margin-right: .5rem;
+                    width: 2.2rem;
+                    height: 2.2rem;
+                }
+            }
+        }
+    }
+}
+
+.home-send-btn {
+    width: 45px;
+    height: 45px;
+    background: #272727;
+    img {
+        max-width: 100%;
+        padding: 9px;
+    }
+}
+
+.home-send-btn:focus,
+.home-send-btn:hover {
+    background: #414141;
+}

@@ -17,7 +17,7 @@ import { PackageList } from './containers'
 class Index extends React.Component {
     render() {
         return (
-            <div className="page">
+            <div className="page brand-container">
                 <Row className="mb-5" gutter={30}>
                     <Col span={6}><SortBySelect /></Col>
                     <Col span={6}><FilterByDesingTheme /></Col>

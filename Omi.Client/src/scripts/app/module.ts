@@ -8,13 +8,14 @@ import {
     homeRoute as Home,
     packageRoute as Package,
     ProjectRoutes,
-    ProductDetails
+    ProductDetails,
+    ContactRoute
 } from './pages'
 
 import { MainMaster } from './layout'
 
 export const Module: CRModule = {
-    routes: [ Home, Package, ...ProjectRoutes, ProductDetails],
+    routes: [ Home, Package, ...ProjectRoutes, ProductDetails, ContactRoute],
     masterPages: {
         [MAIN_MASTER]: MainMaster,
     },

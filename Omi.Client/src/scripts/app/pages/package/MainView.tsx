@@ -11,7 +11,7 @@ import { PackageDetail } from './containers/PackageDetail'
 class Page extends React.Component {
     render() {
         return (
-            <div className="page">
+            <div className="page brand-container">
                 <PackageDetail />
             </div>
         )

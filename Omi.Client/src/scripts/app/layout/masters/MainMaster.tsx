@@ -12,7 +12,7 @@ export class MainMaster extends React.Component {
                 <Layout className="brand brand-layout">
                     <MasterHeader />
                     <Layout.Content className="mt-5 mb-5">
-                        <div className="brand-container">
+                        <div className="">
                             {this.props.children}
                         </div>
                     </Layout.Content>

@@ -10,7 +10,7 @@ import { ConnectedProductDetails } from './containers/ProductDetails'
 class Page extends React.Component {
     render() {
         return (
-            <div className="page product">
+            <div className="page product brand-container">
                 <ConnectedProductDetails />    
             </div>
         )
