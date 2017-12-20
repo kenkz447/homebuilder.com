@@ -31,7 +31,7 @@ const completeRoutePath = (routes: Array<ViewRoute>, currentRoute: ViewRoute) =>
         if (parent.path != '/')
             pathDictonay[currentRoute.name] = completeRoutePath(routes, parent) + (currentRoute.path || '')
         else
-            pathDictonay[currentRoute.name] = currentRoute.path
+            pathDictonay[currentRoute.name] = currentRoute.path || '/'
     }
 
     return pathDictonay[currentRoute.name]

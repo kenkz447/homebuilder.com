@@ -9,11 +9,11 @@ import { Module as Admin } from '../admin'
 function startup() {
     const configuration = new Configuration()
 
-    configuration.useModule(App)
     configuration.useModule(Account)
     configuration.useModule(FileAndMedia)
     configuration.useModule(Admin)
-    
+    configuration.useModule(App)
+
     // Start app when your configuration done
     configuration.appInit()
 }

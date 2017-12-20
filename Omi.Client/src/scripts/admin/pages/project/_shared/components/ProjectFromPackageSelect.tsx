@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispathProps => {
     return {
         getPackages: () => {
             const params = new URLSearchParams()
-            params.append('getTypes', 'perspective')
+            // params.append('getTypes', 'perspective')
             const requestSendAction = RequestSend(
                 'packages', {
                     url: `/package/getPackages?${params.toString()}`,

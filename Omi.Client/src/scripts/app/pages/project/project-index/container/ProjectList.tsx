@@ -59,7 +59,7 @@ class ProjectListComponent extends React.Component<StateProps & DispatchProps> {
                                         <span className="project-list-item-label">VND {toCurrency(o.budgetMin)} | {toCurrency(o.budgetMax)}</span>
                                         <span className="project-list-item-text">{o.city.label} | {o.projectType.label}</span>
                                     </div>
-                                    <NavLink className="project-list-item-viewmore-btn" aria-current="false" to={`/project/${o.name}`}>
+                                    <NavLink className="project-list-item-viewmore-btn" aria-current="false" to={`/${o.name}`}>
                                         <div className="project-list-item-viewmore">
                                             <span className="project-list-item-viewmore-text">View More</span>
                                             <span className="project-list-item-viewmore-icon">

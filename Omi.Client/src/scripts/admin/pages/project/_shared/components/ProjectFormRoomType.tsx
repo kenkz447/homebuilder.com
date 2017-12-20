@@ -48,7 +48,7 @@ export class ProjectFormRoomType extends React.Component<OwnProps> {
     render() {
         return (
             <Card key={this.props.roomTypeFieldName} className="mb-3" title={this.props.roomType.label || `New Room Type`} extra={this.renderRoomTypeActions()} noHovering>
-                <Form.Item>
+                <Form.Item label="Layout type">
                     {
                         this.props.form.getFieldDecorator(`${this.props.roomTypeFieldName}.${nameof<ProjectBlockViewModel>((o) => o.label)}`, {
                             initialValue: this.props.roomType.label,

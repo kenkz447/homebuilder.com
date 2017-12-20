@@ -5,7 +5,7 @@ import { CRModule } from 'shared/core'
 import { MAIN_MASTER } from './layout/keys'
 import { supportedLanguages } from './settings'
 import {
-    homeRoute as Home,
+    // homeRoute as Home,
     packageRoute as Package,
     ProjectRoutes,
     ProductDetails,
@@ -15,7 +15,7 @@ import {
 import { MainMaster } from './layout'
 
 export const Module: CRModule = {
-    routes: [ Home, Package, ...ProjectRoutes, ProductDetails, ContactRoute],
+    routes: [  ...ProjectRoutes, Package, ProductDetails, ContactRoute],
     masterPages: {
         [MAIN_MASTER]: MainMaster,
     },

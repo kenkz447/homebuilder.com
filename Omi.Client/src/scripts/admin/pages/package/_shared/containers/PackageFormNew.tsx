@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch, ownProps): PackageFormDispatchProps => {
         }
       })
       dispatch(showNotificationAction)
-      dispatch(push(`/website/admin/package/update?packageId=${newPackageId}`))
+      dispatch(push(`/website/admin/package/update?id=${newPackageId}`))
     }
   }
 }

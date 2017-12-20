@@ -35,7 +35,7 @@ export const Carousel = (props: OwnProps) => {
             className={classNames(props.containerClassName, 'detail-carousel')}
             effect={!props.slidesToShow ? "fade" : "scrollx"}
             slidesToShow={props.slidesToShow}
-            slidesToScroll={props.slidesToShow}
+            infinite={false}
             prevArrow={(<PrevArrow />)}
             nextArrow={(<NextArrow />)}
             arrows

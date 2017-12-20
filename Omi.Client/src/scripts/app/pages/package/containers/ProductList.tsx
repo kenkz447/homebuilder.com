@@ -25,7 +25,7 @@ export function ProductList(props: Props) {
                                     <span className="product-list-item-text">{product.type.label} | {product.brand.label}</span>
                                     <span className="product-list-item-text">Quantity: {o.quantity}</span>
                                 </div>
-                                <NavLink className="product-list-item-viewmore-btn" aria-current="false" to={`${location.pathname}/product/${product.name}`}>
+                                <NavLink className="product-list-item-viewmore-btn" aria-current="false" to={`${location.pathname}/${product.name}`}>
                                     <div className="product-list-item-viewmore">
                                         <span className="product-list-item-viewmore-text">View More</span>
                                         <span className="product-list-item-viewmore-icon">

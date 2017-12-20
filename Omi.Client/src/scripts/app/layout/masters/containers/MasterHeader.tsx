@@ -18,8 +18,7 @@ export function MasterHeader() {
                                 <div className="clearfix">
                                     <div className="float-right">
                                         <ul className="header-menu-nav clearfix">
-                                            <li className="header-menu-item"><NavLink className="header-menu-link" exact={true} activeClassName="active" to="/">Package</NavLink></li>
-                                            <li className="header-menu-item"><NavLink className="header-menu-link" activeClassName="active" to="/project">Project</NavLink></li>
+                                            <li className="header-menu-item"><NavLink className="header-menu-link" activeClassName="active" to="/">Project</NavLink></li>
                                             <li className="header-menu-item"><NavLink className="header-menu-link" activeClassName="active" to="/contact">Contact</NavLink></li>
                                         </ul>
                                     </div>

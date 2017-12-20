@@ -7,7 +7,7 @@ import { ProjectRoomLayoutDetail } from './project-room-layout'
 import { ProjectPackage } from './project-package'
 
 const Project: ViewRoute = {
-    path: '/project',
+    path: '/',
     name: WEBSITE_PROJECT,
 }
 export const ProjectRoutes = [

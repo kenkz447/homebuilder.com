@@ -119,10 +119,9 @@ class ProjectDetail extends React.Component<OwnProps & StateProps & DispatchProp
                 </ul>
                 <Row gutter={30}>
                     {
-                        currentActiveRoomType && currentActiveRoomType.children.map((o) => {
-
+                        currentActiveRoomType && currentActiveRoomType.children.map((o, i) => {
                             return (
-                                <Col span={8}>
+                                <Col key={i} span={8}>
                                     <Link to={`${location.pathname}/${currentActiveRoomType.id}/${o.id}`}>
                                         <div className="head-text">
                                             {o.label}

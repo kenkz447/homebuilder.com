@@ -1,11 +1,11 @@
 
 import { ViewRoute } from '../../../shared/core'
 import Page from './Page'
-import { packageRoute } from '../package/routes'
+import { ProjectPackage } from '../project/project-package'
 export const ProductDetails: ViewRoute = {
     name: 'PRODUCT',
-    path: '/product/:product',
+    path: '/:product',
     exact: true,
     component: Page,
-    parent: packageRoute.name
+    parent: ProjectPackage.name
 }

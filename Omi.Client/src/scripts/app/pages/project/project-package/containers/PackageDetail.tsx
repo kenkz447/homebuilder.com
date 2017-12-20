@@ -53,7 +53,7 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
         const currentLayoutId = +this.props.match.params.layout
         const currentLayout = currentRoomType.children.find((o) => o.id == currentLayoutId)
 
-        const currentPerspective = currentLayout.children.find((o) => o.id == packageToRender.projectBlockId)
+        const currentPerspective = currentLayout.children.find((o) => o.packageId == packageToRender.id)
 
         const pictures = currentPerspective && currentPerspective.layoutPoints.map((o) => o.image) || []
         return (
@@ -72,7 +72,7 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
                     )
                 }
                 <div className="project-layouts mb-2">
-                    <img className="mw-100" src={`${window.baseUrl}${currentLayout.layoutImage.src}`} />
+                    <img className="mw-100 w-100" src={`${window.baseUrl}${currentLayout.layoutImage.src}`} />
                     {
                         (currentPerspective && currentPerspective.layoutPoints) && (
                             currentPerspective.layoutPoints.map((o, i) => {

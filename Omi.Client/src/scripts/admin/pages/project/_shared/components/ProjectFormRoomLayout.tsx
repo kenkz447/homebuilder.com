@@ -55,7 +55,7 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
                 <div className="mb-3">
                     <Row gutter={15}>
                         <Col span={12}>
-                            <Form.Item>
+                            <Form.Item label="Tên layout">
                                 {
                                     this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.label)}`, {
                                         initialValue: this.props.block.label
@@ -64,7 +64,7 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item>
+                            <Form.Item label="Diện tích">
                                 {
                                     this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.area)}`, {
                                         initialValue: this.props.block.area
@@ -73,7 +73,7 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item>
+                            <Form.Item label="Số phòng ngủ">
                                 {
                                     this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.bedRoomCount)}`, {
                                         initialValue: this.props.block.bedRoomCount
@@ -82,7 +82,7 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item>
+                            <Form.Item label="Số phòng toilet">
                                 {
                                     this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.toiletCount)}`, {
                                         initialValue: this.props.block.toiletCount
@@ -91,7 +91,7 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item>
+                            <Form.Item label="Tổng số căn">
                                 {
                                     this.props.form.getFieldDecorator(`${this.props.fieldName}.${nameof<ProjectBlockViewModel>(o => o.totalRoomOfLayout)}`, {
                                         initialValue: this.props.block.totalRoomOfLayout
@@ -140,7 +140,7 @@ export class ProjectFormRoomLayout extends React.Component<OwnProps> {
             <Collapse.Panel key={fieldName} header="Perspective">
                 <Row gutter={15}>
                     <Col span={12}>
-                        <Form.Item>
+                        <Form.Item label="Package">
                             {this.props.form.getFieldDecorator(`${fieldName}.${nameof<ProjectBlockViewModel>((o) => o.packageId)}`, {
                                 initialValue: roomValue.packageId,
                                 rules: [{ required: true }]
