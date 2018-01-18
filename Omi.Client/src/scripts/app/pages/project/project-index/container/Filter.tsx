@@ -8,17 +8,17 @@ import { FilterByProjectStatus } from './filters/FilterByProjectStatus'
 
 export const Filter = () => {
     return (
-        <Row gutter={30}>
-            <Col span={6}>
+        <Row gutter={15}>
+            <Col span={12} xl={{span: 6}} className="mb-2">
                 <SortBySelect />    
             </Col>
-            <Col span={6}>
+            <Col span={12} xl={{span: 6}} className="mb-2">
                 <FilterByCity />    
             </Col>
-            <Col span={6}>
+            <Col span={12} xl={{span: 6}} className="mb-2">
                 <FilterByProjectType />    
             </Col>
-            <Col span={6}>
+            <Col span={12} xl={{span: 6}} className="mb-2">
                 <FilterByProjectStatus/>
             </Col>
         </Row>

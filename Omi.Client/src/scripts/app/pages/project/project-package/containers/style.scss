@@ -8,7 +8,13 @@
         overflow: hidden;
     }
     &-item {
-        padding: 15px;
         cursor: pointer;
+        padding: 5px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .slick-multi-item {
+        padding: 15px;
     }
 }

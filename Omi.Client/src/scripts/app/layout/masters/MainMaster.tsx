@@ -11,7 +11,7 @@ export class MainMaster extends React.Component {
             <ConnectedMasterWrapper>
                 <Layout className="brand brand-layout">
                     <MasterHeader />
-                    <Layout.Content className="mt-5 mb-5">
+                    <Layout.Content className="mt-0 mt-xl-5 mb-5">
                         <div className="">
                             {this.props.children}
                         </div>

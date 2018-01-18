@@ -4,7 +4,7 @@ import { Menu, Icon } from 'antd'
 
 import { MenuInjector, MenuHOCProps, getAllActivePath } from 'shared/core'
 
-import { PACKAGE_MENU_SIDER, PROJECT_MENU_SIDER, PRODUCT_MENU_SIDER } from '../../settings'
+import { PACKAGE_MENU_SIDER, PROJECT_MENU_SIDER, PRODUCT_MENU_SIDER, BLOG_MENU_SIDER } from '../../settings'
 
 const PureSiderMenu = (props: MenuHOCProps) => {
     const { menu } = props
@@ -32,4 +32,6 @@ const PureSiderMenu = (props: MenuHOCProps) => {
 export const ProductSiderMenu = MenuInjector(PRODUCT_MENU_SIDER)(PureSiderMenu)
 export const PackageSiderMenu = MenuInjector(PACKAGE_MENU_SIDER)(PureSiderMenu)
 export const ProjectSiderMenu = MenuInjector(PROJECT_MENU_SIDER)(PureSiderMenu)
+export const BlogSiderMenu = MenuInjector(BLOG_MENU_SIDER)(PureSiderMenu)
+
 

@@ -29,6 +29,7 @@ interface StateProps {
     package: PackageViewModel
     project?: ProjectViewModel
     packagePage: PageEntityViewModel<PackageViewModel>
+    windowWidth: number
 }
 
 interface OwnProps {
@@ -60,11 +61,11 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
             <div className="package-detail">
                 {
                     currentPerspective && (
-                        <div className="breadcrumb-wrapper">
+                        <div className="breadcrumb-wrapper pl-3 pl-xl-0">
                             <ul className="breadcrumb">
-                                <li className="breadcrumb-item"><NavLink className="breadcrumb-item-link" to={`/project/${this.props.project.name}`}>Project</NavLink></li>
+                                <li className="breadcrumb-item"><NavLink className="breadcrumb-item-link" to={`/${this.props.project.name}`}>Project</NavLink></li>
                                 <li className="breadcrumb-item">/</li>
-                                <li className="breadcrumb-item"><NavLink className="breadcrumb-item-link" to={`/project/${this.props.project.name}/${currentRoomTypeId}/${currentLayoutId}`}>A2-1404</NavLink></li>
+                                <li className="breadcrumb-item"><NavLink className="breadcrumb-item-link" to={`/${this.props.project.name}/${currentRoomTypeId}/${currentLayoutId}`}>A2-1404</NavLink></li>
                                 <li className="breadcrumb-item">/</li>
                                 <li className="breadcrumb-item"><span className="breadcrumb-item-link breadcrumb-item-link-disabled">{currentPerspective.label}</span></li>
                             </ul>
@@ -97,9 +98,9 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
                         )
                     }
                 </div>
-                <div className="slick-multi-wrapper mb-5">
+                <div className="slick-multi-wrapper mb-3 mb-lg-5">
                     <Carousel pictures={pictures}
-                        slidesToShow={4}
+                        slidesToShow={this.props.windowWidth < 1200 ? 3 : 4}
                         itemClassName="slick-multi-item"
                         itemClick={(itemIndex) => { this.props.openLightBox(itemIndex) }}
                         containerClassName="slick-multi" />
@@ -113,7 +114,7 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
 
     renderProjectDescription(renderPackage: PackageViewModel) {
         return (
-            <section className="package-detail-section mb-5">
+            <section className="package-detail-section mb-5 p-3 p-xl-0">
                 <label className="package-detail-section-label">Package Description</label>
                 <div className="package-detail-section-details">
                     <p><span>Design Theme: </span> <span>{renderPackage.designThemeLabel}</span></p>
@@ -129,7 +130,7 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
     renderWhatIncluded(renderPackage: PackageViewModel) {
         return (
             <div className="package-detail-section package-detail-included mb-5">
-                <label className="package-detail-section-label">What's include in this Package</label>
+                <label className="package-detail-section-label pl-3 pl-xl-0">What's include in this Package</label>
                 <div className="clearfix pt-2">
                     {
                         renderPackage.packageIncludedItems && renderPackage.packageIncludedItems.map((o) => (
@@ -179,6 +180,7 @@ const mapStateToProps = (state: WebsiteRootState): StateProps => {
         project: state.data.getIn(['WEBSITE_VIEW_PROJECT', 'response', 'result']),
         package: state.data.getIn(['WEBSITE_VIEW_PACKAGE', 'response', 'result']),
         packagePage: state.data.getIn(['WEBSITE_PACKAGES', 'response', 'result']),
+        windowWidth: state.layout.get('WINDOW_WIDTH')
     }
 }
 

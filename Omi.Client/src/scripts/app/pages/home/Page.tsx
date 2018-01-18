@@ -19,10 +19,10 @@ class Index extends React.Component {
         return (
             <div className="page brand-container">
                 <Row className="mb-5" gutter={30}>
-                    <Col span={6}><SortBySelect /></Col>
-                    <Col span={6}><FilterByDesingTheme /></Col>
-                    <Col span={6}><FilterByBudgetRange /></Col>
-                    <Col span={6}><FilterByHouseType /></Col>
+                    <Col span={12} xl={{span: 6}}><SortBySelect /></Col>
+                    <Col span={12} xl={{span: 6}}><FilterByDesingTheme /></Col>
+                    <Col span={12} xl={{span: 6}}><FilterByBudgetRange /></Col>
+                    <Col span={12} xl={{span: 6}}><FilterByHouseType /></Col>
                 </Row>
 
                 <PackageList />

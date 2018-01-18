@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Omi.DatabaseDesign;
 using System;
 
@@ -175,6 +177,79 @@ namespace Omi.DatabaseDesign.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Omi.Modules.Blog.Entities.BlogDetail", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Content");
+
+                    b.Property<string>("Description");
+
+                    b.Property<long>("EntityId");
+
+                    b.Property<string>("Language");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityId");
+
+                    b.ToTable("BlogDetail");
+                });
+
+            modelBuilder.Entity("Omi.Modules.Blog.Entities.BlogEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CreateByUserId");
+
+                    b.Property<DateTime?>("CreateDate");
+
+                    b.Property<string>("DeleteByUserId");
+
+                    b.Property<DateTime?>("DeleteDate");
+
+                    b.Property<string>("LastUpdateByUserId");
+
+                    b.Property<DateTime?>("LastUpdateDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<DateTime?>("PublicDate");
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreateByUserId");
+
+                    b.HasIndex("DeleteByUserId");
+
+                    b.HasIndex("LastUpdateByUserId");
+
+                    b.HasIndex("Name");
+
+                    b.ToTable("BlogEntity");
+                });
+
+            modelBuilder.Entity("Omi.Modules.Blog.Entities.BlogFile", b =>
+                {
+                    b.Property<long>("EntityId");
+
+                    b.Property<long>("FileEntityId");
+
+                    b.Property<int>("UsingType");
+
+                    b.HasKey("EntityId", "FileEntityId");
+
+                    b.HasIndex("FileEntityId");
+
+                    b.ToTable("BlogFile");
                 });
 
             modelBuilder.Entity("Omi.Modules.Ecommerce.Product.Entities.ProductDetail", b =>
@@ -832,6 +907,42 @@ namespace Omi.DatabaseDesign.Migrations
                     b.HasOne("Omi.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Omi.Modules.Blog.Entities.BlogDetail", b =>
+                {
+                    b.HasOne("Omi.Modules.Blog.Entities.BlogEntity", "Entity")
+                        .WithMany("Details")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Omi.Modules.Blog.Entities.BlogEntity", b =>
+                {
+                    b.HasOne("Omi.Data.ApplicationUser", "CreateByUser")
+                        .WithMany()
+                        .HasForeignKey("CreateByUserId");
+
+                    b.HasOne("Omi.Data.ApplicationUser", "DeleteByUser")
+                        .WithMany()
+                        .HasForeignKey("DeleteByUserId");
+
+                    b.HasOne("Omi.Data.ApplicationUser", "LastUpdateByUser")
+                        .WithMany()
+                        .HasForeignKey("LastUpdateByUserId");
+                });
+
+            modelBuilder.Entity("Omi.Modules.Blog.Entities.BlogFile", b =>
+                {
+                    b.HasOne("Omi.Modules.Blog.Entities.BlogEntity", "Entity")
+                        .WithMany("EntityFiles")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Omi.Modules.FileAndMedia.Entities.FileEntity", "FileEntity")
+                        .WithMany()
+                        .HasForeignKey("FileEntityId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

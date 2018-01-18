@@ -61,21 +61,21 @@ class ProjectRoomLayoutDetail extends React.Component<OwnProps & StateProps & Di
         return (
             <div>
                 <div className="breadcrumb-wrapper">
-                    <ul className="breadcrumb">
-                        <li className="breadcrumb-item"><NavLink className="breadcrumb-item-link" to={`/project/${this.props.project.name}`}>Project</NavLink></li>
+                    <ul className="breadcrumb pl-2 pl-xl-0">
+                        <li className="breadcrumb-item"><NavLink className="breadcrumb-item-link" to={`/${this.props.project.name}`}>Project</NavLink></li>
                         <li className="breadcrumb-item">/</li>
                         <li className="breadcrumb-item"><span className="breadcrumb-item-link breadcrumb-item-link-disabled">A2-1404</span></li>
                     </ul>
                 </div>
                 <div className="project-details mb-5">
                     <Row>
-                        <Col span={12}>
+                        <Col span={24} xl={{span: 12}}>
                             <div className="">
                                 <Image className="mw-100 w-100 d-block" fileEntityInfo={currentLayout.layoutImage} />
                             </div>
                         </Col>
-                        <Col span={12}>
-                            <div className="pt-5 pr-5 pb-5 pl-5">
+                        <Col span={24} xl={{span: 12}}>
+                            <div className="pt-3 pr-3 pb-3 pl-3 pt-xl-5 pr-xl-5 pb-xl-5 pl-xl-5">
                                 <div>
                                     <h1 className="project-title">{currentLayout.label}</h1>
                                 </div>
@@ -90,14 +90,14 @@ class ProjectRoomLayoutDetail extends React.Component<OwnProps & StateProps & Di
                     </Row>
                 </div>
                 <div>
-                    <div className="mb-4">
-                        <label className="package-detail-section-label">Package furniture</label>
+                    <div className="mb-3">
+                        <label className="package-detail-section-label pl-3 pl-xl-0">Package furniture</label>
                     </div>
                     <Transition>
                         <Row className="package-list" gutter={30} >
                             {
                                 this.props.packages && this.props.packages.map((item) => (
-                                    <Col key={item.id} span={8}>
+                                    <Col key={item.id} span={24} xl={{span: 8}}>
                                         <PackageItem package={item} />
                                     </Col>)
                                 )

@@ -7,6 +7,16 @@ import { GeographicaLocationViewModel } from 'shared/modules/Location'
 export interface ModuleRootState extends RootState {
 }
 
+export interface BlogViewModel {
+    id?: number
+    name?: string
+    title?: string
+    description?: string
+    content?: string
+    avatar?: FileEntityInfo
+    pictures: Array<FileEntityInfo>
+}
+
 export interface ProductViewModel {
     entityId?: number
     name?: string

@@ -40,9 +40,9 @@ class ProjectDetail extends React.Component<OwnProps & StateProps & DispatchProp
                     {this.renderDetails()}
                 </div>
                 <div className="location-and-sitemap mb-5">
-                    <div className="title mb-3">Location & Site Maps</div>
+                    <div className="title mb-3 pl-4 pl-xl-0">Location & Site Maps</div>
                     <Row gutter={30}>
-                        <Col span={12}>
+                        <Col span={24} xl={{ span: 12 }} className="mb-3 mb-xl-0">
                             <div className="location">
                                 <div className="head-text">
                                     Location
@@ -50,7 +50,7 @@ class ProjectDetail extends React.Component<OwnProps & StateProps & DispatchProp
                                 <Image className="mw-100 w-100 d-block" fileEntityInfo={this.props.project.locationImage} />
                             </div>
                         </Col>
-                        <Col span={12}>
+                        <Col span={24} xl={{ span: 12 }}>
                             <div className="sitemap">
                                 <div className="head-text">
                                     Site maps
@@ -69,13 +69,13 @@ class ProjectDetail extends React.Component<OwnProps & StateProps & DispatchProp
         return (
             <div className="project-details">
                 <Row>
-                    <Col span={12}>
+                    <Col span={24} xl={{ span: 12 }}>
                         <div className="">
                             <img className="mw-100 w-100 d-block" src={`${window.baseUrl}${this.props.project.avatar.src}`} />
                         </div>
                     </Col>
-                    <Col span={12}>
-                        <div className="pt-5 pr-5 pb-5 pl-5">
+                    <Col span={24} xl={{ span: 12 }}>
+                        <div className="pt-3 pl-3 pr-3 pb-3  pt-xl-5 pr-xl-5 pb-xl-5 pl-xl-5">
                             <div>
                                 <h1 className="project-title">{this.props.project.title}</h1>
                             </div>
@@ -105,23 +105,26 @@ class ProjectDetail extends React.Component<OwnProps & StateProps & DispatchProp
 
         return (
             <div className="room-types">
-                <ul className="room-types-list mb-3">
-                    {
-                        this.props.project.projectBlocks.map((o, i) => {
-                            const isActive = currentActiveRoomType && currentActiveRoomType.id == o.id
-                            return (
-                                <li key={o.id} className={classNames('room-types-list-item', { active: isActive == true })}>
-                                    <a onClick={this.onRoomTypeClick(o.id)}>{o.label}</a>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
+                <div style={{ overflowX: 'auto' }} >
+                    <ul className="room-types-list mb-3 pl-4 pl-xl-0" style={{ whiteSpace: 'nowrap' }}>
+                        {
+                            this.props.project.projectBlocks.map((o, i) => {
+                                const isActive = currentActiveRoomType && currentActiveRoomType.id == o.id
+                                return (
+                                    <li key={o.id} className={classNames('room-types-list-item', { active: isActive == true })}>
+                                        <a onClick={this.onRoomTypeClick(o.id)}>{o.label}</a>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                </div>
+
                 <Row gutter={30}>
                     {
                         currentActiveRoomType && currentActiveRoomType.children.map((o, i) => {
                             return (
-                                <Col key={i} span={8}>
+                                <Col key={i} span={24} xl={{ span: 8 }}>
                                     <Link to={`${location.pathname}/${currentActiveRoomType.id}/${o.id}`}>
                                         <div className="head-text">
                                             {o.label}

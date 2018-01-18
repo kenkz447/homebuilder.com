@@ -15,7 +15,7 @@ import {
 import { MainMaster } from './layout'
 
 export const Module: CRModule = {
-    routes: [  ...ProjectRoutes, Package, ProductDetails, ContactRoute],
+    routes: [  ContactRoute, ...ProjectRoutes, Package, ProductDetails],
     masterPages: {
         [MAIN_MASTER]: MainMaster,
     },

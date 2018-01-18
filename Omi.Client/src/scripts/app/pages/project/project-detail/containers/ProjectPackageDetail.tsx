@@ -84,7 +84,7 @@ class ProjectPackageDetailComponent extends React.Component<StateProps & Dispatc
     renderWhatIncluded(renderPackage: PackageViewModel) {
         return (
             <div className="package-detail-section package-detail-included mb-5">
-                <label className="package-detail-section-label">What's include in this Package</label>
+                <label className="package-detail-section-label pl-3 pl-xl-0">What's include in this Package</label>
                 <div className="clearfix pt-2">
                     {
                         renderPackage.packageIncludedItems && renderPackage.packageIncludedItems.map((o) => (

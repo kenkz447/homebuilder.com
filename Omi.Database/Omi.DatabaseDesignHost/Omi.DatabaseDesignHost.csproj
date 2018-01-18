@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\Omi.Core\Omi.Modular\Omi.Modular.csproj" />
     <ProjectReference Include="..\..\Omi.Core\Omi.Packages\Omi.Packages.csproj" />
     <ProjectReference Include="..\..\Omi.Modules\Omi.Modules.Accounts\Omi.Modules.Accounts.csproj" />
+    <ProjectReference Include="..\..\Omi.Modules\Omi.Modules.Blog\Omi.Modules.Blog.csproj" />
     <ProjectReference Include="..\..\Omi.Modules\Omi.Modules.FileAndMedia\Omi.Modules.FileAndMedia.csproj" />
     <ProjectReference Include="..\..\Omi.Modules\Omi.Modules.HomeBuilder\Omi.Modules.HomeBuilder.csproj" />
     <ProjectReference Include="..\..\Omi.Modules\Omi.Modules.Location\Omi.Modules.Location.csproj" />

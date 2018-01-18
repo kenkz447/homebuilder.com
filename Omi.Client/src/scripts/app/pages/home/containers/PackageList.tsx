@@ -41,7 +41,8 @@ class PackageListComponent extends React.Component<StateProps & DispatchProps> {
                         this.props.packagePage && this.props.packagePage.entities.map((item) => (
                             <Col key={item.id} span={8}>
                                 <PackageItem package={item} />
-                            </Col>)
+                            </Col>
+                            )
                         )
                     }
                     {

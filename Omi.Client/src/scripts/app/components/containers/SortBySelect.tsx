@@ -38,7 +38,7 @@ const SortBySelectComponent = (props: SortBySelectProps) => {
         currentSortBy = defaultSortBy
 
     return (
-        <div className="filter-sortby">
+        <div className="filter filter-sortby">
             <label className="filter-label">Sort by</label>
             <Dropdown toggleKey={dropdownKey} label={templates[currentSortBy]}>
                 <div className="btn-menu">

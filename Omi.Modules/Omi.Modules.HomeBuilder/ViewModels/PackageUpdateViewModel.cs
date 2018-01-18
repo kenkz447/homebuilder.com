@@ -10,6 +10,8 @@ namespace Omi.Modules.HomeBuilder.ViewModels
     {
         public long Id { get; set; }
 
+        public string Name { get; set; }
+
         public bool? IsPerspective { get; set; }
 
         [Required]

@@ -65,7 +65,7 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
 
     renderProjectDescription(renderPackage: PackageViewModel) {
         return (
-            <section className="package-detail-section mb-5">
+            <section className="package-detail-section mb-5 p-3 p-xl-0">
                 <label className="package-detail-section-label">Package Description</label>
                 <div className="package-detail-section-details">
                     <p><span>Design Theme: </span> <span>{renderPackage.designThemeLabel}</span></p>
@@ -73,7 +73,7 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
                     <p><span>Area: </span><span>{renderPackage.area} m<sup>2</sup></span></p>
                     <p className="package-intro"><span>Intro: </span> <span>{renderPackage.sortText}</span></p>
                 </div>
-                <button className="package-contact-us-button">Contact Us</button>
+                <button className="package-contact-us-button position-relative">Contact Us</button>
             </section>
         )
     }
@@ -84,7 +84,7 @@ class PackageComponent extends React.Component<StateProps & DispatchProps & OwnP
 
         return (
             <div className="package-detail-section package-detail-included mb-5">
-                <label className="package-detail-section-label">What's include in this Package</label>
+                <label className="package-detail-section-label pl-3 pl-xl-0">What's include in this Package</label>
                 <ProductList items={renderPackage.products} />
             </div>
         )

@@ -63,11 +63,11 @@
                 border-bottom: 1px solid lightgray;
             }
             &-avatar {
-                max-width: 200px;
+                max-width: 100%;
                 float: left;
             }
             &-details {
-                padding: 20px 30px;
+                padding: 20px 0 20px 15px;
                 float: left;
             }
             &-label {
@@ -101,5 +101,14 @@
                 }
             }
         }
+    }
+}
+
+@media (min-width:1200px) {
+    .project-list-item-avatar {
+        max-width: 200px;
+    }
+    .project-list-item-details {
+        padding: 20px 30px;
     }
 }

@@ -4,6 +4,7 @@ $brand-max-width: 1260px;
     &-container {
         margin: 0 auto;
         max-width: $brand-max-width;
+        overflow-x: hidden;
     }
     &-layout {
         background: #fff;
@@ -11,13 +12,14 @@ $brand-max-width: 1260px;
     }
     &-header {
         background: transparent;
-        padding: $brand-gutter;
+        padding: $brand-gutter 1rem;
         height: auto;
         line-height: initial;
         line-height: auto;
     }
     &-footer {
         background: $gray-light;
+        padding: $brand-gutter 1rem;
         &-text {
             font-size: 1rem;
         }
@@ -61,10 +63,14 @@ $brand-max-width: 1260px;
                 padding-right: 30px;
             }
         }
+        &:not(:first-child) {
+            .header-menu-link {
+                padding-left: 30px;
+            }
+        }
     }
     &-link {
         font-size: 1rem;
-        padding-left: 30px;
         color: #000;
         &:hover {
             color: #000;
@@ -95,6 +101,8 @@ $brand-max-width: 1260px;
 }
 
 .filter {
+    margin-left: 1rem;
+    margin-right: 10px;
     &-label {
         font-weight: 300;
         font-size: 1rem;
@@ -156,3 +164,5 @@ $brand-max-width: 1260px;
         }
     }
 }
+
+@media (min-width: 1200px) {}

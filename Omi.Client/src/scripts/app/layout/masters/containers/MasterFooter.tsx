@@ -6,10 +6,10 @@ export function MasterFooter() {
         <Layout.Footer className="brand-footer">
             <div className="brand-container">
                 <Row>
-                    <Col span={6}>
+                    <Col span={24} xl={{span: 12}}>
                         <span className="brand-footer-text">&#169; HHOME. ALL RIGHTS RESERVED</span>
                     </Col>
-                    <Col span={6}>
+                    <Col span={24} xl={{span: 12}}>
                     </Col>
                 </Row>
             </div>
