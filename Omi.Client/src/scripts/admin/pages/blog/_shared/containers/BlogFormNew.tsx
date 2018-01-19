@@ -33,6 +33,10 @@ const mapDispatchToProps = (dispatch, ownProps): BlogFormDispatchProps => {
       dispatch(requestSendAction)
     },
     post(FormValues) {
+      const body = { ...FormValues }
+      if (body.content)
+        body.content = JSON.stringify(body.content)
+      
       const requestSendAction = RequestSend(
         'FORM_POST_RESULT_BLOG_ID', {
           url: `/blog/create`,
@@ -42,7 +46,7 @@ const mapDispatchToProps = (dispatch, ownProps): BlogFormDispatchProps => {
               'Accept': 'application/json, text/plain, */*',
               'Content-Type': 'application/json'
             }),
-            body: JSON.stringify(FormValues),
+            body: JSON.stringify(body),
             credentials: 'include'
           }
         }
@@ -59,7 +63,7 @@ const mapDispatchToProps = (dispatch, ownProps): BlogFormDispatchProps => {
         }
       })
       dispatch(showNotificationAction)
-      dispatch(push(`/website/admin/blog/update?${nameof<BlogViewModel>(o => o.entityId)}=${newBlogId}`))
+      dispatch(push(`/website/admin/blog/update?${nameof<BlogViewModel>(o => o.id)}=${newBlogId}`))
     }
   }
 }
