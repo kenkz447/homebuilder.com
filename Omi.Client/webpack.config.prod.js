@@ -2,18 +2,17 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
     entry: {
-        app: path.join(__dirname, 'src/scripts/index.prod.ts')
+        app: './src/scripts/index.prod.ts'
     },
     output: {
         publicPath: '/',
         path: path.join(__dirname, 'dist'),
-        filename: 'app.[hash].js',
-        sourceMapFilename: 'bundle.map'
+        filename: 'app.[hash].js'
     },
     plugins: [
         new webpack.DefinePlugin({
@@ -22,13 +21,16 @@ module.exports = {
                 'NODE_ENV': JSON.stringify('production')
             }
         }),
-
-        new BundleAnalyzerPlugin(),
+        // new BundleAnalyzerPlugin(),
         new webpack.optimize.ModuleConcatenationPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: ({ resource }) => /node_modules/.test(resource),
             filename: 'vendor.[hash].js',
+        }),
+        new ExtractTextPlugin({
+            filename: '[name].[hash].css',
+            allChunks: true
         }),
         new UglifyJsPlugin({
             sourceMap: true
@@ -38,11 +40,6 @@ module.exports = {
             include: /\.js$/,
             exclude: /vendor/g,
         }),
-        new webpack.SourceMapDevToolPlugin({
-            filename: 'style.[hash].css.map',
-            include: /\.css$/
-        }),
-        new ExtractTextPlugin('style.[hash].css'),
         new HtmlWebpackPlugin({
             template: 'src/templates/index.html',
             inject: 'body'
@@ -61,17 +58,23 @@ module.exports = {
                         loader: 'css-loader',
                         options: {
                             minimize: true,
-                            sourceMap: true
+                            sourceMap: true,
+                            // importLoaders: false
                         }
                     }, {
                         loader: 'postcss-loader',
-                        options: { sourceMap: true }
+                        options: {
+                            sourceMap: true
+                        }
                     }, {
                         loader: "resolve-url-loader",
                     }, {
                         loader: 'sass-loader',
-                        options: { sourceMap: true }
-                    }, ]
+                        options: {
+                            sourceMap: true,
+                            includePaths: [path.resolve(__dirname, 'src')]
+                        }
+                    }]
                 })
             },
             {
@@ -92,9 +95,9 @@ module.exports = {
     resolve: {
         modules: [
             path.join(__dirname, 'src'),
-			path.join(__dirname, 'src', 'scripts'),
+            path.join(__dirname, 'src', 'scripts'),
             'node_modules'
         ],
         extensions: ['.js', '.ts', '.tsx'],
     }
-};
+}

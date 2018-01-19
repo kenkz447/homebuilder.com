@@ -52,7 +52,7 @@ function ProjectUpdateFormHOC(props) {
 
 const mapStateToProps = (state: ModuleRootState, ownProps): FormStateProps => {
   return {
-    initValue: state.data.getIn(['initProjectForUpdate', 'response', 'result']) || {},
+    initValue: state.data.getIn(['initProjectForUpdate', 'response']) || {},
     formPostResultProjectId: state.data.getIn(['formPostResultProjectId', 'response', 'result']),
   }
 }

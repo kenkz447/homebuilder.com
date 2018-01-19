@@ -6,6 +6,9 @@ export interface RequestSendAction extends Action {
     dataKey: string
     url: string
     requestInit: RequestInit
+    callbacks?: {
+        sucess?(value): void
+    }
 }
 
 const processUrl = (url: string) => {
@@ -18,7 +21,10 @@ const processUrl = (url: string) => {
 
 export function RequestSend(dataKey: string, payload: {
     url: string,
-    requestInit?: RequestInit
+    requestInit?: RequestInit,
+    callbacks?: {
+        sucess?(): void
+    }
 }): RequestSendAction {
     let requestUrl = processUrl(payload.url)
 
@@ -34,7 +40,8 @@ export function RequestSend(dataKey: string, payload: {
         type: REQUEST_SEND,
         dataKey,
         url: requestUrl,
-        requestInit: payload.requestInit
+        requestInit: payload.requestInit,
+        callbacks: payload.callbacks
     }
 }
 

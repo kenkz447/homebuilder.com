@@ -21,7 +21,6 @@ interface StateProps {
 interface DispatchProps {
     getFormValue: () => void
     onPost: (formValue) => void
-    onSubmitSucceeded: () => void
 }
 
 interface OwnProps {
@@ -40,9 +39,6 @@ class WebsiteSettingForm extends React.Component<OwnProps & StateProps & Dispatc
     }
 
     componentWillReceiveProps(nextProps: StateProps) {
-        if (nextProps.submitResponseCode === "POST_SUCCEEDED")
-            this.props.onSubmitSucceeded()
-
         if (this.props.search != nextProps.search)
             this.props.getFormValue()
     }
@@ -276,8 +272,8 @@ class WebsiteSettingForm extends React.Component<OwnProps & StateProps & Dispatc
 
 const mapStateToProps = (state: ModuleRootState, ownProps: OwnProps): StateProps => {
     return {
-        formValue: state.data.getIn(['WEBSITE_SETTING', 'response', 'result']),
-        submitResponseCode: state.data.getIn(['WEBSITE_SETTING_SUBMIT', 'response', 'code']),
+        formValue: state.data.getIn(['WEBSITE_SETTING', 'response']),
+        submitResponseCode: state.data.getIn(['WEBSITE_SETTING_SUBMIT', 'response']),
         search: state.router.location.search
     }
 }
@@ -286,37 +282,36 @@ const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
     return {
         getFormValue: () => {
             const requestAction = RequestSend('WEBSITE_SETTING', {
-                url: '/websiteSetting/getSetting'
+                url: '/website-settings'
             })
             dispatch(requestAction)
         },
         onPost: (formValue) => {
             const requestAction = RequestSend('WEBSITE_SETTING_SUBMIT', {
-                url: '/websiteSetting/updateSetting',
+                url: '/website-settings',
                 requestInit: {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: new Headers({
                         'Accept': 'application/json, text/plain, */*',
                         'Content-Type': 'application/json'
                     }),
                     body: JSON.stringify(formValue),
                     credentials: 'include'
+                },
+                callbacks: {
+                    sucess: () => {
+                        const showNotificationAction = ShowNotification({
+                            notifyType: 'success',
+                            display: {
+                                title: 'Saved!',
+                                description: 'Update Successfuly.'
+                            }
+                        })
+                        dispatch(showNotificationAction)
+                    }
                 }
             })
             dispatch(requestAction)
-        },
-        onSubmitSucceeded() {
-            const showNotificationAction = ShowNotification({
-                notifyType: 'success',
-                display: {
-                    title: 'Saved!',
-                    description: 'Update Successfuly.'
-                }
-            })
-            dispatch(showNotificationAction)
-
-            const action = RequestCacheDelete('WEBSITE_SETTING_SUBMIT')
-            dispatch(action)
         }
     }
 }

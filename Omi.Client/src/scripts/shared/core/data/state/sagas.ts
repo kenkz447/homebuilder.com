@@ -8,7 +8,7 @@ import { RequestResponse, RequestSendAction, RequestFailedAction, RequestFailed 
 import { push } from 'react-router-redux'
 
 function* onFetchFailed(action: RequestFailedAction) {
-    openNotificationWithIcon('error', {title: 'System', description: action.error})
+    openNotificationWithIcon('error', { title: 'System', description: action.error })
 }
 
 function* onRequestSend(action: RequestSendAction) {
@@ -22,9 +22,15 @@ function* onRequestSend(action: RequestSendAction) {
             return
         }
         else {
-            const responseContent = yield response.json()
-            const requestResponseAction = RequestResponse(action.dataKey, responseContent)
+            let responseValue = yield response.text()
+            if (responseValue)
+                responseValue = JSON.parse(responseValue)
+            
+            const requestResponseAction = RequestResponse(action.dataKey, responseValue)
             yield put(requestResponseAction)
+            if (action.callbacks) {
+                action.callbacks.sucess && action.callbacks.sucess(responseValue)
+            }
         }
     } catch (error) {
         yield put(RequestFailed(action.dataKey, error.message))

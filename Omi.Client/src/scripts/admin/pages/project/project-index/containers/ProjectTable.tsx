@@ -30,7 +30,7 @@ const columns = [{
     dataIndex: 'title',
     sorter: true,
     render: (text, entity: ProjectViewModel) => {
-        return <NavLink to={`/website/admin/project/update?${nameof<ProjectViewModel>(o => o.projectId)}=${entity.projectId}`}>{text}</NavLink>
+        return <NavLink to={`/website/admin/project/update?id=${entity.projectId}`}>{text}</NavLink>
     }
 }]
 
@@ -162,7 +162,7 @@ class ProjectTableComponent extends React.Component<StateProps & DispatchProps> 
 
 const mapStateToProps = (state: ModuleRootState): StateProps => {
     return {
-        dataSource: state.data.getIn(['PROJECT', 'response', 'result']),
+        dataSource: state.data.getIn(['PROJECT', 'response']),
         dataSourceProcessing: state.data.getIn(['PROJECT', 'status', 'processing']),
         deleteResult: state.data.getIn(['PROJECT_DELETE', 'response', 'result']),
         deleteProcessing: state.data.getIn(['PROJECT_DELETE', 'status', 'processing'])
@@ -175,7 +175,10 @@ const mapDispatchToProps = (dispatch): DispatchProps => {
         params.append('getMode', String(1))
 
         const requestSendAction = RequestSend('PROJECT', {
-            url: `/project/getProjects?${params.toString()}`
+            url: `/project/getProjects?${params.toString()}`,
+            requestInit: {
+                credentials: 'include'
+            }
         })
         dispatch(requestSendAction)
     }
