@@ -57,10 +57,10 @@ class BlogFormComponent extends React.Component<BlogFormProps> {
                 <Tabs defaultActiveKey="1" tabBarExtraContent={operations}>
                     <TabPane tab="Blog info" key="1">
                         <Row gutter={30}>
-                            <Col span={8}>
+                            <Col span={6}>
                                 {this.renderBasicInfomation.bind(this)()}
                             </Col>
-                            <Col span={16}>
+                            <Col span={18}>
                                 {this.renderContent.bind(this)()}
                             </Col>
                         </Row>
