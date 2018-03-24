@@ -8,10 +8,12 @@ import { ModuleRootState, BlogViewModel } from '../../../../Types'
 import { RequestSend, ExtractImmutableHOC, ShowNotification } from 'shared/core'
 
 import { BlogFormStateProps, BlogFormDispatchProps, BlogForm } from '../components'
+import { getTags } from './actions'
 
 const mapStateToProps = (state: ModuleRootState, ownProps): BlogFormStateProps => {
   return {
     initBlogViewModel: state.data.getIn(['INIT_BLOG_VIEW_MODEL', 'response', 'result']) || {},
+    allTags: state.data.getIn([getTags.dataKey, 'response']) || [],
     FORM_POST_RESULT_BLOG_ID: state.data.getIn(['FORM_POST_RESULT_BLOG_ID', 'response', 'result'])
   }
 }
@@ -31,6 +33,9 @@ const mapDispatchToProps = (dispatch, ownProps): BlogFormDispatchProps => {
           }
         })
       dispatch(requestSendAction)
+    },
+    getTag: () => {
+      dispatch(getTags)
     },
     post(FormValues) {
       const body = { ...FormValues }

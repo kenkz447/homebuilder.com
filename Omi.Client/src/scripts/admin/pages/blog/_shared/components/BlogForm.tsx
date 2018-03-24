@@ -5,18 +5,21 @@ import { Button, Tabs, Form, Input, Row, Col, Select } from 'antd'
 import { AvatarSelect, PictureWall } from 'shared/modules/FileAndMedia'
 import { BlogViewModel } from '../../../../Types'
 import { Editor } from '../../../../components'
+import { TaxonomyViewModel } from 'shared/modules/Modulebase';
 
 export interface BlogFormDispatchProps {
     getInitialViewModel?: () => void
     post?: (FormValues: BlogViewModel) => void
     onPostSucceeded?: (entityId: number) => void
     cleanSelectedResult?: () => void
+    getTag?(): void
 }
 
 export interface BlogFormStateProps {
     initBlogViewModel?: BlogViewModel
     FORM_POST_RESULT_BLOG_ID?: number
     searchParams?: string
+    allTags?: Array<TaxonomyViewModel>
 }
 
 export interface BlogFormProps extends BlogFormStateProps, BlogFormDispatchProps {
@@ -37,6 +40,10 @@ class BlogFormComponent extends React.Component<BlogFormProps> {
         super(props)
     }
 
+    componentDidMount() {
+        this.props.getTag()
+    }
+
     componentWillReceiveProps(nextProps: BlogFormProps) {
         if (nextProps.FORM_POST_RESULT_BLOG_ID && (this.props.FORM_POST_RESULT_BLOG_ID != nextProps.FORM_POST_RESULT_BLOG_ID)) {
             this.props.onPostSucceeded(nextProps.FORM_POST_RESULT_BLOG_ID)
@@ -51,9 +58,7 @@ class BlogFormComponent extends React.Component<BlogFormProps> {
     render() {
         return (
             <Form layout="vertical" onSubmit={this.handleSubmit}>
-                {
-                    this.renderHidden.bind(this)()
-                }
+                {this.renderHidden.bind(this)()}
                 <Tabs defaultActiveKey="1" tabBarExtraContent={operations}>
                     <TabPane tab="Blog info" key="1">
                         <Row gutter={30}>
@@ -99,7 +104,19 @@ class BlogFormComponent extends React.Component<BlogFormProps> {
                     {this.props.form.getFieldDecorator(nameof<BlogViewModel>(o => o.description), {
                         rules: [{ required: true, message: 'Price is required!' }],
                         initialValue: this.props.initBlogViewModel.description
-                    })(<Input.TextArea  placeholder="Short text..." />)}
+                    })(<Input.TextArea placeholder="Short text..." />)}
+                </FormItem>
+                <FormItem label="Tags">
+                    {this.props.form.getFieldDecorator(nameof<BlogViewModel>(o => o.tags), {
+                        initialValue: this.props.initBlogViewModel.tags
+                    })(
+                        <Select placeholder="Select tags" mode="tags">
+                            {
+                                this.props.allTags.map((e) => (
+                                    <Option key={e.id} value={e.name}>{e.label}</Option>
+                                ))
+                            }
+                        </Select>)}
                 </FormItem>
             </fieldset>
         )

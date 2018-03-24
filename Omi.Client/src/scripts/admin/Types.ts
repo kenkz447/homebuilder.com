@@ -15,6 +15,8 @@ export interface BlogViewModel {
     content?: string
     avatar?: FileEntityInfo
     pictures: Array<FileEntityInfo>
+
+    tags: Array<string>
 }
 
 export interface ProductViewModel {

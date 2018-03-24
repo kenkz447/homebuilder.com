@@ -132,7 +132,7 @@ export class ProjectFromRoomPerspective extends React.Component<OwnProps, State>
 
     @autobind
     handleCancel() {
-        this.setState({ modalVisible: false, arrows: [] })
+        this.setState({ modalVisible: false})
     }
 
     //#endregion
